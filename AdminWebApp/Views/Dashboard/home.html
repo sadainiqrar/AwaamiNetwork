@@ -1,0 +1,357 @@
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-panel main-panel-margin">
+
+
+    <div class="col-md-12 widthpanel" style="padding-bottom: 2em; ">
+        <section class="panel panel-default panmain">
+            <div class="row">
+
+                <div class="col-md-4 b-r">
+                    <a class="clear">
+                        <span class="h3 block m-t-xs sm1"><center><strong style="color: #34c9ff">{{MonthExpense | currency:"USD$"}}</strong></center></span>
+
+                        <small class="text-muted text-uc " style="color: #a3a3a3"><center>THIS MONTH'S EXPENSE</center></small>
+
+                    </a>
+                </div>
+                <div class="col-md-4 b-r">
+                    <a class="clear">
+                        <span class="h3 block m-t-xs sm1"><center><strong style="color: #bc49ff">{{$parent.abbreviate(MonthTraffic)}}</strong></center></span>
+
+                        <small class="text-muted text-uc " style="color: #a3a3a3"><center>THIS MONTH'S TRAFFIC</center></small>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a class="clear">
+                        <span class="h3 m-t-xs sm1"><center><strong style="color: #6344ff"> {{$parent.abbreviate(TodayTraffic)}} </strong></center></span>
+
+                        <small class="text-muted text-uc " style="color: #a3a3a3"><center>TODAY'S TRAFFIC</center></small>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <div class="bar">
+            <div class="row bar" style="margin-bottom: 1em;">
+                <section class="col-md-12 col-sm-12 col-xs-12 panmain">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="background-color: #fff;">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 adminOverviewSection">
+                            <div class="col-lg-8 col-md-8 col-sm-6 col-xs-7" style="padding: 3em 0em 1em 0em;">
+                                <p class="trafficNRev">Traffic Generated and Money Spent</p>
+                            </div>
+
+                            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-5" id="monthbutton">
+                                <button class="mbtn" type="button" ng-click='dateActive("month")' ng-class="{ 'activebutton': extra=='month'}">Month</button>
+                                <button class="mbtn" type="button" ng-click='dateActive("week")' ng-class="{ 'activebutton': extra=='week'}">Week</button>
+                                <button class="mbtn" type="button" ng-click='dateActive("year")' ng-class="{ 'activebutton': extra=='year'}">Year</button>
+                            </div>
+                        </div>
+                        <div class="col-md-12 adminOverviewSection">
+
+
+                            <my-custom-chart-control data-id="chart3">
+                            </my-custom-chart-control>
+
+                        </div>
+
+                    </div>
+
+
+
+                </section>
+            </div>
+            <div class="row bar" style="padding-bottom: 8em;">
+                <section class="panel panel-default panmain adminOverviewSection">
+                    <div style="margin: 20px 0px 5px 0px"><p>{{userdata.currentSite.site_name | uppercase}} ARTICLES</p></div>
+
+                    <nav class="navbar navbar-default navbar-collapse collapse" id="navbar-cat-collapse">
+
+
+
+                    </nav>
+
+
+
+                    <div class="container-fluid welcomeimg" style="background-image: url(images/welcomefull.png);" ng-show="NoArticles">
+
+                        <div class="col-md-4 col-xs-2"></div>
+
+                        <div class="col-md-4 col-xs-8">
+
+                            <div class="row welcomeheading"> <h4>WELCOME!</h4> </div>
+
+                            <div class="row welcomeparadiv"> <p style="font-size: 10pt;">Get started by uploading your articles and gain traffic in no time!</p></div>
+
+                            <center><button type="button" class="customarticlebutton" ng-show="custom" ng-click="addArticle($event)">+ ADD CUSTOM ARTICLE</button></center>
+
+                        </div>
+
+                        <div class="col-md-4 col-xs-2"></div>
+
+
+                    </div>
+                    <div class="container-fluid" ng-hide="NoArticles">
+
+                        <div class="col-md-12 col-sm-12">
+
+
+                            <div class="col-md-4 col-sm-12" ng-show="custom">
+                                <div class="col-xs-12 col-md-12 col-sm-12 ok pan">
+                                    <div id="articleImageDiv" class="col-md-12 col-sm-6" style="padding: 5em 2.5em 0em 2.5em;">
+                                        <center><div><i class="fa fa-pencil-square-o icon" style="font-size: 28pt; color:#34c9ff; padding-bottom: 10px; "></i></div></center>
+                                        <p class="customArticleParagraph "> Want to add more Custom Articles?</p>
+
+
+                                    </div>
+                                    <div class="col-md-12 col-sm-6 bottom bdiv">
+                                        <center><button class="button addCustombtn" ng-click="addArticle($event)">+ Add</button></center>
+
+                                    </div>
+
+
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-4 col-sm-12" ng-repeat="article in articles | filter: (_sub_category==='Political' ? undefined : { sub_category: _sub_category }) | orderBy : selectedOrder : true">
+                                <div class="col-xs-12 col-md-12 col-sm-12 ok pan">
+                                    <div id="articleImageDiv" class="col-md-12 col-sm-6" style="padding: 0px 0px 0px 0px;">
+
+                                        <img class="img-responsive" src={{article.photo_url}}>
+
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-6 bottom">
+
+                                        <p style="font-size: 10px;float: left;padding-top:  5px">{{article.modified_date | date: "fullDate"}}</p><br>
+                                        <p class="pArt" style="text-align:left;" ng-bind-html="article.title"></p>
+
+                                        <hr class="h-line" style="margin-top: 1em">
+                                        <p class="copy">Article by:{{article.site_name }} </p>
+
+                                        <a class="btn"><span class="fa fa-pencil" aria-hidden="true" ng-click="publishArticles($event)"></span></a>
+                                        <a class="btn"><span class="fa fa-trash-o" ng-show="custom" aria-hidden="true" ng-click="deleteArticle()"></span></a>
+
+
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
+<script type="text/ng-template" id="addArticle.tmpl.html">
+
+
+
+
+    <md-dialog aria-label="Connect Website" class="modal-dialog" style="width: 800px;">
+
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <md-progress-linear md-mode="indeterminate" ng-hide="!searchingarticle"></md-progress-linear>
+            <div class="modal-header" style="border-bottom: 0">
+                <button type="button" class="close" ng-click="cancel()">&times;</button>
+
+            </div>
+            <div class="modal-body" style="height: 35em">
+
+                <div class="col-md-12">
+                    <div class="col-lg-12 col-md-12 "><center><h5 class="modal-title">Add New Article</h5></center></div>
+
+                    <div class="col-lg-12 col-md-12" style="margin-top: 0.5em">
+                        <div class="col-md-2">
+                            <p style="font-size: 10pt;text-align: center;font-family: lato-regular;padding-bottom: 5px;margin-right: 1em;margin-top: .4em">Article link</p>
+                        </div>
+                        <div class="col-md-8" style="background-color: white">
+                            <input ng-model="url" ng-keyup="$event.keyCode == 13 && getMeta()" required style="width: 100%;background-color: #f5f5f5;border-radius: 5px 0px 0px 5px;border: 0;height: 30px;margin-bottom: 0"></input>
+
+                        </div>
+
+                        <div class="col-md-2" style="background-color: white">
+                            <button type="button" ng-disabled="searchingarticle" ng-click="getMeta()" style="float:left; border: none; border-radius: 0px 8px 8px 0px; background-color: #34c9ff;color: #fff;  width: 8em;height: 31px;font-size: 8pt;margin-left: 0%">Get</button>
+
+                        </div>
+
+                        <div class="col-md-12" style="margin-top: 1em" ng-show="haveArticle">
+                            <div class="col-md-6">
+                                <img src={{article.image}} style="margin-top: 4em;margin-left: 5em; width:80%; height: 80%">
+                            </div>
+                            <div class="col-md-6" style="padding:1em 1em 0em 1em ">
+                                <p style="font-size: 8pt;text-align: left;font-family: lato-regular;padding-bottom: 5px">Article Title</p>
+                                <label style="width: 100%;background-color: #f5f5f5;border-radius: 5px;border: 0;height: 30px">{{article.title}}</label>
+                                <br><br>
+                                <p style="font-size: 8pt;text-align: left;font-family: lato-regular;padding-bottom: 5px">Summary</p>
+                                <label style="width: 100%;background-color: #f5f5f5;border-radius: 5px;border: 0;height: 10em">{{article.description}}</label>
+
+                                <div style="padding-top: 2em">
+                                    <button type="button" class=" btn-md btn-link" ng-click="cancel()" style="font-family: lato-regular;color:#34c9ff;margin-left: 12%;font-size: 8pt ">CANCEL</button>
+                                    <button type="button" ng-disabled="!haveArticle" ng-click="addArticle()" style=" border: none; border-radius: 8px; background-color: #34c9ff;color: #fff;  width: 13em;height: 31px;font-size: 8pt;margin-left: 12%">DONE</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+    </md-dialog>
+</script>
+
+
+
+
+<script type="text/ng-template" id="publishArticle.tmpl.html">
+
+
+
+
+    <md-dialog aria-label="Publish Article" class="modal-dialog" style="width: 800px;">
+
+        <!-- Modal content-->
+
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: 0">
+                <button type="button" class="close" ng-click="cancel()">&times;</button>
+
+            </div>
+            <div class="modal-body" style="margin-bottom: 2em">
+                <div class="" style="margin-left: 25%;">
+                    <p style="font-size: 8pt;font-family: lato-regular; text-align: left">Select Article Type</p>
+                    <div class="row" style="padding: 1em">
+                        <md-radio-group ng-model="category">
+
+                            <div id="iconn">
+
+                                <i class="fa fa-info-circle" aria-hidden="true" style="margin-right: 35%"><span style="min-height: fit-content;text-align:left;min-height: fit-content;word-break: break-all">
+                                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,
+                                         </span></i>
+
+                            </div>
+                                <md-radio-button value="premium" class="md-primary" style="width: 30%">
+                                    Premium
+
+
+                                </md-radio-button>
+
+                            <div id="iconn">
+
+                                <i class="fa fa-info-circle" aria-hidden="true" style=""><span style="min-height: fit-content;text-align:left;min-height: fit-content;word-break: break-all">
+                                    At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident,
+                                         </span></i>
+
+                            </div>
+                            <md-radio-button value="non-premium" style="width: 30%"> Non-Premium </md-radio-button>
+
+                        </md-radio-group>
+                    </div>
+
+                    <p style="font-size: 8pt;font-family: lato-regular;margin-bottom: 1em; text-align: left">Select Category</p>
+
+                </div>
+                <center>
+                    <select ng-model="selected_sub" ng-options="o.value as o.label for o in sub_category" style="font-style:italic;border-color: transparent;background-color: #f5f5f5;border-radius: 5px;width: 50%;height: 3em;font-size: 8pt;margin-bottom: 0em"></select>
+
+                    <div>
+                        <button type="button" class=" btn-md btn-link" style="font-family: lato-regular;color:#34c9ff;font-size: 8pt " ng-click="cancel()">CANCEL</button>
+                        <button type="button" style=" border: none; border-radius: 8px; background-color: #34c9ff;color: #fff;  width: 13em;height: 31px;font-size: 8pt;margin-top: 1em;margin-left: 6%" ng-click="publish()">PUBLISH</button>
+                    </div>
+                </center>
+
+            </div>
+
+    </md-dialog>
+
+</script>
+
+
+
+<script type="text/ng-template" id="successmessage.tmpl.html">
+
+
+
+
+    <md-dialog aria-label="Success Message" class="modal-dialog" style="width: 800px;">
+
+        <!-- Modal content-->
+        <!-- Modal content-->
+        <div class="modal-content" style="height: 15em;border-radius: 0;">
+            <div class="modal-header" style="border-bottom: 0">
+                <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+
+            </div>
+            <div class="modal-body" style="padding: 3em 0em;">
+                <center><i class="fa fa-check-circle-o" aria-hidden="true" style="color:#79c775;font-size: 18pt "></i></center>
+                <p style="color: #79c775;font-size: 14pt"> DONE </p>
+                <center>
+                    <p style="font-size: 10pt;font-family: lato-regular;word-spacing: 2px;margin-top: 1em;">{{Response}}</p>
+                </center>
+
+            </div>
+
+        </div>
+    </md-dialog>
+
+</script>
+
+
+
+<script type="text/ng-template" id="confirmmessage.tmpl.html">
+
+
+
+
+    <md-dialog aria-label="Confirm Message" class="modal-dialog" style="width: 800px;">
+
+        <!-- Modal content-->
+        <!-- Modal content-->
+        <div class="modal-content" style="height: 15em;border-radius: 0;">
+            <div class="modal-header" style="border-bottom: 0">
+                <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+
+            </div>
+            <div class="modal-body" style="padding: 2em 0em;">
+                <center><i class="fa fa-warning" aria-hidden="true" style="color:#fc0;font-size: 18pt "></i></center>
+                <p style="color: #fc0;font-size: 14pt"> Want to Delete? </p>
+                <center>
+                    <p style="font-size: 10pt;font-family: lato-regular;word-spacing: 2px;margin-top: 1em;">{{Response}}</p>
+                </center>
+                <div>
+                    <button type="button" class=" btn-md btn-link" style="font-family: lato-regular;color:#34c9ff;margin-left: 34%;font-size: 8pt " ng-click="cancel()">CANCEL</button>
+                    <button type="button" style=" border: none; border-radius: 8px; background-color: #34c9ff;color: #fff;  width: 13em;height: 31px;font-size: 8pt;margin-top: 1em;margin-left: 6%" ng-click="delete()">Delete</button>
+                </div>
+            </div>
+
+        </div>
+    </md-dialog>
+
+</script>

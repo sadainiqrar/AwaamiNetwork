@@ -1,0 +1,57 @@
+﻿<!--<div class="col-md-6 col-md-offset-3">
+    <h2>Login</h2>
+    <form name="form" ng-submit="vm.login()" role="form">
+        <div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" class="form-control" ng-model="vm.username" required />
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" ng-model="vm.password" required />
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary">Login</button>
+            <img ng-if="vm.dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+            <a ui-sref="home.register" class="btn btn-link">Register</a>
+        </div>
+
+    </form>
+</div>
+<div >
+    <button type="button" id="login" ng-click="login()">login</button>
+    <button type="button" id="api" ng-click="api()">api user data call</button>
+    <button type="button" id="remove_auth" ng-click="removeAuth()">remove auth</button>
+    <pre>isReady: <span id="is_ready" ng-bind="facebookIsReady"></span></pre>
+    <pre>status: <span id="login_status" ng-bind="loginStatus"></span></pre>
+    <pre>username: <span id="api_first_name" ng-bind="user.name"></span></pre>
+</div>
+    -->
+
+<div class="container-fluid loginmaindiv" style="background-image: url(images/Background.png);">
+    <div class="col-lg-4 col-md-4 col-sm-2 col-xs-12"></div>
+
+    <div class="col-lg-4 col-md-4 col-sm-8 col-xs-12">
+        <section class="loginsection">
+
+
+            <div style="text-align: center;padding:6.3em 0em">
+
+                <p class="loginpara">LOGIN TO</p>
+                <p class="loginsubpara">ORLOZ NETWORK</p>
+                <div class="row text-center" style="margin:0em 1em;">
+                    <div id="fbicon" ng-click="login()">
+                    </div>
+                </div>
+                <p id="termspara">By logging in, you agree with our Terms of Service, Privacy <br>Policy and Community Guidelines.</p>
+
+            </div>
+
+        </section>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-2 col-xs-12"></div>
+
+
+</div>

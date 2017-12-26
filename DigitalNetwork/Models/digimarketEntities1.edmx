@@ -1,0 +1,1598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="digimarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="email" />
+          </Key>
+          <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="adminname" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="photo_url" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="AdminSite">
+          <Key>
+            <PropertyRef Name="email" />
+            <PropertyRef Name="site_url" />
+          </Key>
+          <Property Name="email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="site_url" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Articles">
+          <Key>
+            <PropertyRef Name="serial_no" />
+          </Key>
+          <Property Name="serial_no" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="a_id" Type="int" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="status" Type="bit" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="summary" Type="varchar(max)" Nullable="false" />
+          <Property Name="photo_url" Type="varchar(max)" />
+          <Property Name="modified_date" Type="date" Nullable="false" />
+          <Property Name="site_url" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sub_category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="custom" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DeletedArticles">
+          <Key>
+            <PropertyRef Name="serial_no" />
+          </Key>
+          <Property Name="serial_no" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="a_id" Type="int" Nullable="false" />
+          <Property Name="url" Type="varchar(max)" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="summary" Type="varchar(max)" Nullable="false" />
+          <Property Name="modified_date" Type="date" Nullable="false" />
+          <Property Name="site_url" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="sub_category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="custom" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="invoice_id" />
+          </Key>
+          <Property Name="invoice_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="uid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="traffic" Type="int" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="payment_date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rate">
+          <Key>
+            <PropertyRef Name="category" />
+          </Key>
+          <Property Name="category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="rate" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rates_History">
+          <Key>
+            <PropertyRef Name="rh_id" />
+          </Key>
+          <Property Name="rh_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="category" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="rate" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="start_date" Type="date" Nullable="false" />
+          <Property Name="end_date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sites">
+          <Key>
+            <PropertyRef Name="site_url" />
+          </Key>
+          <Property Name="site_url" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="site_name" Type="varchar" MaxLength="50" />
+          <Property Name="ga_id" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sites_Custom">
+          <Key>
+            <PropertyRef Name="site_url" />
+          </Key>
+          <Property Name="site_url" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="custom" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="photourl" Type="varchar(max)" />
+          <Property Name="fullname" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User_Articles">
+          <Key>
+            <PropertyRef Name="uid" />
+            <PropertyRef Name="serial_no" />
+          </Key>
+          <Property Name="uid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="serial_no" Type="int" Nullable="false" />
+          <Property Name="copied" Type="bit" Nullable="false" />
+          <Property Name="shared" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User_Date">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User_Marketing_Sources">
+          <Key>
+            <PropertyRef Name="ums_id" />
+          </Key>
+          <Property Name="ums_id" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="uid" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__AdminSite__email__34C8D9D1">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
+          <End Role="AdminSite" Type="Self.AdminSite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Admin">
+              <PropertyRef Name="email" />
+            </Principal>
+            <Dependent Role="AdminSite">
+              <PropertyRef Name="email" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AdminSite__site___35BCFE0A">
+          <End Role="Sites" Type="Self.Sites" Multiplicity="1" />
+          <End Role="AdminSite" Type="Self.AdminSite" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="site_url" />
+            </Principal>
+            <Dependent Role="AdminSite">
+              <PropertyRef Name="site_url" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Arti__seria__1A9EF37A">
+          <End Role="Articles" Type="Self.Articles" Multiplicity="1" />
+          <End Role="User_Articles" Type="Self.User_Articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="serial_no" />
+            </Principal>
+            <Dependent Role="User_Articles">
+              <PropertyRef Name="serial_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Articl__uid__1B9317B3">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Articles" Type="Self.User_Articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="User_Articles">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Articles_Sites">
+          <End Role="Sites" Type="Self.Sites" Multiplicity="1" />
+          <End Role="Articles" Type="Self.Articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="site_url" />
+            </Principal>
+            <Dependent Role="Articles">
+              <PropertyRef Name="site_url" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeletedArticles_Sites">
+          <End Role="Sites" Type="Self.Sites" Multiplicity="1" />
+          <End Role="DeletedArticles" Type="Self.DeletedArticles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="site_url" />
+            </Principal>
+            <Dependent Role="DeletedArticles">
+              <PropertyRef Name="site_url" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rates_History_Rate">
+          <End Role="Rate" Type="Self.Rate" Multiplicity="1" />
+          <End Role="Rates_History" Type="Self.Rates_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rate">
+              <PropertyRef Name="category" />
+            </Principal>
+            <Dependent Role="Rates_History">
+              <PropertyRef Name="category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sites_Custom_Sites">
+          <End Role="Sites" Type="Self.Sites" Multiplicity="1" />
+          <End Role="Sites_Custom" Type="Self.Sites_Custom" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="site_url" />
+            </Principal>
+            <Dependent Role="Sites_Custom">
+              <PropertyRef Name="site_url" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Date_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Date" Type="Self.User_Date" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="User_Date">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Marketing_Sources_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Marketing_Sources" Type="Self.User_Marketing_Sources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="User_Marketing_Sources">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="add_article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="aid" Type="int" Mode="In" />
+          <Parameter Name="article_url" Type="varchar(max)" Mode="In" />
+          <Parameter Name="status" Type="bit" Mode="In" />
+          <Parameter Name="title" Type="varchar" Mode="In" />
+          <Parameter Name="summary" Type="varchar(max)" Mode="In" />
+          <Parameter Name="photo_url" Type="varchar(max)" Mode="In" />
+          <Parameter Name="modified_date" Type="date" Mode="In" />
+          <Parameter Name="site_url" Type="varchar" Mode="In" />
+          <Parameter Name="category" Type="varchar" Mode="In" />
+          <Parameter Name="sub_category" Type="varchar" Mode="In" />
+          <Parameter Name="custom" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="add_payment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+          <Parameter Name="traffic" Type="int" Mode="In" />
+          <Parameter Name="amount" Type="decimal" Mode="In" />
+          <Parameter Name="pay_date" Type="date" Mode="In" />
+        </Function>
+        <Function Name="add_shared_article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+          <Parameter Name="serial_no" Type="int" Mode="In" />
+          <Parameter Name="copied" Type="bit" Mode="In" />
+          <Parameter Name="shared" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="add_site" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="site" Type="varchar(max)" Mode="In" />
+          <Parameter Name="site_name" Type="varchar" Mode="In" />
+          <Parameter Name="gid" Type="varchar(max)" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="custom" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="add_ums" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ums_id" Type="varchar" Mode="In" />
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="admin_sign_in" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="admin_sign_up" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="photo" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="admin_update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="photo" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="count_ums" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="delete_article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="serial" Type="int" Mode="In" />
+        </Function>
+        <Function Name="delete_site" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="site_url" Type="varchar" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="delete_ums" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ums_id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_admin_articles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="site" Type="varchar" Mode="In" />
+          <Parameter Name="status" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="get_admin_gid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="site" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_admin_single_article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="aid" Type="int" Mode="In" />
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="site" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_all_articles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="site" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_all_site" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="get_articles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+          <Parameter Name="cat" Type="varchar" Mode="In" />
+          <Parameter Name="subcat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_deleted_articles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+          <Parameter Name="site" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_joining_date" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_payment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_rate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="category" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_shared_article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+          <Parameter Name="cat" Type="varchar" Mode="In" />
+          <Parameter Name="subcat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_shared_article_serial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="serial" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_site" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_site_name" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="url" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_total_earned" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_ums" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_user_single_article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="serial" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_user_status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="get_user_traffic" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="getAllUser" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="getArticleBySerial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="serial" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Procedure" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="update_article_data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="serial_no" Type="int" Mode="In" />
+          <Parameter Name="article_url" Type="varchar(max)" Mode="In" />
+          <Parameter Name="title" Type="varchar" Mode="In" />
+          <Parameter Name="summary" Type="varchar(max)" Mode="In" />
+          <Parameter Name="photo_url" Type="varchar(max)" Mode="In" />
+          <Parameter Name="modified_date" Type="date" Mode="In" />
+        </Function>
+        <Function Name="update_articles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="status" Type="bit" Mode="In" />
+          <Parameter Name="serial" Type="int" Mode="In" />
+          <Parameter Name="cat" Type="varchar" Mode="In" />
+          <Parameter Name="subcat" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="update_rates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="category" Type="varchar" Mode="In" />
+          <Parameter Name="rate" Type="decimal" Mode="In" />
+          <Parameter Name="date" Type="date" Mode="In" />
+        </Function>
+        <Function Name="update_shared_articles" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+          <Parameter Name="serial" Type="int" Mode="In" />
+          <Parameter Name="shared" Type="bit" Mode="In" />
+          <Parameter Name="copied" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="update_site" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="site_name" Type="varchar" Mode="In" />
+          <Parameter Name="site" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="user_sign_in" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="user_sign_up" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="photo" Type="varchar(max)" Mode="In" />
+          <Parameter Name="fullname" Type="varchar(max)" Mode="In" />
+          <Parameter Name="joindate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="user_update" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
+          <Parameter Name="status" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="digimarketModelStoreContainer">
+          <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdminSite" EntityType="Self.AdminSite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Articles" EntityType="Self.Articles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeletedArticles" EntityType="Self.DeletedArticles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rate" EntityType="Self.Rate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rates_History" EntityType="Self.Rates_History" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sites" EntityType="Self.Sites" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sites_Custom" EntityType="Self.Sites_Custom" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Articles" EntityType="Self.User_Articles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Date" EntityType="Self.User_Date" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_Marketing_Sources" EntityType="Self.User_Marketing_Sources" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AdminSite__email__34C8D9D1" Association="Self.FK__AdminSite__email__34C8D9D1">
+            <End Role="Admin" EntitySet="Admin" />
+            <End Role="AdminSite" EntitySet="AdminSite" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AdminSite__site___35BCFE0A" Association="Self.FK__AdminSite__site___35BCFE0A">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="AdminSite" EntitySet="AdminSite" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Arti__seria__1A9EF37A" Association="Self.FK__User_Arti__seria__1A9EF37A">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="User_Articles" EntitySet="User_Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Articl__uid__1B9317B3" Association="Self.FK__User_Articl__uid__1B9317B3">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Articles" EntitySet="User_Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Articles_Sites" Association="Self.FK_Articles_Sites">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Articles" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeletedArticles_Sites" Association="Self.FK_DeletedArticles_Sites">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="DeletedArticles" EntitySet="DeletedArticles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_User" Association="Self.FK_Payment_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rates_History_Rate" Association="Self.FK_Rates_History_Rate">
+            <End Role="Rate" EntitySet="Rate" />
+            <End Role="Rates_History" EntitySet="Rates_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sites_Custom_Sites" Association="Self.FK_Sites_Custom_Sites">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Sites_Custom" EntitySet="Sites_Custom" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Date_User" Association="Self.FK_User_Date_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Date" EntitySet="User_Date" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Marketing_Sources_User" Association="Self.FK_User_Marketing_Sources_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="User_Marketing_Sources" EntitySet="User_Marketing_Sources" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="digimarketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Admin">
+          <Key>
+            <PropertyRef Name="email" />
+          </Key>
+          <Property Name="email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="adminname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="photo_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Sites" Relationship="Self.AdminSite" FromRole="Admin" ToRole="Sites" />
+        </EntityType>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="serial_no" />
+          </Key>
+          <Property Name="serial_no" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="a_id" Type="Int32" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="Boolean" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="photo_url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="site_url" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sub_category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="custom" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="User_Articles" Relationship="Self.FK__User_Arti__seria__02084FDA" FromRole="Articles" ToRole="User_Articles" />
+          <NavigationProperty Name="Site" Relationship="Self.FK_Articles_Sites" FromRole="Articles" ToRole="Sites" />
+        </EntityType>
+        <EntityType Name="DeletedArticle">
+          <Key>
+            <PropertyRef Name="serial_no" />
+          </Key>
+          <Property Name="serial_no" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="a_id" Type="Int32" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="summary" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="modified_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="site_url" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="sub_category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="custom" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Site" Relationship="Self.FK_DeletedArticles_Sites" FromRole="DeletedArticles" ToRole="Sites" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="invoice_id" />
+          </Key>
+          <Property Name="invoice_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="uid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="traffic" Type="Int32" Nullable="false" />
+          <Property Name="amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="payment_date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Payment_User" FromRole="Payment" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Rate">
+          <Key>
+            <PropertyRef Name="category" />
+          </Key>
+          <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rate1" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Rates_History" Relationship="Self.FK_Rates_History_Rate" FromRole="Rate" ToRole="Rates_History" />
+        </EntityType>
+        <EntityType Name="Rates_History">
+          <Key>
+            <PropertyRef Name="rh_id" />
+          </Key>
+          <Property Name="rh_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="rate" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Rate1" Relationship="Self.FK_Rates_History_Rate" FromRole="Rates_History" ToRole="Rate" />
+        </EntityType>
+        <EntityType Name="Site">
+          <Key>
+            <PropertyRef Name="site_url" />
+          </Key>
+          <Property Name="site_url" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="site_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ga_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Articles" Relationship="Self.FK_Articles_Sites" FromRole="Sites" ToRole="Articles" />
+          <NavigationProperty Name="DeletedArticles" Relationship="Self.FK_DeletedArticles_Sites" FromRole="Sites" ToRole="DeletedArticles" />
+          <NavigationProperty Name="Sites_Custom" Relationship="Self.FK_Sites_Custom_Sites" FromRole="Sites" ToRole="Sites_Custom" />
+          <NavigationProperty Name="Admins" Relationship="Self.AdminSite" FromRole="Sites" ToRole="Admin" />
+        </EntityType>
+        <EntityType Name="Sites_Custom">
+          <Key>
+            <PropertyRef Name="site_url" />
+          </Key>
+          <Property Name="site_url" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="custom" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Site" Relationship="Self.FK_Sites_Custom_Sites" FromRole="Sites_Custom" ToRole="Sites" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="photourl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="fullname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_User" FromRole="User" ToRole="Payment" />
+          <NavigationProperty Name="User_Articles" Relationship="Self.FK__User_Articl__uid__01142BA1" FromRole="User" ToRole="User_Articles" />
+          <NavigationProperty Name="User_Date" Relationship="Self.FK_User_Date_User" FromRole="User" ToRole="User_Date" />
+          <NavigationProperty Name="User_Marketing_Sources" Relationship="Self.FK_User_Marketing_Sources_User" FromRole="User" ToRole="User_Marketing_Sources" />
+        </EntityType>
+        <EntityType Name="User_Articles">
+          <Key>
+            <PropertyRef Name="uid" />
+            <PropertyRef Name="serial_no" />
+          </Key>
+          <Property Name="uid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="serial_no" Type="Int32" Nullable="false" />
+          <Property Name="copied" Type="Boolean" Nullable="false" />
+          <Property Name="shared" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="Self.FK__User_Arti__seria__02084FDA" FromRole="User_Articles" ToRole="Articles" />
+          <NavigationProperty Name="User" Relationship="Self.FK__User_Articl__uid__01142BA1" FromRole="User_Articles" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User_Date">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Date_User" FromRole="User_Date" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User_Marketing_Sources">
+          <Key>
+            <PropertyRef Name="ums_id" />
+          </Key>
+          <Property Name="ums_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="uid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Marketing_Sources_User" FromRole="User_Marketing_Sources" ToRole="User" />
+        </EntityType>
+        <Association Name="FK__User_Arti__seria__02084FDA">
+          <End Role="Articles" Type="Self.Article" Multiplicity="1" />
+          <End Role="User_Articles" Type="Self.User_Articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Articles">
+              <PropertyRef Name="serial_no" />
+            </Principal>
+            <Dependent Role="User_Articles">
+              <PropertyRef Name="serial_no" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Articles_Sites">
+          <End Role="Sites" Type="Self.Site" Multiplicity="1" />
+          <End Role="Articles" Type="Self.Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="site_url" />
+            </Principal>
+            <Dependent Role="Articles">
+              <PropertyRef Name="site_url" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeletedArticles_Sites">
+          <End Role="Sites" Type="Self.Site" Multiplicity="1" />
+          <End Role="DeletedArticles" Type="Self.DeletedArticle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="site_url" />
+            </Principal>
+            <Dependent Role="DeletedArticles">
+              <PropertyRef Name="site_url" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rates_History_Rate">
+          <End Role="Rate" Type="Self.Rate" Multiplicity="1" />
+          <End Role="Rates_History" Type="Self.Rates_History" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Rate">
+              <PropertyRef Name="category" />
+            </Principal>
+            <Dependent Role="Rates_History">
+              <PropertyRef Name="category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sites_Custom_Sites">
+          <End Role="Sites" Type="Self.Site" Multiplicity="1" />
+          <End Role="Sites_Custom" Type="Self.Sites_Custom" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Sites">
+              <PropertyRef Name="site_url" />
+            </Principal>
+            <Dependent Role="Sites_Custom">
+              <PropertyRef Name="site_url" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User_Articl__uid__01142BA1">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Articles" Type="Self.User_Articles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="User_Articles">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Date_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Date" Type="Self.User_Date" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="User_Date">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Marketing_Sources_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="User_Marketing_Sources" Type="Self.User_Marketing_Sources" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="User_Marketing_Sources">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AdminSite">
+          <End Role="Admin" Type="Self.Admin" Multiplicity="*" />
+          <End Role="Sites" Type="Self.Site" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="digimarketEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Admins" EntityType="Self.Admin" />
+          <EntitySet Name="Articles" EntityType="Self.Article" />
+          <EntitySet Name="DeletedArticles" EntityType="Self.DeletedArticle" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="Rates" EntityType="Self.Rate" />
+          <EntitySet Name="Rates_History" EntityType="Self.Rates_History" />
+          <EntitySet Name="Sites" EntityType="Self.Site" />
+          <EntitySet Name="Sites_Custom" EntityType="Self.Sites_Custom" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="User_Articles" EntityType="Self.User_Articles" />
+          <EntitySet Name="User_Date" EntityType="Self.User_Date" />
+          <EntitySet Name="User_Marketing_Sources" EntityType="Self.User_Marketing_Sources" />
+          <AssociationSet Name="FK__User_Arti__seria__02084FDA" Association="Self.FK__User_Arti__seria__02084FDA">
+            <End Role="Articles" EntitySet="Articles" />
+            <End Role="User_Articles" EntitySet="User_Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Articles_Sites" Association="Self.FK_Articles_Sites">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Articles" EntitySet="Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeletedArticles_Sites" Association="Self.FK_DeletedArticles_Sites">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="DeletedArticles" EntitySet="DeletedArticles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_User" Association="Self.FK_Payment_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rates_History_Rate" Association="Self.FK_Rates_History_Rate">
+            <End Role="Rate" EntitySet="Rates" />
+            <End Role="Rates_History" EntitySet="Rates_History" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sites_Custom_Sites" Association="Self.FK_Sites_Custom_Sites">
+            <End Role="Sites" EntitySet="Sites" />
+            <End Role="Sites_Custom" EntitySet="Sites_Custom" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User_Articl__uid__01142BA1" Association="Self.FK__User_Articl__uid__01142BA1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User_Articles" EntitySet="User_Articles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Date_User" Association="Self.FK_User_Date_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User_Date" EntitySet="User_Date" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Marketing_Sources_User" Association="Self.FK_User_Marketing_Sources_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="User_Marketing_Sources" EntitySet="User_Marketing_Sources" />
+          </AssociationSet>
+          <AssociationSet Name="AdminSite" Association="Self.AdminSite">
+            <End Role="Admin" EntitySet="Admins" />
+            <End Role="Sites" EntitySet="Sites" />
+          </AssociationSet>
+          <FunctionImport Name="add_article">
+            <Parameter Name="aid" Mode="In" Type="Int32" />
+            <Parameter Name="article_url" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="Boolean" />
+            <Parameter Name="title" Mode="In" Type="String" />
+            <Parameter Name="summary" Mode="In" Type="String" />
+            <Parameter Name="photo_url" Mode="In" Type="String" />
+            <Parameter Name="modified_date" Mode="In" Type="DateTime" />
+            <Parameter Name="site_url" Mode="In" Type="String" />
+            <Parameter Name="category" Mode="In" Type="String" />
+            <Parameter Name="sub_category" Mode="In" Type="String" />
+            <Parameter Name="custom" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="add_payment">
+            <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="traffic" Mode="In" Type="Int32" />
+            <Parameter Name="amount" Mode="In" Type="Decimal" />
+            <Parameter Name="pay_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="add_shared_article">
+            <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="serial_no" Mode="In" Type="Int32" />
+            <Parameter Name="copied" Mode="In" Type="Boolean" />
+            <Parameter Name="shared" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="add_site">
+            <Parameter Name="site" Mode="In" Type="String" />
+            <Parameter Name="site_name" Mode="In" Type="String" />
+            <Parameter Name="gid" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="custom" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="add_ums">
+            <Parameter Name="ums_id" Mode="In" Type="String" />
+            <Parameter Name="uid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="admin_sign_in" ReturnType="Collection(digimarketModel.admin_sign_in_Result)">
+          <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="admin_sign_up">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="photo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="admin_update">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="photo" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="count_ums" ReturnType="Collection(Int32)">
+          <Parameter Name="uid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="delete_article">
+          <Parameter Name="serial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="delete_site">
+            <Parameter Name="site_url" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="delete_ums">
+          <Parameter Name="ums_id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_admin_articles" ReturnType="Collection(digimarketModel.get_admin_articles_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="site" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="get_admin_gid" ReturnType="Collection(digimarketModel.get_admin_gid_Result)">
+          <Parameter Name="site" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_admin_single_article" ReturnType="Collection(digimarketModel.get_admin_single_article_Result)">
+            <Parameter Name="aid" Mode="In" Type="Int32" />
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="site" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_all_articles" ReturnType="Collection(digimarketModel.get_all_articles_Result)">
+          <Parameter Name="site" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_all_site" ReturnType="Collection(digimarketModel.get_all_site_Result)" />
+          <FunctionImport Name="get_articles" ReturnType="Collection(digimarketModel.get_articles_Result)">
+            <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="cat" Mode="In" Type="String" />
+            <Parameter Name="subcat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_joining_date" ReturnType="Collection(digimarketModel.get_joining_date_Result)">
+          <Parameter Name="uid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_payment" ReturnType="Collection(digimarketModel.get_payment_Result)">
+          <Parameter Name="uid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_rate" ReturnType="Collection(digimarketModel.get_rate_Result)">
+          <Parameter Name="category" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_shared_article" ReturnType="Collection(digimarketModel.get_shared_article_Result)">
+            <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="cat" Mode="In" Type="String" />
+            <Parameter Name="subcat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_shared_article_serial" ReturnType="Collection(Int32)">
+          <Parameter Name="serial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_site" ReturnType="Collection(digimarketModel.get_site_Result)">
+          <Parameter Name="email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_site_name" ReturnType="Collection(String)">
+          <Parameter Name="url" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_total_earned" ReturnType="Collection(digimarketModel.get_total_earned_Result)">
+          <Parameter Name="uid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_ums" ReturnType="Collection(String)">
+          <Parameter Name="uid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_user_single_article" ReturnType="Collection(digimarketModel.get_user_single_article_Result)">
+          <Parameter Name="serial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_user_status" ReturnType="Collection(String)">
+          <Parameter Name="uid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_user_traffic" ReturnType="Collection(digimarketModel.get_user_traffic_Result)">
+          <Parameter Name="uid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="getAllUser" ReturnType="Collection(digimarketModel.getAllUser_Result)" />
+          <FunctionImport Name="getArticleBySerial" ReturnType="Collection(digimarketModel.getArticleBySerial_Result)">
+          <Parameter Name="serial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Procedure" ReturnType="Collection(digimarketModel.Procedure_Result)" />
+          <FunctionImport Name="update_article_data">
+            <Parameter Name="serial_no" Mode="In" Type="Int32" />
+            <Parameter Name="article_url" Mode="In" Type="String" />
+            <Parameter Name="title" Mode="In" Type="String" />
+            <Parameter Name="summary" Mode="In" Type="String" />
+            <Parameter Name="photo_url" Mode="In" Type="String" />
+            <Parameter Name="modified_date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="update_articles">
+            <Parameter Name="status" Mode="In" Type="Boolean" />
+            <Parameter Name="serial" Mode="In" Type="Int32" />
+            <Parameter Name="cat" Mode="In" Type="String" />
+            <Parameter Name="subcat" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="update_rates">
+            <Parameter Name="category" Mode="In" Type="String" />
+            <Parameter Name="rate" Mode="In" Type="Decimal" />
+            <Parameter Name="date" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="update_shared_articles">
+            <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="serial" Mode="In" Type="Int32" />
+            <Parameter Name="shared" Mode="In" Type="Boolean" />
+            <Parameter Name="copied" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="update_site">
+            <Parameter Name="site_name" Mode="In" Type="String" />
+            <Parameter Name="site" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="user_sign_in" ReturnType="Collection(digimarketModel.user_sign_in_Result)">
+          <Parameter Name="uid" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="user_sign_up">
+            <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="photo" Mode="In" Type="String" />
+            <Parameter Name="fullname" Mode="In" Type="String" />
+            <Parameter Name="joindate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="user_update">
+            <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="get_deleted_articles" ReturnType="Collection(digimarketModel.get_deleted_articles_Result)">
+            <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="site" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="admin_sign_in_Result">
+          <Property Type="String" Name="email" Nullable="false" MaxLength="30" />
+          <Property Type="String" Name="adminname" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="photo_url" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_admin_articles_Result">
+          <Property Type="Int32" Name="serial_no" Nullable="false" />
+          <Property Type="Int32" Name="a_id" Nullable="false" />
+          <Property Type="String" Name="url" Nullable="false" />
+          <Property Type="Boolean" Name="status" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="summary" Nullable="false" />
+          <Property Type="String" Name="photo_url" Nullable="true" />
+          <Property Type="DateTime" Name="modified_date" Nullable="false" />
+          <Property Type="String" Name="site_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="category" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="sub_category" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="custom" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_admin_gid_Result">
+          <Property Type="String" Name="Email" Nullable="true" MaxLength="30" />
+          <Property Type="String" Name="ga_id" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="get_admin_single_article_Result">
+          <Property Type="Int32" Name="serial_no" Nullable="false" />
+          <Property Type="Int32" Name="a_id" Nullable="false" />
+          <Property Type="String" Name="url" Nullable="false" />
+          <Property Type="Boolean" Name="status" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="summary" Nullable="false" />
+          <Property Type="String" Name="photo_url" Nullable="true" />
+          <Property Type="DateTime" Name="modified_date" Nullable="false" />
+          <Property Type="String" Name="site_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="category" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="sub_category" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="custom" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_all_articles_Result">
+          <Property Type="Int32" Name="serial_no" Nullable="false" />
+          <Property Type="Int32" Name="a_id" Nullable="false" />
+          <Property Type="String" Name="url" Nullable="false" />
+          <Property Type="Boolean" Name="status" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="summary" Nullable="false" />
+          <Property Type="String" Name="photo_url" Nullable="true" />
+          <Property Type="DateTime" Name="modified_date" Nullable="false" />
+          <Property Type="String" Name="site_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="category" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="sub_category" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="custom" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_all_site_Result">
+          <Property Type="String" Name="site_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="site_name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ga_id" Nullable="false" />
+          <Property Type="Boolean" Name="custom" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_articles_Result">
+          <Property Type="Int32" Name="serial_no" Nullable="false" />
+          <Property Type="Int32" Name="a_id" Nullable="false" />
+          <Property Type="String" Name="url" Nullable="false" />
+          <Property Type="Boolean" Name="status" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="summary" Nullable="false" />
+          <Property Type="String" Name="photo_url" Nullable="true" />
+          <Property Type="DateTime" Name="modified_date" Nullable="false" />
+          <Property Type="String" Name="site_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="category" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="sub_category" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="custom" Nullable="false" />
+          <Property Type="Boolean" Name="copied" Nullable="false" />
+          <Property Type="Boolean" Name="shared" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_joining_date_Result">
+          <Property Type="String" Name="uid" Nullable="false" MaxLength="20" />
+          <Property Type="DateTime" Name="date" Nullable="false" />
+          <Property Type="String" Name="status" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="get_payment_Result">
+          <Property Type="Int32" Name="invoice_id" Nullable="false" />
+          <Property Type="String" Name="uid" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="traffic" Nullable="false" />
+          <Property Type="Decimal" Name="amount" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="DateTime" Name="payment_date" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_rate_Result">
+          <Property Type="String" Name="category" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="rate" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="DateTime" Name="date" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_shared_article_Result">
+          <Property Type="Int32" Name="serial_no" Nullable="true" />
+          <Property Type="Int32" Name="a_id" Nullable="true" />
+          <Property Type="String" Name="url" Nullable="true" />
+          <Property Type="Boolean" Name="status" Nullable="true" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="summary" Nullable="true" />
+          <Property Type="String" Name="photo_url" Nullable="true" />
+          <Property Type="DateTime" Name="modified_date" Nullable="true" />
+          <Property Type="String" Name="site_url" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="category" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="sub_category" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="custom" Nullable="true" />
+          <Property Type="Boolean" Name="copied" Nullable="false" />
+          <Property Type="Boolean" Name="shared" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_site_Result">
+          <Property Type="String" Name="site_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="site_name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ga_id" Nullable="false" />
+          <Property Type="Boolean" Name="custom" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_total_earned_Result">
+          <Property Type="Int32" Name="totalTraffic" Nullable="true" />
+          <Property Type="Decimal" Name="totalAmount" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="get_user_single_article_Result">
+          <Property Type="Int32" Name="serial_no" Nullable="false" />
+          <Property Type="Int32" Name="a_id" Nullable="false" />
+          <Property Type="String" Name="url" Nullable="false" />
+          <Property Type="Boolean" Name="status" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="summary" Nullable="false" />
+          <Property Type="String" Name="photo_url" Nullable="true" />
+          <Property Type="DateTime" Name="modified_date" Nullable="false" />
+          <Property Type="String" Name="site_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="category" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="sub_category" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="custom" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_user_traffic_Result">
+          <Property Type="String" Name="ga_id" Nullable="false" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="getAllUser_Result">
+          <Property Type="String" Name="uid" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="photourl" Nullable="true" />
+          <Property Type="String" Name="fullname" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="getArticleBySerial_Result">
+          <Property Type="Int32" Name="serial_no" Nullable="false" />
+          <Property Type="Int32" Name="a_id" Nullable="false" />
+          <Property Type="String" Name="url" Nullable="false" />
+          <Property Type="Boolean" Name="status" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="summary" Nullable="false" />
+          <Property Type="String" Name="photo_url" Nullable="true" />
+          <Property Type="DateTime" Name="modified_date" Nullable="false" />
+          <Property Type="String" Name="site_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="category" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="sub_category" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="custom" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="Procedure_Result">
+          <Property Type="String" Name="ga_id" Nullable="false" />
+          <Property Type="String" Name="email" Nullable="false" MaxLength="30" />
+        </ComplexType>
+        <ComplexType Name="user_sign_in_Result">
+          <Property Type="String" Name="uid" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="photourl" Nullable="true" />
+          <Property Type="String" Name="fullname" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_deleted_articles_Result">
+          <Property Type="Int32" Name="serial_no" Nullable="false" />
+          <Property Type="Int32" Name="a_id" Nullable="false" />
+          <Property Type="String" Name="url" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="summary" Nullable="false" />
+          <Property Type="DateTime" Name="modified_date" Nullable="false" />
+          <Property Type="String" Name="site_url" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="category" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="sub_category" Nullable="false" MaxLength="50" />
+          <Property Type="Boolean" Name="custom" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="digimarketModelStoreContainer" CdmEntityContainer="digimarketEntities1">
+          <EntitySetMapping Name="Admins">
+            <EntityTypeMapping TypeName="digimarketModel.Admin">
+              <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="adminname" ColumnName="adminname" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Articles">
+            <EntityTypeMapping TypeName="digimarketModel.Article">
+              <MappingFragment StoreEntitySet="Articles">
+                <ScalarProperty Name="serial_no" ColumnName="serial_no" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="sub_category" ColumnName="sub_category" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeletedArticles">
+            <EntityTypeMapping TypeName="digimarketModel.DeletedArticle">
+              <MappingFragment StoreEntitySet="DeletedArticles">
+                <ScalarProperty Name="serial_no" ColumnName="serial_no" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="sub_category" ColumnName="sub_category" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="digimarketModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="traffic" ColumnName="traffic" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rates">
+            <EntityTypeMapping TypeName="digimarketModel.Rate">
+              <MappingFragment StoreEntitySet="Rate">
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="rate1" ColumnName="rate" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rates_History">
+            <EntityTypeMapping TypeName="digimarketModel.Rates_History">
+              <MappingFragment StoreEntitySet="Rates_History">
+                <ScalarProperty Name="rh_id" ColumnName="rh_id" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sites">
+            <EntityTypeMapping TypeName="digimarketModel.Site">
+              <MappingFragment StoreEntitySet="Sites">
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="site_name" ColumnName="site_name" />
+                <ScalarProperty Name="ga_id" ColumnName="ga_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sites_Custom">
+            <EntityTypeMapping TypeName="digimarketModel.Sites_Custom">
+              <MappingFragment StoreEntitySet="Sites_Custom">
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="digimarketModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="photourl" ColumnName="photourl" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Articles">
+            <EntityTypeMapping TypeName="digimarketModel.User_Articles">
+              <MappingFragment StoreEntitySet="User_Articles">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="serial_no" ColumnName="serial_no" />
+                <ScalarProperty Name="copied" ColumnName="copied" />
+                <ScalarProperty Name="shared" ColumnName="shared" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Date">
+            <EntityTypeMapping TypeName="digimarketModel.User_Date">
+              <MappingFragment StoreEntitySet="User_Date">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_Marketing_Sources">
+            <EntityTypeMapping TypeName="digimarketModel.User_Marketing_Sources">
+              <MappingFragment StoreEntitySet="User_Marketing_Sources">
+                <ScalarProperty Name="ums_id" ColumnName="ums_id" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="AdminSite" TypeName="digimarketModel.AdminSite" StoreEntitySet="AdminSite">
+            <EndProperty Name="Admin">
+              <ScalarProperty Name="email" ColumnName="email" />
+            </EndProperty>
+            <EndProperty Name="Sites">
+              <ScalarProperty Name="site_url" ColumnName="site_url" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="add_article" FunctionName="digimarketModel.Store.add_article" />
+          <FunctionImportMapping FunctionImportName="add_payment" FunctionName="digimarketModel.Store.add_payment" />
+          <FunctionImportMapping FunctionImportName="add_shared_article" FunctionName="digimarketModel.Store.add_shared_article" />
+          <FunctionImportMapping FunctionImportName="add_site" FunctionName="digimarketModel.Store.add_site" />
+          <FunctionImportMapping FunctionImportName="add_ums" FunctionName="digimarketModel.Store.add_ums" />
+          <FunctionImportMapping FunctionImportName="admin_sign_in" FunctionName="digimarketModel.Store.admin_sign_in">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.admin_sign_in_Result">
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="adminname" ColumnName="adminname" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="admin_sign_up" FunctionName="digimarketModel.Store.admin_sign_up" />
+          <FunctionImportMapping FunctionImportName="admin_update" FunctionName="digimarketModel.Store.admin_update" />
+          <FunctionImportMapping FunctionImportName="count_ums" FunctionName="digimarketModel.Store.count_ums" />
+          <FunctionImportMapping FunctionImportName="delete_article" FunctionName="digimarketModel.Store.delete_article" />
+          <FunctionImportMapping FunctionImportName="delete_site" FunctionName="digimarketModel.Store.delete_site" />
+          <FunctionImportMapping FunctionImportName="delete_ums" FunctionName="digimarketModel.Store.delete_ums" />
+          <FunctionImportMapping FunctionImportName="get_admin_articles" FunctionName="digimarketModel.Store.get_admin_articles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_admin_articles_Result">
+                <ScalarProperty Name="serial_no" ColumnName="serial_no" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="sub_category" ColumnName="sub_category" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_admin_gid" FunctionName="digimarketModel.Store.get_admin_gid">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_admin_gid_Result">
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="ga_id" ColumnName="ga_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_admin_single_article" FunctionName="digimarketModel.Store.get_admin_single_article">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_admin_single_article_Result">
+                <ScalarProperty Name="serial_no" ColumnName="serial_no" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="sub_category" ColumnName="sub_category" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_all_articles" FunctionName="digimarketModel.Store.get_all_articles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_all_articles_Result">
+                <ScalarProperty Name="serial_no" ColumnName="serial_no" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="sub_category" ColumnName="sub_category" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_all_site" FunctionName="digimarketModel.Store.get_all_site">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_all_site_Result">
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="site_name" ColumnName="site_name" />
+                <ScalarProperty Name="ga_id" ColumnName="ga_id" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_articles" FunctionName="digimarketModel.Store.get_articles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_articles_Result">
+                <ScalarProperty Name="serial_no" ColumnName="serial_no" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="sub_category" ColumnName="sub_category" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+                <ScalarProperty Name="copied" ColumnName="copied" />
+                <ScalarProperty Name="shared" ColumnName="shared" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_joining_date" FunctionName="digimarketModel.Store.get_joining_date">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_joining_date_Result">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_payment" FunctionName="digimarketModel.Store.get_payment">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_payment_Result">
+                <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="traffic" ColumnName="traffic" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_rate" FunctionName="digimarketModel.Store.get_rate">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_rate_Result">
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="rate" ColumnName="rate" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_shared_article" FunctionName="digimarketModel.Store.get_shared_article">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_shared_article_Result">
+                <ScalarProperty Name="serial_no" ColumnName="serial_no" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="sub_category" ColumnName="sub_category" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+                <ScalarProperty Name="copied" ColumnName="copied" />
+                <ScalarProperty Name="shared" ColumnName="shared" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_shared_article_serial" FunctionName="digimarketModel.Store.get_shared_article_serial" />
+          <FunctionImportMapping FunctionImportName="get_site" FunctionName="digimarketModel.Store.get_site">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_site_Result">
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="site_name" ColumnName="site_name" />
+                <ScalarProperty Name="ga_id" ColumnName="ga_id" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_site_name" FunctionName="digimarketModel.Store.get_site_name" />
+          <FunctionImportMapping FunctionImportName="get_total_earned" FunctionName="digimarketModel.Store.get_total_earned">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_total_earned_Result">
+                <ScalarProperty Name="totalTraffic" ColumnName="totalTraffic" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_ums" FunctionName="digimarketModel.Store.get_ums" />
+          <FunctionImportMapping FunctionImportName="get_user_single_article" FunctionName="digimarketModel.Store.get_user_single_article">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_user_single_article_Result">
+                <ScalarProperty Name="serial_no" ColumnName="serial_no" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="sub_category" ColumnName="sub_category" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_user_status" FunctionName="digimarketModel.Store.get_user_status" />
+          <FunctionImportMapping FunctionImportName="get_user_traffic" FunctionName="digimarketModel.Store.get_user_traffic">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_user_traffic_Result">
+                <ScalarProperty Name="ga_id" ColumnName="ga_id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getAllUser" FunctionName="digimarketModel.Store.getAllUser">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.getAllUser_Result">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="photourl" ColumnName="photourl" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="getArticleBySerial" FunctionName="digimarketModel.Store.getArticleBySerial">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.getArticleBySerial_Result">
+                <ScalarProperty Name="serial_no" ColumnName="serial_no" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="photo_url" ColumnName="photo_url" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="sub_category" ColumnName="sub_category" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Procedure" FunctionName="digimarketModel.Store.Procedure">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.Procedure_Result">
+                <ScalarProperty Name="ga_id" ColumnName="ga_id" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="update_article_data" FunctionName="digimarketModel.Store.update_article_data" />
+          <FunctionImportMapping FunctionImportName="update_articles" FunctionName="digimarketModel.Store.update_articles" />
+          <FunctionImportMapping FunctionImportName="update_rates" FunctionName="digimarketModel.Store.update_rates" />
+          <FunctionImportMapping FunctionImportName="update_shared_articles" FunctionName="digimarketModel.Store.update_shared_articles" />
+          <FunctionImportMapping FunctionImportName="update_site" FunctionName="digimarketModel.Store.update_site" />
+          <FunctionImportMapping FunctionImportName="user_sign_in" FunctionName="digimarketModel.Store.user_sign_in">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.user_sign_in_Result">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="photourl" ColumnName="photourl" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="user_sign_up" FunctionName="digimarketModel.Store.user_sign_up" />
+          <FunctionImportMapping FunctionImportName="user_update" FunctionName="digimarketModel.Store.user_update" />
+          <FunctionImportMapping FunctionImportName="get_deleted_articles" FunctionName="digimarketModel.Store.get_deleted_articles">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_deleted_articles_Result">
+                <ScalarProperty Name="serial_no" ColumnName="serial_no" />
+                <ScalarProperty Name="a_id" ColumnName="a_id" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="modified_date" ColumnName="modified_date" />
+                <ScalarProperty Name="site_url" ColumnName="site_url" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="sub_category" ColumnName="sub_category" />
+                <ScalarProperty Name="custom" ColumnName="custom" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

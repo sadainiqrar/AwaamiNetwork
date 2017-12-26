@@ -1,0 +1,319 @@
+<nav class="navbar navbar-default" style="margin-bottom: 0px; background: url(images/head.png); background-size:100%;" >
+    <div class="container-fluid">
+        <div class="navbar-header">
+
+
+
+            <a href="#!/dashboard" class="navbar-brand" style="color: white">Digital Marketing</a>
+
+
+        </div>
+
+
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main-collapse">
+            <i class="fa fa-bars" style="color:white;"></i>
+        </button>
+        <div>
+                <ul class="nav navbar-nav pull-right userbtn">
+                    <li class="dropdown">
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-bell-o icon" style="color:white"></i>
+
+                        </a>
+                        <ul class="dropdown-menu" style=" background-color: white;left: -8em;">
+                            <li><a href="#">Notification 1</a></li>
+                            <li><a href="#">Notification 2</a></li>
+                            <li><a href="#">Notification 3</a></li>
+                            <li><a href="#">Notification 4</a></li>
+                            <li><a href="#">Another notification</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+
+                        <a href="" class="navbar-toggle userbtn" data-toggle="dropdown">
+                            <img class="img-circle userImage" src={{admin_data.photo_url}} style="width:20px"><span class="username">
+                                {{adminname}}
+                            </span>
+
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu" style="background-color: white;    width: 14em;">
+
+                            <h5 class="dropdownheadings">WEBSITE</h5>
+                            <hr style="margin: 0px; border-color: #eaeaea">
+                            <li ng-repeat="s in globals.currentUser.sites" style="cursor:pointer">
+                                <a ng-click="switchSite()">
+                                    <span class="text">{{s.site_name}}</span>
+                                    <button type="button" class="invisible" ng-class="{ 'switchbutton': selectedSite==s.site_name}">Selected</button>
+                                </a>
+                            </li>
+                            <li style="cursor:pointer">
+                                <a ng-click="addSite($event)">
+                                    <button type="button" class="text addwebsitebutton" >+ ADD NEW WEBSITE</button>
+                                </a>
+                            </li>
+
+                            <h5 class="dropdownheadings">ACCOUNT</h5>
+                            <hr style="margin: 0px; border-color: #eaeaea">
+
+                            <li>
+                                <a href="Overview.html">
+                                    <span class="text"> YOUR PROFILE</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="Overview.html">
+                                    <span class="text"> BILLING INFORMATION</span>
+                                </a>
+                            </li>
+
+                            <h5 class="dropdownheadings">SETTINGS</h5>
+                            <hr style="margin: 0px; border-color: #eaeaea">
+                            <li >
+                                <a href="Overview.html">
+                                    <span class="text">ACCOUNT</span>
+                                    <p class="text" style="text-align: left;">Control your Account Settings</p>
+                                </a>
+                            </li>
+
+                            <li style="cursor:pointer">
+                                <a ng-click="googleLogout()">
+                                    <i class="fa fa-sign-out ">
+                                        <b class="bg-success"></b>
+                                    </i>
+                                    <span class="text">Sign Out</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+
+        </div>
+
+    </div>
+</nav>
+
+<div class="wrapper">
+
+
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 collapse" id="navbar-main-collapse">
+
+        <!--
+            Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+            Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+        -->
+
+        <div class="sidebar-wrapper  hidden-md hidden-lg">
+            <ul class="nav">
+                <li>
+                    <a >
+                        <img class="img-circle" style="width: 20px;" src={{admin_data.photo_url}}>
+                        <span class="text">
+                            {{adminname}}
+                        </span>
+                    </a>
+                </li>
+                <hr style="margin: 0px; border-color: white">
+
+                <li style="cursor:pointer">
+                    <a data-toggle="collapse" data-target="#submenu2">
+                        <i class="fa fa-globe icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">SITES</span>
+
+                    </a>
+                    <ul class="nav subMenu collapse" id="submenu2">
+                        <li ng-repeat="s in globals.currentUser.sites" style="cursor:pointer">
+                            <a ng-click="switchSite()">
+                                <span class="text">{{s.site_name | uppercase}}</span>
+                                <button type="button" class="invisible" ng-class="{ 'switchbutton': selectedSite==s.site_name}">Selected</button>
+                            </a>
+                        </li>
+                        <li style="cursor:pointer">
+                            <a ng-click="addSite($event)">
+                                <button type="button" class="text addwebsitebutton">+ ADD NEW WEBSITE</button>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <hr style="margin: 0px; border-color: white">
+                <li ng-click='makeActive("/dashboard")' ng-class="{ 'active-o': active=='/dashboard'}">
+                    <a ui-sref="dashboard.home">
+                        <i class="fa fa-search aria-hidden=" true"">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">OVERVIEW</span>
+                    </a>
+                </li>
+                <li style="cursor:pointer">
+                    <a data-toggle="collapse" data-target="#submenu1">
+                        <i class="fa fa-pencil-square-o icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">ARTICLES</span>
+
+                    </a>
+                    <ul class="nav collapse subMenu" id="submenu1" >
+                        <li class="subMenuChild" ng-click='makeActive("/published")' ng-class="{ 'active-o': active=='/published'}"><a ui-sref="dashboard.published">PUBLISHED ARTICLES</a></li>
+                        <li class="subMenuChild" ng-click='makeActive("/freezed")' ng-class="{ 'active-o': active=='/freezed'}"><a ui-sref="dashboard.freezed">FREEZED ARTICLES</a></li>
+                    </ul>
+                </li>
+                <li ng-click='makeActive("/statistics")' ng-class="{ 'active-o': active=='/statistics'}">
+                    <a ui-sref="dashboard.statistics">
+                        <i class="fa fa-pie-chart icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">STATISTICS</span>
+                    </a>
+                </li>
+               
+                
+                <li ng-click='makeActive("/payment")' ng-class="{ 'active-o': active=='/payment'}">
+                    <a ui-sref="dashboard.payment">
+                        <i class="fa fa-briefcase">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">PAYMENT</span>
+                    </a>
+                </li>
+                <hr style="margin: 0px; border-color: white">
+                <li style="cursor:pointer">
+                    <a ng-click="googleLogout()">
+                        <i class="fa fa-sign-out ">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">Sign Out</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+
+    <div class="sidebar hidden-xs">
+
+        <!--
+            Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+            Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+        -->
+
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li ng-click='makeActive("/dashboard")' ng-class="{ 'active-o': active=='/dashboard'}">
+                    <a ui-sref="dashboard.home">
+                        <i class="fa fa-search aria-hidden=" true"">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">OVERVIEW</span>
+                    </a>
+                </li>
+                <li style="cursor:pointer">
+                    <a data-toggle="collapse" data-target="#submenu3">
+                        <i class="fa fa-pencil-square-o icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">ARTICLES</span>
+                        
+                    </a>
+                    <ul class="nav collapse subMenu" id="submenu3" >
+                        <li class="subMenuChild" ng-click='makeActive("/published")'  ng-class="{ 'active-o': active=='/published'}"><a ui-sref="dashboard.published">PUBLISHED ARTICLES</a></li>
+                        <li class="subMenuChild" ng-click='makeActive("/freezed")' ng-class="{ 'active-o': active=='/freezed'}"><a ui-sref="dashboard.freezed">FREEZED ARTICLES</a></li>
+                    </ul>
+                </li>
+                <li ng-click='makeActive("/statistics")' ng-class="{ 'active-o': active=='/statistics'}">
+                    <a ui-sref="dashboard.statistics">
+                        <i class="fa fa-pie-chart icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">STATISTICS</span>
+                    </a>
+                </li>
+                
+                
+                <li ng-click='makeActive("/payment")' ng-class="{ 'active-o': active=='/payment'}">
+                    <a ui-sref="dashboard.payment">
+                        <i class="fa fa-briefcase">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">PAYMENT</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+
+
+
+        <ui-view></ui-view>
+
+
+</div>
+
+
+
+<script type="text/ng-template" id="addsite.tmpl.html">
+
+
+
+
+    <md-dialog aria-label="Connect Website" class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header" style="border-bottom: 0">
+                        <button type="button" class="close" ng-click="cancel()">&times;</button>
+                        <center><h4 class="modal-title">Add New Website</h4></center>
+                    </div>
+                    <div class="modal-body">
+                        <center>
+
+                            <p style="font-size: 8pt;font-family: lato-regular;margin-bottom: 1%">Select Google Integrated Website</p>
+                            
+                            <select ng-model="selectedSite" ng-options="x.site_name for x in sites" style="font-style:italic;border-color: transparent;background-color: #f5f5f5;border-radius: 5px;width: 50%;height: 3em;font-size: 8pt;"></select>
+                            <md-checkbox ng-model="ischecked" aria-label="Custom" class="blue">
+                                Custom
+                            </md-checkbox>
+                        </center>
+                        <button type="button" class=" btn-md btn-link" style="font-family: lato-regular;color:#34c9ff;margin-left: 34%;font-size: 8pt " ng-click="cancel()">CANCEL</button>
+                        <button type="button" style=" border: none; border-radius: 8px; background-color: #34c9ff;color: #fff;  width: 13em;height: 31px;font-size: 8pt;margin-top: 1em;margin-left: 6%" ng-click="add()">ADD WEBSITE</button>
+                    </div>
+                </div>
+
+
+</md-dialog>
+</script>
+
+
+
+<script type="text/ng-template" id="successmessage.tmpl.html">
+
+
+
+
+    <md-dialog aria-label="Success Message" class="modal-dialog" style="width: 800px;">
+
+        <!-- Modal content-->
+        <!-- Modal content-->
+        <div class="modal-content" style="height: 15em;border-radius: 0;">
+            <div class="modal-header" style="border-bottom: 0">
+                <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+
+            </div>
+            <div class="modal-body" style="padding: 3em 0em;">
+                <center><i class="fa fa-check-circle-o" aria-hidden="true" style="color:#79c775;font-size: 18pt "></i></center>
+                <p style="color: #79c775;font-size: 14pt"> DONE </p>
+                <center>
+                    <p style="font-size: 10pt;font-family: lato-regular;word-spacing: 2px;margin-top: 1em;">{{Response}}</p>
+                </center>
+
+            </div>
+
+        </div>
+    </md-dialog>
+
+</script>

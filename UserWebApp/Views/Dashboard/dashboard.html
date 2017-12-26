@@ -1,0 +1,290 @@
+<nav class="navbar navbar-default" style="margin-bottom: 0px; background: url(images/head.png); background-size:100%;">
+    <div class="container-fluid">
+        <div class="navbar-header">
+
+
+
+            <a href="#!/dashboard" class="navbar-brand" style="color: white">Digital Marketing</a>
+
+
+
+        </div>
+
+
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-main-collapse">
+            <i class="fa fa-bars" style="color:white;"></i>
+        </button>
+        <div>
+
+
+
+
+
+
+            <ul class="nav navbar-nav pull-right userbtn">
+                <li class="dropdown">
+
+                    <a href="" class="navbar-toggle userbtn" data-toggle="dropdown">
+                        <ng-avatar class="img-circle userImage avatar" initials={{userdata.username[0]}} auto-color="true"  round-shape="true" picture-resolution="1024" width="25" style="float:left"></ng-avatar>
+                        <span class="username">
+                            {{username}}
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu" style="background-color: white">
+                       <!-- <li>
+                            <a href="Overview.html">
+                                <i class="fa fa-user">
+                                    <b class="bg-success"></b>
+                                </i>
+                                <span class="text">Profile</span>
+                            </a>
+                        </li>
+                        <hr style="margin: 0px; border-color: #eaeaea">-->
+                        <li>
+                            <a ng-click="logout()">
+                                <i class="fa fa-search ">
+                                    <b class="bg-success"></b>
+                                </i>
+                                <span  class="text">Sign Out</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+</nav>
+
+<div class="wrapper">
+
+
+    <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 collapse" id="navbar-main-collapse">
+
+        <!--
+            Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+            Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+        -->
+
+        <div class="sidebar-wrapper  hidden-md hidden-lg">
+            <ul class="nav">
+                <li>
+                    <a >
+                        <ng-avatar class="img-circle userImage avatar" initials={{userdata.username[0]}} auto-color="true" round-shape="true" picture-resolution="1024" width="25" style="float:left"></ng-avatar>
+                        <span class="text">
+                            {{username}}
+                        </span>
+                    </a>
+                </li>
+                <hr style="margin: 0px; border-color: white">
+                <li ng-click='makeActive("/dashboard")' ng-class="{ 'active-o': active=='/dashboard'}">
+                    <a ui-sref="dashboard.home">
+                        <i class="fa fa-search aria-hidden=" true"">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">OVERVIEW</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/articles")' ng-class="{ 'active-o': active=='/articles'}">
+                    <a ui-sref="dashboard.articles">
+                        <i class="fa fa-pencil-square-o icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">SHARED ARTICLES</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/statistics")' ng-class="{ 'active-o': active=='/statistics'}">
+                    <a ui-sref="dashboard.statistics">
+                        <i class="fa fa-pie-chart icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">STATISTICS</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/realtime")' ng-class="{ 'active-o': active=='/realtime'}">
+                    <a ui-sref="dashboard.realtime">
+                        <i class="fa fa-tachometer icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">REALTIME</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/marketingsources")' ng-class="{ 'active-o': active=='/marketingsources'}">
+                    <a ui-sref="dashboard.marketingsources">
+                        <i class="fa fa-rocket icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">MARKETING SOURCES</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/payment")' ng-class="{ 'active-o': active=='/payment'}">
+                    <a ui-sref="dashboard.payment">
+                        <i class="fa fa-briefcase">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">PAYMENT</span>
+                    </a>
+                </li>
+                <hr style="margin: 0px; border-color: white">
+                <li ng-click='makeActive("/logout")' ng-class="{ 'active-o': active=='/logout'}">
+                    <a ng-click="logout()">
+                        <i class="fa fa-briefcase">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span  class="text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+
+    <div class="sidebar hidden-xs">
+
+        <!--
+            Tip 1: you can change the color of the sidebar's background using: data-background-color="white | black"
+            Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
+        -->
+
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li ng-click='makeActive("/dashboard")' ng-class="{ 'active-o': active=='/dashboard'}">
+                    <a ui-sref="dashboard.home">
+                        <i class="fa fa-search aria-hidden=" true"">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">OVERVIEW</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/articles")' ng-class="{ 'active-o': active=='/articles'}">
+                    <a ui-sref="dashboard.articles">
+                        <i class="fa fa-pencil-square-o icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">SHARED ARTICLES</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/statistics")' ng-class="{ 'active-o': active=='/statistics'}">
+                    <a ui-sref="dashboard.statistics">
+                        <i class="fa fa-pie-chart icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">STATISTICS</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/realtime")' ng-class="{ 'active-o': active=='/realtime'}">
+                    <a ui-sref="dashboard.realtime">
+                        <i class="fa fa-tachometer icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">REALTIME</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/marketingsources")' ng-class="{ 'active-o': active=='/marketingsources'}">
+                    <a ui-sref="dashboard.marketingsources">
+                        <i class="fa fa-rocket icon">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">MARKETING SOURCES</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/payment")' ng-class="{ 'active-o': active=='/payment'}">
+                    <a ui-sref="dashboard.payment">
+                        <i class="fa fa-briefcase">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">PAYMENT</span>
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+
+
+
+
+        <ui-view></ui-view>
+
+
+
+    <div class="col-md-3 chat widthchat hidden-xs hidden-sm" style="float:right;">
+
+        <div class="col-md-12" ng-hide="!(chat)">
+
+            <ul class="nav nav-tabs" id="Tab" style=" padding: 0em 1em;">
+                <li class="active"><a class="chatTab" data-toggle="tab">Top Users</a></li>
+                <li><a class="chatTab" data-toggle="tab">NOTIFICATIONS</a></li>
+            </ul>
+
+
+
+            <div class="col-md-12 subPanel" style="overflow-y: auto; height: 460px;">
+                <div class="col-md-12 topuserpad" ng-repeat="user in top_users| orderBy:user.Value:true | limitTo: 10 ">
+                    <div class="col-lg-2 col-md-2 imgchatpad">
+                        <ng-avatar class="img-circle imagecircle" initials={{user.Key[0]}} auto-color="true" round-shape="true" picture-resolution="1024" width="30"  ></ng-avatar>
+                    </div>
+                    <div class="col-lg-9 col-md-9" style="padding-left: 15px;float:left">
+                        <p class="topusername">{{user.Key}}</p>
+                        <p class="usrearning">Total Traffic Generated:{{abbreviate(user.Value)}}</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <div ng-hide="chat">
+            <div class="col-md-12" style="padding: 1em 0em">
+
+                <center><p style="font-size: 8pt;font-weight: 600;color: #797d81">CHAT BOX</p></center><button type="button" class="cross" ng-click="hidechat()">&times;</button>
+
+
+            </div>
+
+            <hr class="chatline" style="margin: 0;margin-left: 5px">
+
+            <div class="col-md-12 subPanel" style="overflow-y: auto;overflow-x: hidden; height: 400px;">
+
+                <div class="row rowpad" style="height:fit-content" ng-repeat="m in messages">
+
+                    <div class="col-lg-2 col-md-2" ng-class="{ 'userchat': m.username!=userdata.username,'friendchat': m.username==userdata.username }">
+
+                        <ng-avatar class="img-circle" initials={{m.username[0]}} auto-color="true" round-shape="true" picture-resolution="1024" width="30"></ng-avatar>
+                    </div>
+                    <p ng-class="{ 'chattime': m.username!=userdata.username,'chattimefriend': m.username==userdata.username  }">{{m.username}}</p>
+                    <div class="col-lg-10 col-md-10" ng-class="{ 'userdiv': m.username!=userdata.username,'frienddiv': m.username==userdata.username }">
+                        <p ng-class="{ 'userchatmsg': m.username!=userdata.username,'friendchatmsg': m.username==userdata.username  }">{{m.message}}</p>
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
+
+
+            <div class="col-md-12">
+
+                <hr class="linechat">
+
+                <input type="text" placeholder="Type your message..." class="messagebox" style="width: 90%;" ng-model="message" ng-keyup="$event.keyCode == 13 && send()"><i class="fa fa-send" id="sendbtnicon" ng-click="send()"></i>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <button class="button" ng-class="{ 'chatbutton': chat,'chatoffbutton': !chat  }" ng-click="hidechat()">{{chattext}}<i class="fa fa-share-square-o" aria-hidden="true" style="float:right;padding-top:4px" ></i></button>
+
+        </div>
+
+    </div>
+</div>
