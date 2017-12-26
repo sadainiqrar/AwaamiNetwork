@@ -6,7 +6,7 @@
 
                 <div class="col-md-4 b-r">
                     <a class="clear">
-                        <span class="h3 block m-t-xs sm1"><center><strong style="color: #34c9ff">{{today_earned| currency:"USD$"}} </strong></center></span>
+                        <span class="h3 block m-t-xs sm1"><center><strong style="color: #da454d">{{today_earned| currency:"PKR"}} </strong></center></span>
                         <div layout="row" layout-sm="column" layout-align="space-around">
                             <md-progress-circular md-mode="indeterminate" class="md-hue-2" md-diameter="15px" ng-show="dailyIsLoading"></md-progress-circular>
                         </div>
@@ -17,7 +17,7 @@
                 <div class="col-md-4 b-r">
 
                     <a class="clear">
-                        <span class="h3 block m-t-xs sm1"><center><strong style="color: #bc49ff">{{monthly_earned| currency:"USD$"}} </strong></center></span>
+                        <span class="h3 block m-t-xs sm1"><center><strong style="color: #da454d">{{monthly_earned| currency:"PKR"}} </strong></center></span>
                         <div layout="row" layout-sm="column" layout-align="space-around">
                             <md-progress-circular md-mode="indeterminate" class="md-hue-2" md-diameter="15px" ng-show="monthlyIsLoading"></md-progress-circular>
                         </div>
@@ -27,7 +27,7 @@
                 <div class="col-md-4">
 
                     <a class="clear">
-                        <span class="h3 m-t-xs sm1"><center><strong style="color: #6344ff"> {{$parent.abbreviate(sessions)}} </strong></center></span>
+                        <span class="h3 m-t-xs sm1"><center><strong style="color: #da454d"> {{$parent.abbreviate(sessions)}} </strong></center></span>
                         <div layout="row" layout-sm="column" layout-align="space-around">
                             <md-progress-circular md-mode="indeterminate" class="md-hue-2" md-diameter="15px" ng-show="monthlyTrafficIsLoading"></md-progress-circular>
                         </div>
@@ -38,10 +38,7 @@
         </section>
 
         <div class="bar">
-            <ul class="nav nav-tabs" id="Tab">
-                <li class="active"><a class=" maintab " data-toggle="tab" ng-click="_category = 'premium'">Premium</a></li>
-                <li><a class="maintab" data-toggle="tab" ng-click="_category = 'non-premium'">Non Premium</a></li>
-            </ul>
+            
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-cat-collapse">
                 <i class="fa fa-bars"></i>
             </button>
@@ -80,10 +77,7 @@
                                 <div id="articleImageDiv" class="col-md-12 col-sm-6" style="padding: 0px 0px 0px 0px;">
 
                                     <img class="img-responsive" src={{article.photo_url}}>
-                                    <div class="overlay">
-                                        <div class="textt"><i class="fa fa-eye" aria-hidden="true"></i><p style="font-size: 10px;">VIEWS</p> <p style="color: deepskyblue">{{ $parent.abbreviate(article.views)}}</p> </div>
-                                        <div class="txt"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><p style="font-size: 10px;">SHARES</p><p style="color: deepskyblue">{{$parent.abbreviate(article.shares)}}</p></div>
-                                    </div>
+                                    
 
                                 </div>
 
@@ -144,8 +138,8 @@
                                 <span class="h3 block m-t-xs">
                                     <center>
 
-                                        <i class="fa fa-thumbs-o-up" aria-hidden="true" style="margin: 8px; color: #3dcaff;"></i>
-                                        <strong style="color: #3dcaff; font-size: 12pt;">
+                                        <i class="fa fa-thumbs-o-up" aria-hidden="true" style="margin: 8px; color: #da454d;"></i>
+                                        <strong style="color: #da454d; font-size: 12pt;">
 
                                             <br> {{$parent.abbreviate(s.fan_count)}}
                                         </strong>
@@ -160,8 +154,8 @@
                                 <span class="h3 block m-t-xs">
                                     <center>
 
-                                        <i class="fa fa-star" aria-hidden="true" style="margin: 8px; color: #ffb400;"></i>
-                                        <strong style="color: #ffb400; font-size: 12pt;">
+                                        <i class="fa fa-star" aria-hidden="true" style="margin: 8px; color: #da454d;"></i>
+                                        <strong style="color: #da454d; font-size: 12pt;">
 
                                             <br> {{s.overall_star_rating || "0"}}
                                         </strong>
@@ -219,7 +213,7 @@
                     </div>
 
                     <div class="col-md-2" style="background-color: white">
-                        <button type="button" ng-click="copy()" style="float:left; border: none; border-radius: 0px 8px 8px 0px; background-color: #34c9ff;color: #fff;  width: 8em;height: 31px;font-size: 8pt;margin-left: 0%">Copy</button>
+                        <button type="button" ng-click="copy()" style="float:left; border: none; border-radius: 0px 8px 8px 0px; background-color: #da454d;color: #fff;  width: 8em;height: 31px;font-size: 8pt;margin-left: 0%">Copy</button>
 
                     </div>
                 </div>

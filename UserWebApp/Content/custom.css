@@ -126,10 +126,9 @@ md-toast.md-error-toast-theme .md-toast-content, md-toast .md-toast-content {
 .sidebar-wrapper{
     background-color: #eeeeee;
 }
-.active-o{
-    background-color: rgba(52, 201, 255, 0.51);
-    border-left: 5px solid #34c9ff
-    
+.active-o {
+    background-color: rgba(214, 42, 52, 0.58);
+    border-left: 5px solid #da454d
 }
 .maincolor{
     background-color: #34c9ff;
@@ -181,20 +180,20 @@ md-toast.md-error-toast-theme .md-toast-content, md-toast .md-toast-content {
     
     border: 1px solid #9a9a9d; 
 }
-.nav>li:not(.active)>a:hover.tabpad{
-    cursor:pointer;
-    color: #34c9ff; 
+.nav > li:not(.active) > a:hover.tabpad {
+    cursor: pointer;
+    color: #da454d;
 }
-.nav>li.active>a:hover.tabpad{
-    cursor:pointer;
-    background-color:#34c9ff;
+.nav > li.active > a:hover.tabpad {
+    cursor: pointer;
+    background-color: #da454d;
     color: #fff;
 }
-.nav>li.active>a.tabpad{
+.nav > li.active > a.tabpad {
     color: #fff;
     cursor: default;
-    border: 0px solid #ddd; 
-    background-color: #34c9ff;
+    border: 0px solid #ddd;
+    background-color: #da454d;
     border-bottom-color: transparent;
     border-radius: 10px;
     padding: 0px 20px;
@@ -412,10 +411,11 @@ p{
      padding-left: 1em;
     padding-right: 1em;
 }
- 
-.btn{
+
+.btn {
     float: right;
     border: 0;
+    color: #da454d;
 }
 .bt1 {
     font-size: 8pt;
@@ -1080,7 +1080,7 @@ MSArt{
 @media (min-width: 1024px) {.paymentselect{width: 80px;}
 }
 #trafficgenerated {
-    background-image: url(../images/PaymentsImage1.png);
+    background-image: url(../images/PaymentImage1.png);
     background-size: 100%;
     padding: 4em 2em 4em 2em;
     width: 75%;
@@ -1214,9 +1214,9 @@ MSArt{
 background: transparent;
     border: 0
 }
-.activebutton{
-    background:#9539ca;
-    color: #fff;
+.activebutton {
+    background: #da454d;
+    color: #fefb00;
     border-radius: 10px;
     width: 5em;
     border: 0
@@ -1293,12 +1293,13 @@ background: transparent;
 }
 }
 
-.chatbutton{width: 100%;
-    height: 4em; 
+.chatbutton {
+    width: 100%;
+    height: 4em;
     border: 0;
-    background-color:#269ad4;
+    background-color: #da454d;
     font-size: 8pt;
-    color: #a3d3ec;
+    color: #fff;
     font-family: lato-regular;
     position: absolute;
     top: 2em;
@@ -1318,12 +1319,12 @@ background: transparent;
 }
 
 
-.nav>li.active>a.chatTab{
+.nav > li.active > a.chatTab {
     font-family: lato-regular;
     font-size: 8pt;
-    color: #63aac5;
+    color: #da454d;
     border: none;
-    border-bottom: 3px solid #63aac5; 
+    border-bottom: 3px solid #da454d;
     background-color: transparent;
     cursor: default;
     font-weight: 600;
@@ -1380,17 +1381,17 @@ background: transparent;
     
 }
 
-.chatoffbutton{
+.chatoffbutton {
     width: 100%;
-    height: 4em; 
+    height: 4em;
     border: 0;
-    background-color:#9dbed4;
+    background-color: #da454d;
     font-size: 8pt;
-    color: #d6e4ed;
+    color: #fff;
     font-family: lato-regular;
     text-align: left;
     padding-left: 3em;
-    top:2em;
+    top: 2em;
     position: absolute;
     font-weight: 400;
 }
@@ -1459,7 +1460,7 @@ background: transparent;
     background-color: #ffffff;
     width: 69%;
     float: right;
-    background-color: #3598db;
+    background-color: #da454d;
     border-radius: 5px;
     max-width: fit-content;
     max-width: -moz-fit-content;
@@ -1491,14 +1492,18 @@ background: transparent;
     top:3em
 }
 @media(min-width:993px){.messagebox{width:85%}}
-#sendbtnicon{
+#sendbtnicon {
     float: right;
     margin-top: 3em;
     margin-right: 1.3em;
     position: relative;
-    color: #3598db;}
+    color: #da454d;
+}
 @media(min-width:2000px){
     #sendbtnicon{
         margin-right: 3em;
     }
+}
+.md-bar {
+    background-color: rgb(255,0,0) !important;
 }

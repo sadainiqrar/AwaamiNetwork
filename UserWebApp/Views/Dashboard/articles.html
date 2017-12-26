@@ -4,11 +4,7 @@
 
     <div class="col-md-12 widthpanel">
 
-        <div class="bar">
-            <ul class="nav nav-tabs" id="Tab">
-                <li class="active"><a class=" maintab " data-toggle="tab" ng-click="_category = 'premium'">Premium</a></li>
-                <li><a class="maintab" data-toggle="tab" ng-click="_category = 'non-premium'">Non Premium</a></li>
-            </ul>
+        <div class="bar" style="padding-top:20px">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-cat-collapse">
                 <i class="fa fa-bars"></i>
             </button>
@@ -69,9 +65,9 @@
                                                     <div layout="row" layout-sm="column" layout-align="space-around">
                                                         <md-progress-circular md-mode="indeterminate" class="md-hue-2" md-diameter="15px" ng-show="earnedloading"></md-progress-circular>
                                                     </div>
-                                                    <i class="fa fa-money" aria-hidden="true" style="margin: 8px; color: #bc49ff;"></i>
+                                                    <i class="fa fa-money" aria-hidden="true" style="margin: 8px; color: #da454d;"></i>
 
-                                                    <strong style="color: #bc49ff; font-size: 12pt;">
+                                                    <strong style="color: #da454d; font-size: 12pt;">
 
                                                         <br>
 
@@ -88,7 +84,7 @@
                                                     <i class="fa fa-copy icon" aria-hidden="true">
 
                                                     </i>
-                                                    <span class="text title1" style="color: #337ab7;">Copy</span>
+                                                    <span class="text title1" style="color: #da454d;">Copy</span>
                                                 </a>
                                             </center>
                                         </div>
@@ -100,8 +96,8 @@
                                                 </div>
                                                 <center>
 
-                                                    <i class="fa fa-line-chart" aria-hidden="true" style="margin: 8px; color: #bc49ff;"></i>
-                                                    <strong style="color: #bc49ff; font-size: 12pt;">
+                                                    <i class="fa fa-line-chart" aria-hidden="true" style="margin: 8px; color: #da454d;"></i>
+                                                    <strong style="color: #da454d; font-size: 12pt;">
 
                                                         <br> {{$parent.abbreviate(article.views)}}
                                                     </strong>
@@ -115,7 +111,7 @@
                                                 <a ng-click="openModal('custom-modal-2'); $event.stopPropagation()" class="padsharecopy">
                                                     <i class="fa fa-share-square-o icon" aria-hidden="true">
                                                     </i>
-                                                    <span class="text title1" style="color: #337ab7;">Share</span>
+                                                    <span class="text title1" style="color: #da454d;">Share</span>
                                                 </a>
                                             </center>
                                         </div>
@@ -170,8 +166,8 @@
                                 <span class="h3 block m-t-xs">
                                     <center>
 
-                                        <i class="fa fa-thumbs-o-up" aria-hidden="true" style="margin: 8px; color: #3dcaff;"></i>
-                                        <strong style="color: #3dcaff; font-size: 12pt;">
+                                        <i class="fa fa-thumbs-o-up" aria-hidden="true" style="margin: 8px; color: #da454d;"></i>
+                                        <strong style="color: #da454d; font-size: 12pt;">
 
                                             <br> {{$parent.abbreviate(s.fan_count)}}
                                         </strong>
@@ -186,8 +182,8 @@
                                 <span class="h3 block m-t-xs">
                                     <center>
 
-                                        <i class="fa fa-star" aria-hidden="true" style="margin: 8px; color: #ffb400;"></i>
-                                        <strong style="color: #ffb400; font-size: 12pt;">
+                                        <i class="fa fa-star" aria-hidden="true" style="margin: 8px; color: #da454d"></i>
+                                        <strong style="color: #da454d; font-size: 12pt;">
 
                                             <br> {{s.overall_star_rating || "0"}}
                                         </strong>
@@ -246,7 +242,7 @@
                     </div>
 
                     <div class="col-md-2" style="background-color: white">
-                        <button type="button" ng-click="copy()" style="float:left; border: none; border-radius: 0px 8px 8px 0px; background-color: #34c9ff;color: #fff;  width: 8em;height: 31px;font-size: 8pt;margin-left: 0%">Copy</button>
+                        <button type="button" ng-click="copy()" style="float:left; border: none; border-radius: 0px 8px 8px 0px; background-color: #da454d;color: #fff;  width: 8em;height: 31px;font-size: 8pt;margin-left: 0%">Copy</button>
 
                     </div>
                 </div>

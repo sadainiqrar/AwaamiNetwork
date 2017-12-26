@@ -181,12 +181,13 @@
     <Content Include="images\avatar.jpg" />
     <Content Include="images\avatar_default.jpg" />
     <Content Include="images\avatar_default_female.jpg" />
-    <Content Include="images\Background.png" />
+    <Content Include="images\Awamilogo.png" />
     <Content Include="images\facebook.png" />
+    <Content Include="images\head.png" />
     <Content Include="images\logo.png" />
     <Content Include="images\main.png" />
+    <Content Include="images\PaymentImage1.png" />
     <Content Include="images\PaymentImage2.png" />
-    <Content Include="images\PaymentsImage1.png" />
     <Content Include="images\phone-1.png" />
     <Content Include="images\phone-2.png" />
     <Content Include="images\realtime.png" />

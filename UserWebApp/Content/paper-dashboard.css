@@ -242,10 +242,12 @@ body {
     position: relative; }
 
 a {
-  color: #68B3C8; }
-  a:hover, a:focus {
-    color: #3091B2;
-    text-decoration: none; }
+    color: #da454d;
+}
+    a:hover, a:focus {
+        color: #da454d;
+        text-decoration: none;
+    }
 
 a:focus, a:active,
 button::-moz-focus-inner,
@@ -417,11 +419,11 @@ hr {
     .off-canvas-sidebar .logo .simple-text,
     .off-canvas-sidebar[data-background-color="white"] .logo .simple-text {
       color: #66615B; }
-  .nav li:not(.active) > a, .sidebar[data-background-color="white"] .nav li:not(.active) > a,
-  .off-canvas-sidebar .nav li:not(.active) > a,
-  .off-canvas-sidebar[data-background-color="white"] .nav li:not(.active) > a {
-    
-    color: #34c9ff;}
+    .nav li:not(.active) > a, .sidebar[data-background-color="white"] .nav li:not(.active) > a,
+    .off-canvas-sidebar .nav li:not(.active) > a,
+    .off-canvas-sidebar[data-background-color="white"] .nav li:not(.active) > a {
+        color: #da454d;
+    }
 
 .nav li:not(.active) > a  > span.text
 {
