@@ -61,9 +61,9 @@
                                     <span class="text"> YOUR PROFILE</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="Overview.html">
-                                    <span class="text"> BILLING INFORMATION</span>
+                            <li style="cursor:pointer" ng-click='makeActive("/dashboard")'>
+                                <a ui-sref="dashboard.invoices">
+                                    <span type="button" class="text">BILLING HISTORY</span>
                                 </a>
                             </li>
 
@@ -176,6 +176,14 @@
                             <b class="bg-success"></b>
                         </i>
                         <span class="text">PAYMENT</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/invoices")' ng-class="{ 'active-o': active=='/invoices'}">
+                    <a ui-sref="dashboard.invoices">
+                        <i class="fa fa-briefcase">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">BILLING HISTORY</span>
                     </a>
                 </li>
                 <hr style="margin: 0px; border-color: white">

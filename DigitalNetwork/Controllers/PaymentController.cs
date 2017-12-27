@@ -12,6 +12,28 @@ namespace DigitalNetwork.Controllers
     public class PaymentController : ApiController
     {
         private digimarketEntities1 db = new digimarketEntities1();
+
+        [HttpGet]
+        [Route("api/admin/pendingpayments")]
+        public IEnumerable<get_adminPayments_Result> pendingpayment()
+        {
+            return db.get_adminPayments("pending");
+        }
+
+        [HttpGet]
+        [Route("api/admin/clearedpayments")]
+        public IEnumerable<get_adminPayments_Result> clearedpayment()
+        {
+            return db.get_adminPayments("cleared");
+        }
+
+        [HttpPut]
+        [Route("api/admin/payment/clear")]
+        public int ClearPayment([FromBody]Payment _payment)
+        {
+            return db.clear_payment(_payment.invoice_id,"cleared", System.DateTime.Now);
+        }
+
         //add_Payment
         [HttpPut]
         [Route("api/payment/make")]

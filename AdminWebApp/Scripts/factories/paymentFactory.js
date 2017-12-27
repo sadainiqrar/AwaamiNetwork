@@ -5,28 +5,28 @@ angular.module('DigitalMarket').factory(serviceId,
 
 function paymentFactory($http, apiUrl) {
 
-    function get_payment_details(_uid, _username) {
+    function get_pending_payments() {
    
-        var data = { uid: _uid, username: _username };
-        return $http.post(apiUrl + 'api/payment/details', data);
+        return $http.get(apiUrl + 'api/admin/pendingpayments');
     }
 
-    function payment_history(_uid){
-        var data = { uid: _uid };
-        return $http.post(apiUrl + 'api/payment/history', data);
-    
+    function get_cleared_payments() {
+
+        return $http.get(apiUrl + 'api/admin/clearedpayments');
     }
-    function make_payment(_uid, _traffic, _amount) {
-        var data = { uid: _uid, traffic:_traffic, amount:_amount };
-        return $http.put(apiUrl + 'api/payment/make', data);
+
+    
+    function clear_payment(_invoice) {
+        var data = { invoice_id: _invoice};
+        return $http.put(apiUrl + 'api/admin/payment/clear', data);
 
     }
 
 
     var service = {
-        get_payment_details: get_payment_details,
-        payment_history: payment_history,
-        make_payment: make_payment
+        get_pending_payments: get_pending_payments,
+        get_cleared_payments: get_cleared_payments,
+        clear_payment: clear_payment
     };
 
     return service;

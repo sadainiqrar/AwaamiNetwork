@@ -46,10 +46,10 @@ scotchApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '
             templateUrl: 'Views/Dashboard/published.html',
             controller: 'publishedController'
         })
-        .state('dashboard.userdata', {
-            url: '/userdata',
-            templateUrl: 'Views/Dashboard/userdata.html',
-            controller: 'userdataController'
+        .state('dashboard.invoices', {
+            url: '/invoices',
+            templateUrl: 'Views/Dashboard/invoices.html',
+            controller: 'invoicesController'
         })
         .state('dashboard.payment', {
             url: '/payment',

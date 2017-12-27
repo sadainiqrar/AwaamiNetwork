@@ -17,9 +17,9 @@ namespace DigitalNetwork.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
-            this.Payments = new HashSet<Payment>();
             this.User_Articles = new HashSet<User_Articles>();
             this.User_Marketing_Sources = new HashSet<User_Marketing_Sources>();
+            this.Payments = new HashSet<Payment>();
         }
     
         public string uid { get; set; }
@@ -28,11 +28,11 @@ namespace DigitalNetwork.Models
         public string fullname { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Payment> Payments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Articles> User_Articles { get; set; }
         public virtual User_Date User_Date { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User_Marketing_Sources> User_Marketing_Sources { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Payment> Payments { get; set; }
     }
 }

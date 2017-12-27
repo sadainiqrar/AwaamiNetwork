@@ -212,6 +212,23 @@ namespace DigitalNetwork.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("admin_update", emailParameter, nameParameter, photoParameter);
         }
     
+        public virtual int clear_payment(Nullable<int> invoiceid, string status, Nullable<System.DateTime> paydate)
+        {
+            var invoiceidParameter = invoiceid.HasValue ?
+                new ObjectParameter("invoiceid", invoiceid) :
+                new ObjectParameter("invoiceid", typeof(int));
+    
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
+    
+            var paydateParameter = paydate.HasValue ?
+                new ObjectParameter("paydate", paydate) :
+                new ObjectParameter("paydate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("clear_payment", invoiceidParameter, statusParameter, paydateParameter);
+        }
+    
         public virtual ObjectResult<Nullable<int>> count_ums(string uid)
         {
             var uidParameter = uid != null ?
@@ -278,6 +295,15 @@ namespace DigitalNetwork.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_admin_gid_Result>("get_admin_gid", siteParameter);
         }
     
+        public virtual ObjectResult<get_admin_payments_Result> get_admin_payments(string status)
+        {
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_admin_payments_Result>("get_admin_payments", statusParameter);
+        }
+    
         public virtual ObjectResult<get_admin_single_article_Result> get_admin_single_article(Nullable<int> aid, string email, string site)
         {
             var aidParameter = aid.HasValue ?
@@ -324,6 +350,19 @@ namespace DigitalNetwork.Models
                 new ObjectParameter("subcat", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_articles_Result>("get_articles", uidParameter, catParameter, subcatParameter);
+        }
+    
+        public virtual ObjectResult<get_deleted_articles_Result> get_deleted_articles(string email, string site)
+        {
+            var emailParameter = email != null ?
+                new ObjectParameter("email", email) :
+                new ObjectParameter("email", typeof(string));
+    
+            var siteParameter = site != null ?
+                new ObjectParameter("site", site) :
+                new ObjectParameter("site", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_deleted_articles_Result>("get_deleted_articles", emailParameter, siteParameter);
         }
     
         public virtual ObjectResult<get_joining_date_Result> get_joining_date(string uid)
@@ -609,17 +648,13 @@ namespace DigitalNetwork.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("user_update", uidParameter, statusParameter);
         }
     
-        public virtual ObjectResult<get_deleted_articles_Result> get_deleted_articles(string email, string site)
+        public virtual ObjectResult<get_adminPayments_Result> get_adminPayments(string status)
         {
-            var emailParameter = email != null ?
-                new ObjectParameter("email", email) :
-                new ObjectParameter("email", typeof(string));
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
     
-            var siteParameter = site != null ?
-                new ObjectParameter("site", site) :
-                new ObjectParameter("site", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_deleted_articles_Result>("get_deleted_articles", emailParameter, siteParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_adminPayments_Result>("get_adminPayments", statusParameter);
         }
     }
 }

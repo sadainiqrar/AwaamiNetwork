@@ -11,11 +11,14 @@
 
 
 
-        <center><h6 style="color:#878787;">Requested Payments</h6></center>
+        <center><h6 style="color:#878787;">Cleared Payments</h6></center>
 
         <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 1em 2em 8em 2em">
             <table class="responsive" style="width: 100%;">
                 <tr style="border-bottom: 1px solid;border-color: #DCDCDC;">
+
+                    <th id="paymenttable">InvoiceID</th>
+
                     <th id="paymenttable">DATE</th>
 
                     <th id="paymenttable">USERNAME</th>
@@ -24,9 +27,11 @@
                     <th id="paymenttable">AMOUNT</th>
                     <th id="paymenttable">STATUS</th>
 
-                    <th id="paymenttable"></th>
                 </tr>
                 <tr ng-repeat="h in payment | orderBy: payment_date :true ">
+
+                    <td id="paymenttable">{{h.invoice_id}}</td>
+
                     <td id="paymenttable">{{h.payment_date | date: "fullDate"}}</td>
 
                     <td id="paymenttable">{{h.username}}</td>
@@ -36,11 +41,7 @@
                     <td id="paymenttable">{{h.amount}}</td>
 
                     <td id="paymenttable">{{h.status}}</td>
-
-                    <td>
-
-                        <button type="button" class=" btn-md btn-link" ng-click="clearPayment($event)" >Clear Payment</button>
-                    </td>
+                    
 
                 </tr>
 

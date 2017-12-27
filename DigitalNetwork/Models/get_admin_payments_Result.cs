@@ -11,7 +11,7 @@ namespace DigitalNetwork.Models
 {
     using System;
     
-    public partial class get_payment_Result
+    public partial class get_admin_payments_Result
     {
         public int invoice_id { get; set; }
         public string uid { get; set; }

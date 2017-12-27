@@ -55,7 +55,7 @@ function paymentController($scope, $state, $rootScope, $cookies, paymentFactory,
         }
     );
     $scope.makePayment = function () {
-        if ($scope.availablePayment >= 10) {
+        if ($scope.availablePayment > 0) {
             paymentFactory.make_payment($scope.uid, $scope.unpaidTraffic, $scope.availablePayment).then(
                 // callback function for successful http request
                 function success(response) {
@@ -73,7 +73,7 @@ function paymentController($scope, $state, $rootScope, $cookies, paymentFactory,
         {
             $mdToast.show(
                 $mdToast.simple()
-                    .textContent('Withdrawal Must be atleast $10')
+                    .textContent('Withdrawal Must be atleast PKR 0.1')
                     .action('CLOSE')
                     .position('bottom left')
                     .theme('error-toast')
