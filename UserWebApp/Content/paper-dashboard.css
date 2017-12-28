@@ -427,7 +427,8 @@ hr {
 
 .nav li:not(.active) > a  > span.text
 {
-    color: #fff;
+    color:#da454d;
+    font-weight:600;
 }
 
 .nav li:not(.active-o) > a  > span.text

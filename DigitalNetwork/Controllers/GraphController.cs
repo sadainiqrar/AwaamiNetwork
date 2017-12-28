@@ -238,7 +238,7 @@ namespace DigitalNetwork.Controllers
                 result.Dimensions = "ga:year,ga:month";
                 result1.Dimensions = "ga:year,ga:month";
             }
-            
+
             result.Filters = "ga:landingPagePath=@" + use.convertUrl(input.url, input.site_url) + ";ga:campaign=@" + input.uid + ";ga:medium=@referral";
             result1.Filters = "ga:landingPagePath=@" + use.convertUrl(input.url, input.site_url) + ";ga:campaign=@" + input.uid + ";ga:medium=@referral;ga:country=@Canada";
             var final = result.Execute();

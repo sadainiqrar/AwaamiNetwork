@@ -22,7 +22,7 @@
                 <a class="clear">
                     <small class="text-muted text-uc " style="color: #a3a3a3;">Total Earned</small><br>
 
-                    <span class="h3 block m-t-xs sm1" style="color:#c064f8;font-size: 1.8em;">{{totalEarned |currency : "$"}}</span>
+                    <span class="h3 block m-t-xs sm1" style="color:#da454d;font-size: 1.8em;">{{totalEarned |currency : "PKR"}}</span>
 
                     <hr id="linePaymentWelocome">
 
@@ -35,7 +35,7 @@
 
                     <small class="text-muted text-uc " style="color: #a3a3a3;">Last Payment</small><br>
 
-                    <span class="h3 block m-t-xs sm1" style="color:#6445ff; font-size: 1.8em; "> {{lastPayment | currency : "$"}} <i class="fa fa-bar-chart" aria-hidden="true"></i></span>
+                    <span class="h3 block m-t-xs sm1" style="color:#da454d; font-size: 1.8em; "> {{lastPayment | currency : "PKR"}} <i class="fa fa-bar-chart" aria-hidden="true"></i></span>
 
                     <hr id="linePaymentWelocome">
 
@@ -64,7 +64,7 @@
                     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="trafficgenerated" style="padding-left: 2em;">
                         <center>
                             <p id="trafficbox">{{$parent.abbreviate(totalTraffic)}} </p>
-                            <p id="trafficbox" style="font-size: 10pt">TOTAL TRAFFIC GENERATED</p>
+                            <p id="trafficbox" style="font-size: 10pt">Total Traffic Generated</p>
                             <button type="button" id="viewbutton" ng-click="changeClass()">VIEW TRAFFIC</button>
                         </center>
                     </div>
@@ -81,7 +81,7 @@
 
                     <div class="col-lg-12 col-md-12 col-sm-6 col-xs-12" id="moneygenerated" style="padding-left: 2em;">
                         <center>
-                            <p id="trafficbox">{{availablePayment | currency : "$"}} </p>
+                            <p id="trafficbox">{{availablePayment | currency : "PKR"}} </p>
                             <p id="trafficbox" style="font-size: 10pt">Available Balance </p>
                             <button type="button" id="withdrawbutton" ng-click="makePayment()">WITH DRAW</button>
                         </center>
@@ -135,7 +135,7 @@
 
                     <td id="paymenttable">{{$parent.abbreviate(h.traffic)}}</td>
 
-                    <td id="paymenttable">{{h.amount | currency :"$"}}</td>
+                    <td id="paymenttable">{{h.amount | currency :"PKR"}}</td>
 
                     <td id="paymenttable">{{h.status}}</td>
                 </tr>

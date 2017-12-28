@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="digimarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="digimarketModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="email" />
@@ -130,6 +130,7 @@
           </Key>
           <Property Name="ums_id" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="uid" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="url" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <Association Name="FK__AdminSite__email__34C8D9D1">
           <End Role="Admin" Type="Self.Admin" Multiplicity="1" />
@@ -298,6 +299,7 @@
         <Function Name="add_ums" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ums_id" Type="varchar" Mode="In" />
           <Parameter Name="uid" Type="varchar" Mode="In" />
+          <Parameter Name="url" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="admin_sign_in" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="email" Type="varchar" Mode="In" />
@@ -368,6 +370,7 @@
         <Function Name="get_payment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="uid" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="get_pending_user" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="get_rate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="category" Type="varchar" Mode="In" />
         </Function>
@@ -393,6 +396,9 @@
         </Function>
         <Function Name="get_user_single_article" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="serial" Type="int" Mode="In" />
+        </Function>
+        <Function Name="get_user_sources" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="uid" Type="varchar" Mode="In" />
         </Function>
         <Function Name="get_user_status" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="uid" Type="varchar" Mode="In" />
@@ -507,7 +513,8 @@
             <End Role="User_Marketing_Sources" EntitySet="User_Marketing_Sources" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="digimarketModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -565,7 +572,7 @@
           <Property Name="amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="payment_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="digimarketModel.FK_Payment_User" FromRole="Payment" ToRole="User" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Payment_User" FromRole="Payment" ToRole="User" />
         </EntityType>
         <EntityType Name="Rate">
           <Key>
@@ -615,10 +622,10 @@
           <Property Name="username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="photourl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="fullname" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_User" FromRole="User" ToRole="Payment" />
           <NavigationProperty Name="User_Articles" Relationship="Self.FK__User_Articl__uid__1B9317B3" FromRole="User" ToRole="User_Articles" />
           <NavigationProperty Name="User_Date" Relationship="Self.FK_User_Date_User" FromRole="User" ToRole="User_Date" />
           <NavigationProperty Name="User_Marketing_Sources" Relationship="Self.FK_User_Marketing_Sources_User" FromRole="User" ToRole="User_Marketing_Sources" />
-          <NavigationProperty Name="Payments" Relationship="digimarketModel.FK_Payment_User" FromRole="User" ToRole="Payment" />
         </EntityType>
         <EntityType Name="User_Articles">
           <Key>
@@ -647,6 +654,7 @@
           </Key>
           <Property Name="ums_id" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="uid" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_User_Marketing_Sources_User" FromRole="User_Marketing_Sources" ToRole="User" />
         </EntityType>
         <Association Name="FK__User_Arti__seria__1A9EF37A">
@@ -682,6 +690,18 @@
             </Principal>
             <Dependent Role="DeletedArticles">
               <PropertyRef Name="site_url" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="uid" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="uid" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -774,6 +794,10 @@
             <End Role="Sites" EntitySet="Sites" />
             <End Role="DeletedArticles" EntitySet="DeletedArticles" />
           </AssociationSet>
+          <AssociationSet Name="FK_Payment_User" Association="Self.FK_Payment_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
           <AssociationSet Name="FK_Rates_History_Rate" Association="Self.FK_Rates_History_Rate">
             <End Role="Rate" EntitySet="Rates" />
             <End Role="Rates_History" EntitySet="Rates_History" />
@@ -833,9 +857,10 @@
           <FunctionImport Name="add_ums">
             <Parameter Name="ums_id" Mode="In" Type="String" />
             <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="url" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="admin_sign_in" ReturnType="Collection(digimarketModel.admin_sign_in_Result)">
-          <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="admin_sign_up">
             <Parameter Name="email" Mode="In" Type="String" />
@@ -853,17 +878,17 @@
             <Parameter Name="paydate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="count_ums" ReturnType="Collection(Int32)">
-          <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="uid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="delete_article">
-          <Parameter Name="serial" Mode="In" Type="Int32" />
+            <Parameter Name="serial" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="delete_site">
             <Parameter Name="site_url" Mode="In" Type="String" />
             <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="delete_ums">
-          <Parameter Name="ums_id" Mode="In" Type="String" />
+            <Parameter Name="ums_id" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_admin_articles" ReturnType="Collection(digimarketModel.get_admin_articles_Result)">
             <Parameter Name="email" Mode="In" Type="String" />
@@ -871,18 +896,21 @@
             <Parameter Name="status" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="get_admin_gid" ReturnType="Collection(digimarketModel.get_admin_gid_Result)">
-          <Parameter Name="site" Mode="In" Type="String" />
+            <Parameter Name="site" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_admin_payments" ReturnType="Collection(digimarketModel.get_admin_payments_Result)">
-          <Parameter Name="status" Mode="In" Type="String" />
+            <Parameter Name="status" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_admin_single_article" ReturnType="Collection(digimarketModel.get_admin_single_article_Result)">
             <Parameter Name="aid" Mode="In" Type="Int32" />
             <Parameter Name="email" Mode="In" Type="String" />
             <Parameter Name="site" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="get_adminPayments" ReturnType="Collection(digimarketModel.get_adminPayments_Result)">
+            <Parameter Name="status" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="get_all_articles" ReturnType="Collection(digimarketModel.get_all_articles_Result)">
-          <Parameter Name="site" Mode="In" Type="String" />
+            <Parameter Name="site" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_all_site" ReturnType="Collection(digimarketModel.get_all_site_Result)" />
           <FunctionImport Name="get_articles" ReturnType="Collection(digimarketModel.get_articles_Result)">
@@ -895,13 +923,14 @@
             <Parameter Name="site" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_joining_date" ReturnType="Collection(digimarketModel.get_joining_date_Result)">
-          <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="uid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_payment" ReturnType="Collection(digimarketModel.get_payment_Result)">
-          <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="uid" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="get_pending_user" ReturnType="Collection(digimarketModel.get_pending_user_Result)" />
           <FunctionImport Name="get_rate" ReturnType="Collection(digimarketModel.get_rate_Result)">
-          <Parameter Name="category" Mode="In" Type="String" />
+            <Parameter Name="category" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_shared_article" ReturnType="Collection(digimarketModel.get_shared_article_Result)">
             <Parameter Name="uid" Mode="In" Type="String" />
@@ -909,32 +938,35 @@
             <Parameter Name="subcat" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_shared_article_serial" ReturnType="Collection(Int32)">
-          <Parameter Name="serial" Mode="In" Type="Int32" />
+            <Parameter Name="serial" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="get_site" ReturnType="Collection(digimarketModel.get_site_Result)">
-          <Parameter Name="email" Mode="In" Type="String" />
+            <Parameter Name="email" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_site_name" ReturnType="Collection(String)">
-          <Parameter Name="url" Mode="In" Type="String" />
+            <Parameter Name="url" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_total_earned" ReturnType="Collection(digimarketModel.get_total_earned_Result)">
-          <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="uid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_ums" ReturnType="Collection(String)">
-          <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="uid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_user_single_article" ReturnType="Collection(digimarketModel.get_user_single_article_Result)">
-          <Parameter Name="serial" Mode="In" Type="Int32" />
+            <Parameter Name="serial" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="get_user_sources" ReturnType="Collection(digimarketModel.get_user_sources_Result)">
+            <Parameter Name="uid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_user_status" ReturnType="Collection(String)">
-          <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="uid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_user_traffic" ReturnType="Collection(digimarketModel.get_user_traffic_Result)">
-          <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="uid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="getAllUser" ReturnType="Collection(digimarketModel.getAllUser_Result)" />
           <FunctionImport Name="getArticleBySerial" ReturnType="Collection(digimarketModel.getArticleBySerial_Result)">
-          <Parameter Name="serial" Mode="In" Type="Int32" />
+            <Parameter Name="serial" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="Procedure" ReturnType="Collection(digimarketModel.Procedure_Result)" />
           <FunctionImport Name="update_article_data">
@@ -967,7 +999,7 @@
             <Parameter Name="site" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="user_sign_in" ReturnType="Collection(digimarketModel.user_sign_in_Result)">
-          <Parameter Name="uid" Mode="In" Type="String" />
+            <Parameter Name="uid" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="user_sign_up">
             <Parameter Name="uid" Mode="In" Type="String" />
@@ -978,13 +1010,6 @@
           </FunctionImport>
           <FunctionImport Name="user_update">
             <Parameter Name="uid" Mode="In" Type="String" />
-            <Parameter Name="status" Mode="In" Type="String" />
-          </FunctionImport>
-          <AssociationSet Name="FK_Payment_User" Association="digimarketModel.FK_Payment_User">
-            <End Role="User" EntitySet="Users" />
-            <End Role="Payment" EntitySet="Payments" />
-          </AssociationSet>
-          <FunctionImport Name="get_adminPayments" ReturnType="Collection(digimarketModel.get_adminPayments_Result)">
             <Parameter Name="status" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -1013,7 +1038,7 @@
         </ComplexType>
         <ComplexType Name="get_admin_payments_Result">
           <Property Type="Int32" Name="invoice_id" Nullable="false" />
-          <Property Type="String" Name="uid" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="traffic" Nullable="false" />
           <Property Type="Decimal" Name="amount" Nullable="false" Precision="10" Scale="2" />
           <Property Type="DateTime" Name="payment_date" Nullable="false" />
@@ -1032,6 +1057,14 @@
           <Property Type="String" Name="category" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="sub_category" Nullable="false" MaxLength="50" />
           <Property Type="Boolean" Name="custom" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="get_adminPayments_Result">
+          <Property Type="Int32" Name="invoice_id" Nullable="false" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="traffic" Nullable="false" />
+          <Property Type="Decimal" Name="amount" Nullable="false" Precision="10" Scale="2" />
+          <Property Type="DateTime" Name="payment_date" Nullable="false" />
+          <Property Type="String" Name="status" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="get_all_articles_Result">
           <Property Type="Int32" Name="serial_no" Nullable="false" />
@@ -1094,6 +1127,14 @@
           <Property Type="DateTime" Name="payment_date" Nullable="false" />
           <Property Type="String" Name="status" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <ComplexType Name="get_pending_user_Result">
+          <Property Type="String" Name="uid" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="username" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="fullname" Nullable="false" />
+          <Property Type="String" Name="photourl" Nullable="true" />
+          <Property Type="DateTime" Name="date" Nullable="false" />
+          <Property Type="String" Name="status" Nullable="false" MaxLength="20" />
+        </ComplexType>
         <ComplexType Name="get_rate_Result">
           <Property Type="String" Name="category" Nullable="false" MaxLength="50" />
           <Property Type="Decimal" Name="rate" Nullable="false" Precision="10" Scale="2" />
@@ -1139,6 +1180,11 @@
           <Property Type="String" Name="sub_category" Nullable="false" MaxLength="50" />
           <Property Type="Boolean" Name="custom" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="get_user_sources_Result">
+          <Property Type="String" Name="ums_id" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="uid" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="url" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="get_user_traffic_Result">
           <Property Type="String" Name="ga_id" Nullable="false" />
           <Property Type="String" Name="email" Nullable="false" MaxLength="30" />
@@ -1172,26 +1218,6 @@
           <Property Type="String" Name="username" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="photourl" Nullable="true" />
           <Property Type="String" Name="fullname" Nullable="false" />
-        </ComplexType>
-        <Association Name="FK_Payment_User">
-          <End Type="digimarketModel.User" Role="User" Multiplicity="1" />
-          <End Type="digimarketModel.Payment" Role="Payment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="uid" />
-            </Principal>
-            <Dependent Role="Payment">
-              <PropertyRef Name="uid" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="get_adminPayments_Result">
-          <Property Type="Int32" Name="invoice_id" Nullable="false" />
-          <Property Type="String" Name="username" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="traffic" Nullable="false" />
-          <Property Type="Decimal" Name="amount" Nullable="false" Precision="10" Scale="2" />
-          <Property Type="DateTime" Name="payment_date" Nullable="false" />
-          <Property Type="String" Name="status" Nullable="false" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -1325,6 +1351,7 @@
               <MappingFragment StoreEntitySet="User_Marketing_Sources">
                 <ScalarProperty Name="ums_id" ColumnName="ums_id" />
                 <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="url" ColumnName="url" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1387,7 +1414,7 @@
             <ResultMapping>
               <ComplexTypeMapping TypeName="digimarketModel.get_admin_payments_Result">
                 <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
-                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="username" ColumnName="username" />
                 <ScalarProperty Name="traffic" ColumnName="traffic" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
                 <ScalarProperty Name="payment_date" ColumnName="payment_date" />
@@ -1410,6 +1437,18 @@
                 <ScalarProperty Name="category" ColumnName="category" />
                 <ScalarProperty Name="sub_category" ColumnName="sub_category" />
                 <ScalarProperty Name="custom" ColumnName="custom" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_adminPayments" FunctionName="digimarketModel.Store.get_adminPayments">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_adminPayments_Result">
+                <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="traffic" ColumnName="traffic" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+                <ScalarProperty Name="status" ColumnName="status" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -1498,6 +1537,18 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_pending_user" FunctionName="digimarketModel.Store.get_pending_user">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_pending_user_Result">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="fullname" ColumnName="fullname" />
+                <ScalarProperty Name="photourl" ColumnName="photourl" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="get_rate" FunctionName="digimarketModel.Store.get_rate">
             <ResultMapping>
               <ComplexTypeMapping TypeName="digimarketModel.get_rate_Result">
@@ -1566,6 +1617,15 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="get_user_sources" FunctionName="digimarketModel.Store.get_user_sources">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="digimarketModel.get_user_sources_Result">
+                <ScalarProperty Name="ums_id" ColumnName="ums_id" />
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="url" ColumnName="url" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="get_user_status" FunctionName="digimarketModel.Store.get_user_status" />
           <FunctionImportMapping FunctionImportName="get_user_traffic" FunctionName="digimarketModel.Store.get_user_traffic">
             <ResultMapping>
@@ -1628,18 +1688,6 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="user_sign_up" FunctionName="digimarketModel.Store.user_sign_up" />
           <FunctionImportMapping FunctionImportName="user_update" FunctionName="digimarketModel.Store.user_update" />
-          <FunctionImportMapping FunctionImportName="get_adminPayments" FunctionName="digimarketModel.Store.get_adminPayments">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="digimarketModel.get_adminPayments_Result">
-                <ScalarProperty Name="invoice_id" ColumnName="invoice_id" />
-                <ScalarProperty Name="username" ColumnName="username" />
-                <ScalarProperty Name="traffic" ColumnName="traffic" />
-                <ScalarProperty Name="amount" ColumnName="amount" />
-                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
-                <ScalarProperty Name="status" ColumnName="status" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

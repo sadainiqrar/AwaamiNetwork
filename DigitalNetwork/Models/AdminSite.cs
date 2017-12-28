@@ -22,7 +22,10 @@ namespace DigitalNetwork.Models
         public string user_token { get; set; }
     }
 
-
+    public class PendingUsers : get_pending_user_Result
+    {
+        public List<get_user_sources_Result> sources { get; set; }
+    }
 
     public partial class admin_sign_up_Result
     {

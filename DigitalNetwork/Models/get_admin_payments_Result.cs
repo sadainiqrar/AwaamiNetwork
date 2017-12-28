@@ -14,7 +14,7 @@ namespace DigitalNetwork.Models
     public partial class get_admin_payments_Result
     {
         public int invoice_id { get; set; }
-        public string uid { get; set; }
+        public string username { get; set; }
         public int traffic { get; set; }
         public decimal amount { get; set; }
         public System.DateTime payment_date { get; set; }

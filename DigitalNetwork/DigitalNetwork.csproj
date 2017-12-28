@@ -303,6 +303,9 @@
     <Compile Include="Models\get_payment_Result.cs">
       <DependentUpon>digimarketEntities1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\get_pending_user_Result.cs">
+      <DependentUpon>digimarketEntities1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\get_rate_Result.cs">
       <DependentUpon>digimarketEntities1.tt</DependentUpon>
     </Compile>
@@ -316,6 +319,9 @@
       <DependentUpon>digimarketEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\get_user_single_article_Result.cs">
+      <DependentUpon>digimarketEntities1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\get_user_sources_Result.cs">
       <DependentUpon>digimarketEntities1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\get_user_traffic_Result.cs">

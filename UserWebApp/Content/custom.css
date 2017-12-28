@@ -127,7 +127,7 @@ md-toast.md-error-toast-theme .md-toast-content, md-toast .md-toast-content {
     background-color: #eeeeee;
 }
 .active-o {
-    background-color: rgba(214, 42, 52, 0.58);
+    background-color: rgba(234, 215, 218, 1);
     border-left: 5px solid #da454d
 }
 .maincolor{
@@ -272,7 +272,7 @@ md-toast.md-error-toast-theme .md-toast-content, md-toast .md-toast-content {
     align-content: center;
     margin: 0px;
     border: 0px solid transparent;
-    height: : 75px;
+    height: 75px;
     overflow: auto;
     
 }
@@ -294,11 +294,11 @@ p{
     
 }
 
-@media (min-width: 992px)
-.navbar {
-    min-height: 40px;
+@media (min-width: 992px) {
+    .navbar {
+        min-height: 40px;
+    }
 }
-
 .widthchat{
     width: 15%;
     z-index: 2;
@@ -436,9 +436,12 @@ p{
     font-weight: bold;
     background-color: coral;
 }
+.rowborder:focus {
+    outline-color: #da454d29;
+}
 .icon{
     font-size: 14pt;
-}@(max-width:425px){
+}@media(max-width:425px){
     .icon{
     font-size: 12pt;
     }
@@ -592,10 +595,10 @@ p{
     padding-top:1em;
 }
 }
-.sharedArticleDiv:hover
-{
-    background-color: #f5fafc;
+.sharedArticleDiv:hover {
+    background-color: rgba(218, 12, 18, 0.04);
 }
+
 #tablesm{
     padding: 1em 4em 1em 2em;
     margin : 0em;
@@ -609,11 +612,10 @@ p{
 }
 
 
-.table> tbody > tr:hover
-{
-    background-color: #f5fafc;
+.table > tbody > tr:hover {
+
+    background-color: rgba(218, 12, 18, 0.04);
     cursor: pointer;
-    
 }
 .table> tbody > tr > td
 {
@@ -840,6 +842,7 @@ MSArt{
 #realtimetable{
     border-bottom: 1px solid;
     font-size: 8pt;
+    width: 50%;
     
 }
 
@@ -909,9 +912,10 @@ MSArt{
     font-size: 8pt;
     
 }
-#namefont{
+#namefont {
     font-size: 8pt;
-    text-align:justify;
+    text-align: justify;
+    width: 50%;
 }
 
 
@@ -1047,25 +1051,27 @@ MSArt{
     margin: 0;
    
 }
-#viewbutton{
-    border: none; 
-    border-radius: 8px; 
-    background-color:#bc49ff;
-    color: #fff;  
+#viewbutton {
+    border: none;
+    border-radius: 8px;
+    background-color: #fefb00;
+    color: #000;
     width: 13em;
     height: 31px;
     font-size: 8pt;
     margin-top: 1em;
+    font-weight: bold;
 }
-#withdrawbutton{
-    border: none; 
-    border-radius: 8px; 
-    background-color: #34c9ff;
-    color: #fff;
+#withdrawbutton {
+    border: none;
+    border-radius: 8px;
+    background-color: #fefb00;
+    color: #000;
     width: 13em;
     height: 31px;
     font-size: 8pt;
     margin-top: 1em;
+    font-weight: bold;
 }
 .paymentselect{
     border-radius: 8px;
@@ -1089,7 +1095,7 @@ MSArt{
 
 #moneygenerated {
     background-image: url(../images/PaymentImage2.png);
-    background-size: 100%;
+    background-size: cover;
     padding: 4em 2em 4em 2em;
     width: 75%;
     margin-top: 13px;
@@ -1172,8 +1178,8 @@ MSArt{
     margin:1em 5em 0em 0em;
 }
 }
-.secPayment1a{
-     color: #2b9cd5;
+.secPayment1a {
+    color: #da454d;
     font-size: 1.8em;
 }
 @media(max-width:425px) {
@@ -1241,7 +1247,7 @@ background: transparent;
     padding: 3em 2em 0em 2em;
     margin: 0;
 }
-@media (min-width: 320px){#nextdiv{padding: 1em 0em 0em 1em;margin: o;}}
+@media (min-width: 320px){#nextdiv{padding: 1em 0em 0em 1em;margin: 0;}}
 
 /*
 @media (min-width: 1224px) {#imageDivMS{ height : 8em;}

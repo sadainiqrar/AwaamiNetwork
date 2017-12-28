@@ -86,7 +86,7 @@ function articlestatsController($scope, $rootScope, $cookies, $stateParams, grap
                                 dataSeries: [{
                                     seriesType: 'bar',
                                     backgroundColor: '#f8f8f8',
-                                    color: '#4587d9',
+                                    color: '#da454d',
                                     collectionAlias: "Traffic from Country",
                                     data: $scope.countrySessions
                                 }]
@@ -117,12 +117,12 @@ function articlestatsController($scope, $rootScope, $cookies, $stateParams, grap
                                 },
                                 dataSeries: [{
                                     seriesType: 'splinearea',
-                                    color: '#9539ca',
+                                    color: '#da454d',
                                     collectionAlias: 'Traffic generated',
                                     data: $scope.trafficData
                                 }, {
                                     seriesType: 'splinearea',
-                                    color: '#800000',
+                                    color: '#ffa500',
                                     collectionAlias: 'Revenue generated',
                                     data: $scope.earnedData
                                 }]
@@ -223,7 +223,7 @@ function articlestatsController($scope, $rootScope, $cookies, $stateParams, grap
                             dataSeries: [{
                                 seriesType: 'bar',
                                 backgroundColor: '#f8f8f8',
-                                color: '#4587d9',
+                                color: '#da454d',
                                 collectionAlias: "Traffic from Country",
                                 data: $scope.countrySessions
                             }]
@@ -255,12 +255,12 @@ function articlestatsController($scope, $rootScope, $cookies, $stateParams, grap
                             },
                             dataSeries: [{
                                 seriesType: 'splinearea',
-                                color: '#9539ca',
+                                color: '#da454d',
                                 collectionAlias: 'Traffic generated',
                                 data: $scope.trafficData
                             }, {
                                 seriesType: 'splinearea',
-                                color: '#800000',
+                                color: '#ffa500',
                                 collectionAlias: 'Revenue generated',
                                 data: $scope.earnedData
                             }]

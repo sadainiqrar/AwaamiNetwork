@@ -186,6 +186,15 @@
                         <span class="text">BILLING HISTORY</span>
                     </a>
                 </li>
+                <li ng-click='makeActive("/userdata")' ng-class="{ 'active-o': active=='/userdata'}">
+                    <a ui-sref="dashboard.userdata">
+                        <i class="fa fa-user">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">USER REQUESTS</span>
+                    </a>
+                </li>
+
                 <hr style="margin: 0px; border-color: white">
                 <li style="cursor:pointer">
                     <a ng-click="googleLogout()">
@@ -247,6 +256,14 @@
                             <b class="bg-success"></b>
                         </i>
                         <span class="text">PAYMENT</span>
+                    </a>
+                </li>
+                <li ng-click='makeActive("/userdata")' ng-class="{ 'active-o': active=='/userdata'}">
+                    <a ui-sref="dashboard.userdata">
+                        <i class="fa fa-user">
+                            <b class="bg-success"></b>
+                        </i>
+                        <span class="text">USER REQUESTS</span>
                     </a>
                 </li>
             </ul>

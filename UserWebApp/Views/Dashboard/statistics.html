@@ -6,7 +6,7 @@
 
                 <div class="col-md-4 b-r">
                     <a class="clear">
-                        <span class="h3 block m-t-xs sm1"><center><strong style="color: #34c9ff">{{today_earned| currency:"USD$"}} </strong></center></span>
+                        <span class="h3 block m-t-xs sm1"><center><strong style="color: #da454d">{{today_earned| currency:"PKR"}} </strong></center></span>
                         <div layout="row" layout-sm="column" layout-align="space-around">
                             <md-progress-circular md-mode="indeterminate" class="md-hue-2" md-diameter="15px" ng-show="dailyIsLoading"></md-progress-circular>
                         </div>
@@ -17,7 +17,7 @@
                 <div class="col-md-4 b-r">
 
                     <a class="clear">
-                        <span class="h3 block m-t-xs sm1"><center><strong style="color: #bc49ff">{{monthly_earned| currency:"USD$"}}</strong></center></span>
+                        <span class="h3 block m-t-xs sm1"><center><strong style="color: #da454d">{{monthly_earned| currency:"PKR"}}</strong></center></span>
                         <div layout="row" layout-sm="column" layout-align="space-around">
                             <md-progress-circular md-mode="indeterminate" class="md-hue-2" md-diameter="15px" ng-show="monthlyIsLoading"></md-progress-circular>
                         </div>
@@ -27,7 +27,7 @@
                 <div class="col-md-4">
 
                     <a class="clear">
-                        <span class="h3 m-t-xs sm1"><center><strong style="color: #6344ff">{{$parent.abbreviate(sessions)}}</strong></center></span>
+                        <span class="h3 m-t-xs sm1"><center><strong style="color: #da454d">{{$parent.abbreviate(sessions)}}</strong></center></span>
                         <div layout="row" layout-sm="column" layout-align="space-around">
                             <md-progress-circular md-mode="indeterminate" class="md-hue-2" md-diameter="15px" ng-show="dailyIsLoading"></md-progress-circular>
                         </div>
@@ -91,11 +91,11 @@
                                     <td class="yeclass" style="font-size: 8pt"></td>
                                     <td id="tsp1">{{s.day}}</td>
                                     <td id="tsp2">{{$parent.abbreviate(s.total_traffic)}}</td>
-                                    <td id="tsp3">{{s.total_earning | currency :"$"}}</td>
+                                    <td id="tsp3">{{s.total_earning | currency :"PKR"}}</td>
 
                                     <td>
 
-                                        <button type="button" class=" btn-md btn-link" ng-init="clickedh=false" ng-click="clickedh=!clickedh">View Details</button>
+                                        <button type="button" style="color:#da454d" class=" btn-md btn-link" ng-init="clickedh=false" ng-click="clickedh=!clickedh">View Details</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -105,8 +105,8 @@
                                                 <table class="tableSub table">
                                                     <tbody>
                                                         <tr style="font-size: 8pt" ng-repeat="c in s.country_stats">
-                                                            <td><left>{{c.country}}</left></td>
-                                                            <td><right>SESSIONS: <span style="color: deepskyblue">{{$parent.abbreviate(c.sessions)}}</span></right></td>
+                                                            <td style="width: 33%;"><left>{{c.country}}</left></td>
+                                                            <td style="width: 31%;"><right>SESSIONS: <span style="color: red">{{$parent.abbreviate(c.sessions)}}</span></right></td>
                                                             <td><right>NEW SESSIONS: <span style="color: red">{{$parent.abbreviate(c.newSessions)}}</span></right></td>
                                                         </tr>
 

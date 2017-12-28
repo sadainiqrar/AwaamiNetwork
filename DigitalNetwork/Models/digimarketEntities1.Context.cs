@@ -156,7 +156,7 @@ namespace DigitalNetwork.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("add_site", siteParameter, site_nameParameter, gidParameter, emailParameter, customParameter);
         }
     
-        public virtual int add_ums(string ums_id, string uid)
+        public virtual int add_ums(string ums_id, string uid, string url)
         {
             var ums_idParameter = ums_id != null ?
                 new ObjectParameter("ums_id", ums_id) :
@@ -166,7 +166,11 @@ namespace DigitalNetwork.Models
                 new ObjectParameter("uid", uid) :
                 new ObjectParameter("uid", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("add_ums", ums_idParameter, uidParameter);
+            var urlParameter = url != null ?
+                new ObjectParameter("url", url) :
+                new ObjectParameter("url", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("add_ums", ums_idParameter, uidParameter, urlParameter);
         }
     
         public virtual ObjectResult<admin_sign_in_Result> admin_sign_in(string email)
@@ -321,6 +325,15 @@ namespace DigitalNetwork.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_admin_single_article_Result>("get_admin_single_article", aidParameter, emailParameter, siteParameter);
         }
     
+        public virtual ObjectResult<get_adminPayments_Result> get_adminPayments(string status)
+        {
+            var statusParameter = status != null ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_adminPayments_Result>("get_adminPayments", statusParameter);
+        }
+    
         public virtual ObjectResult<get_all_articles_Result> get_all_articles(string site)
         {
             var siteParameter = site != null ?
@@ -381,6 +394,11 @@ namespace DigitalNetwork.Models
                 new ObjectParameter("uid", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_payment_Result>("get_payment", uidParameter);
+        }
+    
+        public virtual ObjectResult<get_pending_user_Result> get_pending_user()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_pending_user_Result>("get_pending_user");
         }
     
         public virtual ObjectResult<get_rate_Result> get_rate(string category)
@@ -461,6 +479,15 @@ namespace DigitalNetwork.Models
                 new ObjectParameter("serial", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_user_single_article_Result>("get_user_single_article", serialParameter);
+        }
+    
+        public virtual ObjectResult<get_user_sources_Result> get_user_sources(string uid)
+        {
+            var uidParameter = uid != null ?
+                new ObjectParameter("uid", uid) :
+                new ObjectParameter("uid", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_user_sources_Result>("get_user_sources", uidParameter);
         }
     
         public virtual ObjectResult<string> get_user_status(string uid)
@@ -646,15 +673,6 @@ namespace DigitalNetwork.Models
                 new ObjectParameter("status", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("user_update", uidParameter, statusParameter);
-        }
-    
-        public virtual ObjectResult<get_adminPayments_Result> get_adminPayments(string status)
-        {
-            var statusParameter = status != null ?
-                new ObjectParameter("status", status) :
-                new ObjectParameter("status", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_adminPayments_Result>("get_adminPayments", statusParameter);
         }
     }
 }

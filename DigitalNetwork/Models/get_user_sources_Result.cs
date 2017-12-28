@@ -10,14 +10,11 @@
 namespace DigitalNetwork.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class User_Marketing_Sources
+    public partial class get_user_sources_Result
     {
         public string ums_id { get; set; }
         public string uid { get; set; }
         public string url { get; set; }
-    
-        public virtual User User { get; set; }
     }
 }

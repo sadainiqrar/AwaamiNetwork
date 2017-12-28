@@ -38,7 +38,7 @@
                     <div class="col-md-12 col-sm-12" style="cursor: pointer">
 
                         <!-- shared Articles body -->
-                        <div ng-click="reroute(); $event.stopPropagation()" ng-repeat="article in shared_articles | articlefilter: {_category, _sub_category} | orderBy : selectedOrder : true">
+                        <div class="rowborder" ng-click="reroute(); $event.stopPropagation()" ng-repeat="article in shared_articles | articlefilter: {_category, _sub_category} | orderBy : selectedOrder : true">
                             <div class="row" >
                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 sharedArticleDiv" style="padding: 0px 0px 0px 0px;">
                                     <div class="col-lg-7 col-md-8 col-sm-7 col-xs-12">

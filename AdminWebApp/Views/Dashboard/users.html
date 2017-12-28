@@ -1,0 +1,113 @@
+
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 main-panel main-panel-margin">
+
+
+    <div class="bar">
+
+
+
+
+
+
+
+        <center><h6 style="color:#878787;">Pending Users</h6></center>
+
+        <div class="col-md-12 col-sm-12 col-xs-12" style="padding: 1em 2em 8em 2em">
+
+            <table class="table tableResp">
+                <thead>
+                    <tr>
+                        <th id="tsp1" class="asd"><b>USERNAME</b></th>
+                        <th id="tsp2" class="asd"><b>FULLNAME</b></th>
+                        <th id="tsp3" class="asd"><b>JOINING DATE</b></th>
+                        <th class="asd"> </th>
+                        <th class="asd"> </th>
+
+                    </tr>
+                </thead>
+                <tbody ng-repeat="user in users |orderBy:date:false">
+
+                    <tr>
+                        <td id="tsp1">{{user.username }}</td>
+                        <td id="tsp2">{{user.fullname}}</td>
+                        <td id="tsp3">{{user.date | date: "fullDate"}}</td>
+
+                        <td>
+
+                            <button type="button" class=" btn-md btn-link" ng-init="clickedh=false" ng-click="clickedh=!clickedh">View Sources</button>
+                        </td>
+                        <td>
+
+                            <button type="button" class=" btn-md btn-link" ng-click="verifyUsers($event)">Verify</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td ng-show="clickedh" colspan="8">
+                            <div>
+                                <section class="panel-default subPanel" style=" height: 120px; overflow: auto;">
+                                    <table class="tableSub table">
+                                        <thead>
+                                            <tr>
+                                                <th id="tsp1" class="asd"><b>Source ID</b></th>
+                                                <th id="tsp2" class="asd"><b>Source Url</b></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="font-size: 8pt" ng-repeat="source in user.sources">
+                                                <td><left>{{source.ums_id}}</left></td>
+                                                <td><right><a href={{source.url}} style="color: deepskyblue">{{source.url}}</a></right></td>
+                                            </tr>
+
+                                        </tbody>
+
+                                    </table>
+                                </section>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+
+
+<script type="text/ng-template" id="confirmmessage.tmpl.html">
+
+
+
+
+    <md-dialog aria-label="Confirm Message" class="modal-dialog" style="width: 800px;">
+
+        <!-- Modal content-->
+        <!-- Modal content-->
+        <div class="modal-content" style="height: 16em;border-radius: 0;">
+            <div class="modal-header" style="border-bottom: 0">
+                <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+
+            </div>
+            <div class="modal-body" style="padding: 2em 0em;">
+                <center><i class="fa fa-check" aria-hidden="true" style="color:#34c9ff;font-size: 18pt "></i></center>
+                <p style="color: #34c9ff;font-size: 14pt"> Verify This User? </p>
+                <center>
+                    <p style="font-size: 10pt;font-family: lato-regular;word-spacing: 2px;margin-top: 1em;">{{Response}}</p>
+                </center>
+                <div>
+                    <button type="button" class=" btn-md btn-link" style="font-family: lato-regular;color:#34c9ff;margin-left: 34%;font-size: 8pt " ng-click="cancel()">CANCEL</button>
+                    <button type="button" style=" border: none; border-radius: 8px; background-color: #34c9ff;color: #fff;  width: 13em;height: 31px;font-size: 8pt;margin-top: 1em;margin-left: 6%" ng-click="answer()">Confirm</button>
+                </div>
+            </div>
+
+        </div>
+    </md-dialog>
+
+</script>

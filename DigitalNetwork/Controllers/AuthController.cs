@@ -132,7 +132,30 @@ namespace DigitalNetwork.Controllers
 
         }
 
+        [HttpGet]
+        [Route("api/admin/pendingusers")]
+        public List<PendingUsers> GetPending()
+        {
+            List<PendingUsers> resultUsers = new List<PendingUsers>();
+            List<get_pending_user_Result> pUsers = new List<get_pending_user_Result>();
+            using (var data = new digimarketEntities1().get_pending_user())
+            {
+                pUsers = data.ToList<get_pending_user_Result>();
+            }
 
+            foreach(var user in pUsers)
+            {
+                PendingUsers temp = new PendingUsers() { uid = user.uid, fullname = user.fullname, photourl = user.photourl, status = user.status, username = user.username, date = user.date, sources = new List<get_user_sources_Result>() };
+                using (var data = new digimarketEntities1().get_user_sources(temp.uid))
+                {
+                    temp.sources = data.ToList<get_user_sources_Result>();
+                }
+
+                resultUsers.Add(temp);
+            }
+            return resultUsers;
+
+        }
 
         //user_login
         [HttpPost]
@@ -157,6 +180,14 @@ namespace DigitalNetwork.Controllers
         public string GetUserStatus([FromBody]User_Date user)
         {
             return db.get_user_status(user.uid).FirstOrDefault<string>();
+
+        }
+
+        [HttpPost]
+        [Route("api/admin/updateuser")]
+        public int UpdateUserStatus([FromBody]User_Date user)
+        {
+            return db.user_update(user.uid, "verified");
 
         }
 

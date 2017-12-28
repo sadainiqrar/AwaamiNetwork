@@ -6,8 +6,8 @@ angular.module('DigitalMarket').factory(serviceId,
 
 
 function umsFactory($http, apiUrl) {
-    function addUms(_pid, _uid ) {
-        var data = { ums_id: _pid, uid: _uid  };
+    function addUms(_pid,_link, _uid ) {
+        var data = { ums_id: _pid,url: _link, uid: _uid  };
         return $http.put(apiUrl + 'api/ums/add', data);
     }
 
