@@ -1,9 +1,9 @@
 var controllerId = 'paymentController';
 
 angular.module('DigitalMarket').controller(controllerId,
-    ['$scope', '$state', '$rootScope', '$cookies', 'paymentFactory','$mdToast', paymentController]);
+    ['$scope', '$state', '$rootScope', '$cookies', 'paymentFactory', '$mdToast','$mdDialog',paymentController]);
 
-function paymentController($scope, $state, $rootScope, $cookies, paymentFactory, $mdToast) {
+function paymentController($scope, $state, $rootScope, $cookies, paymentFactory, $mdToast, $mdDialog) {
     $rootScope.globals = $cookies.getObject('globals') || {};
     $scope.userdata = $rootScope.globals.currentUser;
     $scope.username = $scope.userdata.fullname;
@@ -54,33 +54,113 @@ function paymentController($scope, $state, $rootScope, $cookies, paymentFactory,
             // log errors
         }
     );
-    $scope.makePayment = function () {
-        if ($scope.availablePayment > 0) {
-            paymentFactory.make_payment($scope.uid, $scope.unpaidTraffic, $scope.availablePayment).then(
-                // callback function for successful http request
-                function success(response) {
+   
+    $scope.makePayment = function (ev) {
+
+        var payment = $scope.availablePayment;
+        $mdDialog.show({
+            locals: { data:  payment },
+            controller: confirmDialogController,
+            templateUrl: 'confirmmessage.tmpl.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose: true
+        })
+            .then(function (answer) {
+                if (answer === "Submited") {
+                    if ($scope.availablePayment > -1) {
+                        paymentFactory.make_payment($scope.uid, $scope.unpaidTraffic, $scope.availablePayment).then(
+                            // callback function for successful http request
+                            function success(response) {
+                                $mdToast.show(
+                                    $mdToast.simple()
+                                        .textContent('Payment Withdrawled')
+                                        .action('CLOSE')
+                                        .position('bottom left')
+                                        .theme('success-toast')
+                                        .hideDelay(3000)
+                                );
+                                paymentFactory.get_payment_details($scope.uid, $scope.id).then(
+                                    // callback function for successful http request
+                                    function success(response) {
+                                        $scope.totalTraffic = response.data.total_traffic;
+                                        $scope.totalEarned = response.data.total_earned;
+                                        $scope.lastPayment = response.data.last_paid;
+                                        $scope.availablePayment = response.data.available;
+
+                                        $scope.unpaidTraffic = response.data.unpaid_traffic;
+
+                                    },
+                                    // callback function for error in http request
+                                    function error(response) {
+                                        // log errors
+                                    }
+                                );
+                                paymentFactory.payment_history($scope.uid).then(
+                                    // callback function for successful http request
+                                    function success(response) {
+                                        $scope.history = response.data;
 
 
+                                    },
+                                    // callback function for error in http request
+                                    function error(response) {
+                                        // log errors
+                                    }
+                                );
 
-                },
-                // callback function for error in http request
-                function error(response) {
-                    // log errors
+
+                            },
+                            // callback function for error in http request
+                            function error(response) {
+                                // log errors
+                            }
+                        );
+                    }
+                    else {
+                        $mdToast.show(
+                            $mdToast.simple()
+                                .textContent('Withdrawal Must be atleast PKR 0.1')
+                                .action('CLOSE')
+                                .position('bottom left')
+                                .theme('error-toast')
+                                .hideDelay(3000)
+                        );
+                    }
+                  
                 }
-            );
-        }
-        else
-        {
-            $mdToast.show(
-                $mdToast.simple()
-                    .textContent('Withdrawal Must be atleast PKR 0.1')
-                    .action('CLOSE')
-                    .position('bottom left')
-                    .theme('error-toast')
-                    .hideDelay(3000)
-            );
-        }
+            }, function () {
+
+            });
+
+
+
+
+
     }
+
+
+
+
+
+    function confirmDialogController($scope, $mdDialog, data) {
+        $scope.Response = data;
+        $scope.answer = function () {
+            $mdDialog.hide("Submited");
+        };
+        $scope.cancel = function () {
+            $mdDialog.cancel();
+        };
+
+    }
+
+
+
+
+
+
+
+
     $scope.abbreviate = function (n) {
         n =  parseInt(n);
         n = n * 541231587;

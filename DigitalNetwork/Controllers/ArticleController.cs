@@ -380,9 +380,9 @@ namespace DigitalNetwork.Controllers
             }
             Authorization auth = new Authorization(res.Email);
             var result = auth.service.Data.Ga.Get(("ga:" + res.ga_id), convertDate(publishDate), convertDate(System.DateTime.Now), "ga:sessions");
-            result.Filters = "ga:medium=@referral;ga:landingPagePath=@" + convertUrl(a_url, url) + ";ga:campaign=@" + username;
+            result.Filters = "ga:landingPagePath=@" + convertUrl(a_url, url) + ";ga:campaign=@" + username;
             var result1 = auth.service.Data.Ga.Get(("ga:" + res.ga_id), convertDate(publishDate), convertDate(System.DateTime.Now), "ga:sessions");
-            result1.Filters = "ga:medium=@referral;ga:landingPagePath=@" + convertUrl(a_url, url) + ";ga:campaign=@" + username +";ga:country=@Canada";
+            result1.Filters = "ga:landingPagePath=@" + convertUrl(a_url, url) + ";ga:campaign=@" + username +";ga:country=@Canada";
          
             var final1 = result1.Execute();
             var final = result.Execute();

@@ -83,7 +83,7 @@
                         <center>
                             <p id="trafficbox">{{availablePayment | currency : "PKR"}} </p>
                             <p id="trafficbox" style="font-size: 10pt">Available Balance </p>
-                            <button type="button" id="withdrawbutton" ng-click="makePayment()">WITH DRAW</button>
+                            <button type="button" id="withdrawbutton" ng-click="makePayment($event)">WITH DRAW</button>
                         </center>
 
                     </div>
@@ -149,6 +149,37 @@
 
     </div>
 
+
+<script type="text/ng-template" id="confirmmessage.tmpl.html">
+
+
+
+
+    <md-dialog aria-label="Confirm Message" class="modal-dialog" style="width: 800px;">
+
+        <!-- Modal content-->
+        <!-- Modal content-->
+        <div class="modal-content" style="height: 16em;border-radius: 0;">
+            <div class="modal-header" style="border-bottom: 0">
+                <button type="button" class="close" data-dismiss="modal" ng-click="cancel()">&times;</button>
+
+            </div>
+            <div class="modal-body" style="padding: 2em 0em;">
+                <center><i class="fa fa-money" aria-hidden="true" style="color:#34c9ff;font-size: 18pt "></i></center>
+                <p style="color: #34c9ff;font-size: 14pt"> Withdrawl This Payment? </p>
+                <center>
+                    <p style="font-size: 10pt;font-family: lato-regular;word-spacing: 2px;margin-top: 1em;">{{Response|currency:"PKR"}}</p>
+                </center>
+                <div>
+                    <button type="button" class=" btn-md btn-link" style="font-family: lato-regular;color:#34c9ff;margin-left: 34%;font-size: 8pt " ng-click="cancel()">CANCEL</button>
+                    <button type="button" style=" border: none; border-radius: 8px; background-color: #34c9ff;color: #fff;  width: 13em;height: 31px;font-size: 8pt;margin-top: 1em;margin-left: 6%" ng-click="answer()">Confirm</button>
+                </div>
+            </div>
+
+        </div>
+    </md-dialog>
+
+</script>
 
 
 
