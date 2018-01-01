@@ -23,9 +23,13 @@ function statisticsFactory($http, apiUrl) {
     }
 
 
+    function get_notifications() {
+        return $http.get(apiUrl + 'api/user/get/notification');
+    }
     var service = {
         get_statistics: get_statistics,
-        get_top: get_top
+        get_top: get_top,
+        get_notifications: get_notifications
     };
 
     return service;

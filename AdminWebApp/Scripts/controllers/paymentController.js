@@ -30,6 +30,7 @@ function paymentController($scope, $state, $rootScope, $cookies, paymentFactory,
     $scope.clearPayment = function (ev) {
 
         var invoice = this.h.invoice_id;
+        var v = this.h;
         $mdDialog.show({
             locals: { data: "Invoice #" + invoice },
             controller: confirmDialogController,
@@ -43,6 +44,15 @@ function paymentController($scope, $state, $rootScope, $cookies, paymentFactory,
                     paymentFactory.clear_payment(invoice).then(
                         // callback function for successful http request
                         function success(response) {
+                            paymentFactory.make_notification(v.username, 'Your invoice id :' + invoice + ' is cleared').then(
+                                // callback function for successful http request
+                                function success(response) {
+                                },
+                                // callback function for error in http request
+                                function error(response) {
+                                    // log errors
+                                }
+                            );
                             $mdToast.show(
                                 $mdToast.simple()
                                     .textContent('Payment Cleared')

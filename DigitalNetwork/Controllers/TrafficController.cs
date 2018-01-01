@@ -344,8 +344,8 @@ namespace DigitalNetwork.Controllers
             GraphStats stats = new GraphStats() { dateTime = "", sessions = "0", earned = 0 };
             var result = auth.service.Data.Ga.Get("ga:" + analytics_Input.ga_id, analytics_Input.from_date, analytics_Input.to_date, analytics_Input.session);
             var result1 = auth.service.Data.Ga.Get("ga:" + analytics_Input.ga_id, analytics_Input.from_date, analytics_Input.to_date, analytics_Input.session);
-            result.Filters = "ga:medium=@digitalmarket";
-            result1.Filters = "ga:medium=@digitalmarket;ga:country=@Canada";
+            result.Filters = "ga:medium=@referral";
+            result1.Filters = "ga:medium=@referral;ga:country=@Canada";
             var session_result1 = result1.Execute();
             var session_result = result.Execute();
 

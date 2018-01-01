@@ -1316,7 +1316,7 @@ background: transparent;
 
 .nav>li:not(.active)>a.chatTab{
     font-family: lato-regular;
-    font-size: 8pt;
+    font-size: 7pt;
     color: #c6c6c6; 
     border: none;
     border-bottom: 1px solid #c6c6c6;
@@ -1327,7 +1327,7 @@ background: transparent;
 
 .nav > li.active > a.chatTab {
     font-family: lato-regular;
-    font-size: 8pt;
+    font-size: 7pt;
     color: #da454d;
     border: none;
     border-bottom: 3px solid #da454d;

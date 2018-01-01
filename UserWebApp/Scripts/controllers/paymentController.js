@@ -68,7 +68,7 @@ function paymentController($scope, $state, $rootScope, $cookies, paymentFactory,
         })
             .then(function (answer) {
                 if (answer === "Submited") {
-                    if ($scope.availablePayment > -1) {
+                    if ($scope.availablePayment > 1) {
                         paymentFactory.make_payment($scope.uid, $scope.unpaidTraffic, $scope.availablePayment).then(
                             // callback function for successful http request
                             function success(response) {
@@ -120,7 +120,7 @@ function paymentController($scope, $state, $rootScope, $cookies, paymentFactory,
                     else {
                         $mdToast.show(
                             $mdToast.simple()
-                                .textContent('Withdrawal Must be atleast PKR 0.1')
+                                .textContent('Withdrawal Must be atleast PKR 1')
                                 .action('CLOSE')
                                 .position('bottom left')
                                 .theme('error-toast')

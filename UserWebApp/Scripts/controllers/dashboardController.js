@@ -5,11 +5,12 @@ angular.module('DigitalMarket').controller('dashboardController', function ($sco
    $scope.userdata = $rootScope.globals.currentUser;
    $scope.username = $scope.userdata.fullname;
    $scope.tempData = [];
-
+   $scope.notify = true;
    $scope.chat = true;
    $scope.chattext = 'Turn On Chat';
-
-
+  
+   
+ 
    
    $scope.top_users = [];
    $scope.$parent.abbreviate = function (n) {
@@ -27,6 +28,23 @@ angular.module('DigitalMarket').controller('dashboardController', function ($sco
        // callback function for successful http request
        function success(response) {
            $scope.top_users = response.data;
+       },
+       // callback function for error in http request
+       function error(response) {
+           // log errors
+       }
+   );
+   statisticsFactory.get_notifications().then(
+       // callback function for successful http request
+       function success(response) {
+           $rootScope.Notifications = [];
+           angular.forEach(response.data, function (value, key) {
+               if ($rootScope.Notifications.indexOf(value.n_id) == -1) {
+                   if (value.uid == $rootScope.globals.currentUser.uid)
+                       $rootScope.Notifications.push(value);
+               }
+
+           });
        },
        // callback function for error in http request
        function error(response) {

@@ -30,6 +30,7 @@ namespace DigitalNetwork.Models
         public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Article> Articles { get; set; }
         public virtual DbSet<DeletedArticle> DeletedArticles { get; set; }
+        public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Rate> Rates { get; set; }
         public virtual DbSet<Rates_History> Rates_History { get; set; }
@@ -87,6 +88,31 @@ namespace DigitalNetwork.Models
                 new ObjectParameter("custom", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("add_article", aidParameter, article_urlParameter, statusParameter, titleParameter, summaryParameter, photo_urlParameter, modified_dateParameter, site_urlParameter, categoryParameter, sub_categoryParameter, customParameter);
+        }
+    
+        public virtual int add_notification(string message, string category, string uid, Nullable<bool> status, Nullable<System.DateTime> date)
+        {
+            var messageParameter = message != null ?
+                new ObjectParameter("message", message) :
+                new ObjectParameter("message", typeof(string));
+    
+            var categoryParameter = category != null ?
+                new ObjectParameter("category", category) :
+                new ObjectParameter("category", typeof(string));
+    
+            var uidParameter = uid != null ?
+                new ObjectParameter("uid", uid) :
+                new ObjectParameter("uid", typeof(string));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(bool));
+    
+            var dateParameter = date.HasValue ?
+                new ObjectParameter("date", date) :
+                new ObjectParameter("date", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("add_notification", messageParameter, categoryParameter, uidParameter, statusParameter, dateParameter);
         }
     
         public virtual int add_payment(string uid, Nullable<int> traffic, Nullable<decimal> amount, Nullable<System.DateTime> pay_date)
@@ -251,6 +277,15 @@ namespace DigitalNetwork.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("delete_article", serialParameter);
         }
     
+        public virtual int delete_notification(Nullable<int> n_id)
+        {
+            var n_idParameter = n_id.HasValue ?
+                new ObjectParameter("n_id", n_id) :
+                new ObjectParameter("n_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("delete_notification", n_idParameter);
+        }
+    
         public virtual int delete_site(string site_url, string email)
         {
             var site_urlParameter = site_url != null ?
@@ -385,6 +420,11 @@ namespace DigitalNetwork.Models
                 new ObjectParameter("uid", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_joining_date_Result>("get_joining_date", uidParameter);
+        }
+    
+        public virtual ObjectResult<get_notification_Result> get_notification()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<get_notification_Result>("get_notification");
         }
     
         public virtual ObjectResult<get_payment_Result> get_payment(string uid)
@@ -577,6 +617,19 @@ namespace DigitalNetwork.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("update_articles", statusParameter, serialParameter, catParameter, subcatParameter);
         }
     
+        public virtual int update_notification(string uid, Nullable<bool> status)
+        {
+            var uidParameter = uid != null ?
+                new ObjectParameter("uid", uid) :
+                new ObjectParameter("uid", typeof(string));
+    
+            var statusParameter = status.HasValue ?
+                new ObjectParameter("status", status) :
+                new ObjectParameter("status", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("update_notification", uidParameter, statusParameter);
+        }
+    
         public virtual int update_rates(string category, Nullable<decimal> rate, Nullable<System.DateTime> date)
         {
             var categoryParameter = category != null ?
@@ -673,6 +726,15 @@ namespace DigitalNetwork.Models
                 new ObjectParameter("status", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("user_update", uidParameter, statusParameter);
+        }
+    
+        public virtual ObjectResult<string> get_uid(string username)
+        {
+            var usernameParameter = username != null ?
+                new ObjectParameter("username", username) :
+                new ObjectParameter("username", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("get_uid", usernameParameter);
         }
     }
 }

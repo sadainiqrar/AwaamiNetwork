@@ -16,6 +16,7 @@ namespace DigitalNetwork.Scheduler
     public class RealtimeEngine
     {
         private IHubContext _hubs;
+       
         private readonly int _pollIntervalMillis;
 
 
@@ -23,13 +24,15 @@ namespace DigitalNetwork.Scheduler
         {
             //HostingEnvironment.RegisterObject(this);
             _hubs = GlobalHost.ConnectionManager.GetHubContext<RealtimeHub>();
+          
             _pollIntervalMillis = pollIntervalMillis;
         }
 
         public async Task OnDataMonitor()
         {
             Dictionary<string, RealtimeModel> data = new Dictionary<string, RealtimeModel>();
-        
+          //  List<get_notification_Result> notifications = new List<get_notification_Result>();
+
             //Monitor for infinity!
             while (true)
             {
@@ -37,8 +40,11 @@ namespace DigitalNetwork.Scheduler
 
                 //List of performance models that is loaded up on every itteration.
                 data = statistics();
-                
+            //    notifications = notify();
+
+
                 _hubs.Clients.All.broadcastData(data);
+            //    _hubs1.Clients.All.broadcastData(notifications);
       
             }
             
@@ -100,6 +106,18 @@ namespace DigitalNetwork.Scheduler
                 realtimeList.Add(user.uid, final);
             }
             return realtimeList;
+        }
+
+        public List<get_notification_Result> notify()
+        {
+            List<get_notification_Result> notifications = new List<get_notification_Result>();
+
+            using (var data = new digimarketEntities1().get_notification())
+            {
+                notifications = data.ToList<get_notification_Result>();
+            }
+
+            return notifications;
         }
         public void Stop(bool immediate)
         {

@@ -21,6 +21,7 @@ function paymentFactory($http, apiUrl) {
         return $http.put(apiUrl + 'api/payment/make', data);
 
     }
+   
 
 
     var service = {

@@ -215,13 +215,13 @@
         <div class="col-md-12" ng-hide="!(chat)">
 
             <ul class="nav nav-tabs" id="Tab" style=" padding: 0em 1em;">
-                <li class="active"><a class="chatTab" data-toggle="tab">TOP USERS</a></li>
-                <li><a class="chatTab" data-toggle="tab">NOTIFICATIONS</a></li>
+                <li class="active" ><a class="chatTab" data-toggle="tab" ng-click="notify = true">TOP USERS</a></li>
+                <li><a class="chatTab" data-toggle="tab" ng-click="notify = false">NOTIFICATIONS</a></li>
             </ul>
 
 
 
-            <div class="col-md-12 subPanel" style="overflow-y: auto; height: 460px;">
+            <div class="col-md-12 subPanel" style="overflow-y: auto; height: 460px;" ng-hide="!notify">
                 <div class="col-md-12 topuserpad" ng-repeat="user in top_users| orderBy:user.Value:true | limitTo: 10 ">
                     <div class="col-lg-2 col-md-2 imgchatpad">
                         <ng-avatar class="img-circle imagecircle" initials={{user.Key[0]}} auto-color="true" round-shape="true" picture-resolution="1024" width="30"  ></ng-avatar>
@@ -229,6 +229,21 @@
                     <div class="col-lg-9 col-md-9" style="padding-left: 15px;float:left">
                         <p class="topusername">{{user.Key}}</p>
                         <p class="usrearning">Total Traffic Generated:{{abbreviate(user.Value)}}</p>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col-md-12 subPanel" style="overflow-y: auto; height: 460px;"  ng-hide="notify">
+                <div class="col-md-12 topuserpad" ng-repeat="notification in Notifications| orderBy:notification.Value:true  ">
+                    <div class="col-lg-2 col-md-2 imgchatpad">
+                        <i class=" fa fa-money icon" style="color:#da454d"></i>
+                    </div>
+                    <div class="col-lg-9 col-md-9" style="padding-left: 15px;float:left">
+                        
+                        <p class="usrearning">{{notification.message}}</p>
+                        <p class="usrearning">Date:{{notification.date| date: "fullDate"}}</p>
                     </div>
                 </div>
 

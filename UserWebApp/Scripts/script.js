@@ -90,7 +90,7 @@ scotchApp.constant('chatUrl', 'http://localhost:3000');
     scotchApp.run(run);
 
     run.$inject = ['$rootScope', 'Facebook', 'realtimeHubProxy', 'AuthenticationService', '$location', '$state', '$cookies', '$http'];
-    function run($rootScope, Facebook, realtimeHubProxy, AuthenticationService, $location, $state, $cookies, $http) {
+    function run($rootScope, Facebook, realtimeHubProxy,AuthenticationService, $location, $state, $cookies, $http) {
         
         $rootScope.realtimeDataHub = realtimeHubProxy("http://localhost:3208/", 'RealtimeHub');
 
@@ -101,7 +101,23 @@ scotchApp.constant('chatUrl', 'http://localhost:3000');
             var timestamp = ((new Date()).getTime() / 1000) | 0;
             $rootScope.realtimeValue = data; 
         });
+        $rootScope.notificationDataHub = realtimeHubProxy("http://localhost:3208/", 'NotificationHub');
 
+        //$scope.realtimeLineFeed = entry;
+
+
+        $rootScope.notificationDataHub.on('broadcastData', function (notifications) {
+            var timestamp = ((new Date()).getTime() / 10000) | 0;
+            $rootScope.Notifications = [];
+            angular.forEach(notifications, function (value, key) {
+                
+                if (value.uid === $rootScope.globals.currentUser.uid) {
+                    $rootScope.Notifications.push(value);
+                }
+                
+              
+            });
+        });
 
         // keep user logged in after page refresh
         $rootScope.globals = $cookies.getObject('globals') || {};
