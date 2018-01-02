@@ -5,7 +5,7 @@ var scotchApp = angular.module('DigitalMarket', ['ui.router', 'ngRoute', 'ngCook
 // configure our routes
 
 
-scotchApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'GoogleSigninProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, GoogleSigninProvider) {
+scotchApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', 'GoogleSigninProvider', '$mdThemingProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, GoogleSigninProvider, $mdThemingProvider) {
 
 
     GoogleSigninProvider.init({
@@ -13,7 +13,8 @@ scotchApp.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '
 
     });
 
-
+    $mdThemingProvider.theme('error-toast');
+    $mdThemingProvider.theme('success-toast');
     $stateProvider
 
         // route for the home page

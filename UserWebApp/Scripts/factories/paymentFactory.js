@@ -22,6 +22,7 @@ function paymentFactory($http, apiUrl) {
 
     }
    
+   
 
 
     var service = {

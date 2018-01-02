@@ -44,7 +44,7 @@ function paymentController($scope, $state, $rootScope, $cookies, paymentFactory,
                     paymentFactory.clear_payment(invoice).then(
                         // callback function for successful http request
                         function success(response) {
-                            paymentFactory.make_notification(v.username, 'Your invoice id :' + invoice + ' is cleared').then(
+                            paymentFactory.make_notification(v.username, 'Your invoice id :' + invoice + ' is cleared','payment').then(
                                 // callback function for successful http request
                                 function success(response) {
                                 },

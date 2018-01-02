@@ -21,8 +21,8 @@ function paymentFactory($http, apiUrl) {
         return $http.put(apiUrl + 'api/admin/payment/clear', data);
 
     }
-    function make_notification(_uid, _msg) {
-        var data = { uid: _uid, message: _msg, category: 'payment' };
+    function make_notification(_uid, _msg,_category) {
+        var data = { uid: _uid, message: _msg, category: _category };
         return $http.put(apiUrl + 'api/admin/push/notification', data);
 
     }

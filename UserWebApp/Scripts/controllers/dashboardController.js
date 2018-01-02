@@ -1,16 +1,32 @@
 	// create the controller and inject Angular's $scope
-angular.module('DigitalMarket').controller('dashboardController', function ($scope, socket, Facebook, AuthenticationService, $rootScope, $state, $cookies, $location, statisticsFactory) {
+angular.module('DigitalMarket').controller('dashboardController', function ($scope,$document, $anchorScroll, socket, Facebook, AuthenticationService, $rootScope, $state, $cookies, $location, statisticsFactory) {
     $rootScope.globals = $cookies.getObject('globals') || {};
 
    $scope.userdata = $rootScope.globals.currentUser;
    $scope.username = $scope.userdata.fullname;
    $scope.tempData = [];
-   $scope.notify = true;
+   $rootScope.notify = true;
+   $rootScope.badge = true;
    $scope.chat = true;
    $scope.chattext = 'Turn On Chat';
-  
-   
  
+
+
+   
+   if (!$rootScope.notify)
+   {
+       statisticsFactory.mark_as_read($scope.userdata.uid).then(
+           // callback function for successful http request
+           function success(response) {
+               $rootScope.badge = true;
+           },
+           // callback function for error in http request
+           function error(response) {
+               // log errors
+           }
+
+       );
+   };
    
    $scope.top_users = [];
    $scope.$parent.abbreviate = function (n) {
@@ -19,7 +35,7 @@ angular.module('DigitalMarket').controller('dashboardController', function ($sco
        var base = Math.floor(Math.log(Math.abs(n)) / Math.log(1000));
        var suffix = 'KMBT'[base - 1];
        return suffix ? roundWithPrecision(n / Math.pow(1000, base), 2) + suffix : '' + n;
-   }
+   };
    function roundWithPrecision(n, precision) {
        var prec = Math.pow(10, precision);
        return Math.round(n * prec) / prec;
@@ -38,13 +54,25 @@ angular.module('DigitalMarket').controller('dashboardController', function ($sco
        // callback function for successful http request
        function success(response) {
            $rootScope.Notifications = [];
+           $rootScope.counter = 0;
+          
            angular.forEach(response.data, function (value, key) {
-               if ($rootScope.Notifications.indexOf(value.n_id) == -1) {
-                   if (value.uid == $rootScope.globals.currentUser.uid)
+               if ($rootScope.Notifications.indexOf(value.n_id) === -1) {
+                   if (value.uid === $rootScope.globals.currentUser.uid)
+                   {
                        $rootScope.Notifications.push(value);
-               }
+                       if (value.status === false) {
+                           $rootScope.counter++;
 
+                       }
+                   }
+                     
+               }
+               
            });
+           if ($rootScope.counter > 0) {
+               $rootScope.badge = false;
+           }
        },
        // callback function for error in http request
        function error(response) {
@@ -52,6 +80,9 @@ angular.module('DigitalMarket').controller('dashboardController', function ($sco
        }
    );
 
+   $scope.anchor = function () {
+       $anchorScroll('bottom');
+   }
    $scope.hidechat = function ()
    {
        $scope.chat = !($scope.chat);
@@ -60,15 +91,23 @@ angular.module('DigitalMarket').controller('dashboardController', function ($sco
            $scope.chattext = 'Turn On Chat';
        }
        else {
+         
+       $anchorScroll('bottom');
+        
+       
+           //div[0].animate({
 
+           //    scrollTop = div[0].scrollHeight
+
+
+           //}, 500);
+           
            $scope.chattext = 'Turn Off Chat';
        }
    }
    if (socket) {
        socket.emit('disconnect', { username: $scope.userdata.username });
    }
-
-
 
 
 
@@ -87,6 +126,25 @@ angular.module('DigitalMarket').controller('dashboardController', function ($sco
            }
        });
    };
+   $scope.read = function () {
+       $rootScope.notify = false;
+       statisticsFactory.mark_as_read($scope.userdata.uid).then(
+           // callback function for successful http request
+           function success(response) {
+               $rootScope.badge = true;
+           },
+           // callback function for error in http request
+           function error(response) {
+               // log errors
+           }
+
+       );
+
+   };
+   $scope.r = function () {
+       $rootScope.notify = true;
+   }
+
 
 
    $scope.messages = [];
@@ -111,6 +169,8 @@ angular.module('DigitalMarket').controller('dashboardController', function ($sco
         socket.on("message", function (data) {
 
             $scope.messages.push({ username: data.username, message: data.message });
+            $scope.anchor();
+            
         });
 
         socket.on("unjoin", function (data) {
@@ -124,7 +184,7 @@ angular.module('DigitalMarket').controller('dashboardController', function ($sco
 
     $scope.send = function ()
     {
-        if (socket && $scope.message!='')
+        if (socket && $scope.message!=='')
         {
             var data = { username: $scope.userdata.username, message: $scope.message}
             socket.emit('message', data );

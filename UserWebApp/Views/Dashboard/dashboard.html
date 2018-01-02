@@ -215,8 +215,9 @@
         <div class="col-md-12" ng-hide="!(chat)">
 
             <ul class="nav nav-tabs" id="Tab" style=" padding: 0em 1em;">
-                <li class="active" ><a class="chatTab" data-toggle="tab" ng-click="notify = true">TOP USERS</a></li>
-                <li><a class="chatTab" data-toggle="tab" ng-click="notify = false">NOTIFICATIONS</a></li>
+                <li class="active" ><a class="chatTab" data-toggle="tab" ng-click="r()">Top Users</a></li>
+                <li><a class="chatTab" data-toggle="tab" ng-click="read()">Notifications<span ng-hide="badge" class="badge">{{counter}}</span></a>
+                </li>
             </ul>
 
 
@@ -237,8 +238,12 @@
 
             <div class="col-md-12 subPanel" style="overflow-y: auto; height: 460px;"  ng-hide="notify">
                 <div class="col-md-12 topuserpad" ng-repeat="notification in Notifications| orderBy:notification.Value:true  ">
-                    <div class="col-lg-2 col-md-2 imgchatpad">
-                        <i class=" fa fa-money icon" style="color:#da454d"></i>
+                    <div class="col-lg-2 col-md-2 imgchatpad" ng-switch="notification.category">
+                       
+                        <i  ng-switch-when="payment" class=" fa fa-money icon" style="color:#da454d"></i>
+                        <i ng-switch-when="status" class=" fa fa-check icon" style="color:#da454d"></i>
+                        <i  ng-switch-default class=" fa fa-bell icon" style="color:#da454d"></i>
+                       
                     </div>
                     <div class="col-lg-9 col-md-9" style="padding-left: 15px;float:left">
                         
@@ -265,10 +270,10 @@
             </div>
 
             <hr class="chatline" style="margin: 0;margin-left: 5px">
+            
+            <div id="abc" class="col-md-12 subPanel" style="overflow-y: auto;overflow-x: hidden; height: 400px;" >
 
-            <div class="col-md-12 subPanel" style="overflow-y: auto;overflow-x: hidden; height: 400px;display: flex;flex-direction: column-reverse;">
-
-                <div class="row rowpad" style="height:fit-content" ng-repeat="m in messages | orderBy:'':true">
+                <div class="row rowpad" style="height:fit-content" ng-repeat="m in messages | orderBy:'':false">
 
                     <div class="col-lg-2 col-md-2" ng-class="{ 'userchat': m.username!=userdata.username,'friendchat': m.username==userdata.username }">
 
@@ -278,8 +283,11 @@
                     <div class="col-lg-10 col-md-10" ng-class="{ 'userdiv': m.username!=userdata.username,'frienddiv': m.username==userdata.username }">
                         <p ng-class="{ 'userchatmsg': m.username!=userdata.username,'friendchatmsg': m.username==userdata.username  }">{{m.message}}</p>
                     </div>
-
+                   
                 </div>
+                {{ anchor()}}
+                <a id="bottom" ng-init=""></a>
+
 
 
 
@@ -287,6 +295,7 @@
 
             </div>
 
+            
 
             <div class="col-md-12">
 
@@ -297,7 +306,7 @@
         </div>
 
         <div class="col-md-12">
-            <button class="button" ng-class="{ 'chatbutton': chat,'chatoffbutton': !chat  }" ng-click="hidechat()">{{chattext}}<i class="fa fa-share-square-o" aria-hidden="true" style="float:right;padding-top:4px" ></i></button>
+            <button id="chatbtn" class="button" ng-class="{ 'chatbutton': chat,'chatoffbutton': !chat  }" ng-click="hidechat()" >{{chattext}}<i class="fa fa-share-square-o" aria-hidden="true" style="float:right;padding-top:4px" ></i></button>
 
         </div>
 

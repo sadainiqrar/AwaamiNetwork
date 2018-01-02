@@ -1,4 +1,15 @@
 /* Let's get this party started */
+
+
+md-toast.md-success-toast-theme .md-toast-content, md-toast .md-toast-content {
+    background-color: rgba(54, 129, 201, 0.9909803921568627) !important;
+    z-index: 9000 !important;
+}
+
+md-toast.md-error-toast-theme .md-toast-content, md-toast .md-toast-content {
+    background-color: rgba(255, 0, 0, 0.65) !important;
+    z-index: 9000 !important;
+}
 .raphael-group-37-creditgroup{
     font-size: 0;
 }

@@ -26,10 +26,16 @@ function statisticsFactory($http, apiUrl) {
     function get_notifications() {
         return $http.get(apiUrl + 'api/user/get/notification');
     }
+    function mark_as_read(_uid) {
+        var data = { uid: _uid };
+        return $http.post(apiUrl + 'api/admin/update/notification', data);
+
+    }
     var service = {
         get_statistics: get_statistics,
         get_top: get_top,
-        get_notifications: get_notifications
+        get_notifications: get_notifications,
+        mark_as_read: mark_as_read
     };
 
     return service;

@@ -89,8 +89,8 @@ scotchApp.constant('apiUrl', 'http://localhost:3208/');
 scotchApp.constant('chatUrl', 'http://localhost:3000');
     scotchApp.run(run);
 
-    run.$inject = ['$rootScope', 'Facebook', 'realtimeHubProxy', 'AuthenticationService', '$location', '$state', '$cookies', '$http'];
-    function run($rootScope, Facebook, realtimeHubProxy,AuthenticationService, $location, $state, $cookies, $http) {
+    run.$inject = ['$rootScope', 'Facebook', 'realtimeHubProxy', 'AuthenticationService', 'statisticsFactory', '$location', '$state', '$cookies', '$http'];
+    function run($rootScope, Facebook, realtimeHubProxy, AuthenticationService, statisticsFactory, $location, $state, $cookies, $http) {
         
         $rootScope.realtimeDataHub = realtimeHubProxy("http://localhost:3208/", 'RealtimeHub');
 
@@ -109,14 +109,37 @@ scotchApp.constant('chatUrl', 'http://localhost:3000');
         $rootScope.notificationDataHub.on('broadcastData', function (notifications) {
             var timestamp = ((new Date()).getTime() / 10000) | 0;
             $rootScope.Notifications = [];
+            $rootScope.counter = 0;
             angular.forEach(notifications, function (value, key) {
                 
                 if (value.uid === $rootScope.globals.currentUser.uid) {
                     $rootScope.Notifications.push(value);
+                    if (value.status == false) {
+                        $rootScope.counter++;
+
+                    }
                 }
+                
                 
               
             });
+           
+            if (!$rootScope.notify) {
+                statisticsFactory.mark_as_read($rootScope.globals.currentUser.uid).then(
+                    // callback function for successful http request
+                    function success(response) {
+                        $rootScope.badge = true;
+                    },
+                    // callback function for error in http request
+                    function error(response) {
+                        // log errors
+                    }
+
+                );
+            }
+            else if  ($rootScope.counter > 0) {
+                $rootScope.badge = false;
+            }
         });
 
         // keep user logged in after page refresh

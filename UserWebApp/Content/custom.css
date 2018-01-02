@@ -1,6 +1,29 @@
 /* Let's get this party started */
 
-
+.badge {
+    display: inline-block;
+    min-width: 8px;
+    padding: 3px 5px;
+    font-size: 7pt;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color:  #da454d;
+    border-radius: 40px;
+}
+@media(min-width:992px) {
+    .badge {
+        font-size: 5.5pt;
+    }
+}
+@media(min-width:1000px) {
+    .badge {
+        font-size: 7pt;
+    }
+}
 md-toast.md-success-toast-theme .md-toast-content, md-toast .md-toast-content {
     background-color: rgba(54, 129, 201, 0.9909803921568627) !important;
     z-index: 9000 !important;
@@ -1316,7 +1339,7 @@ background: transparent;
 
 .nav>li:not(.active)>a.chatTab{
     font-family: lato-regular;
-    font-size: 7pt;
+    font-size: 8pt;
     color: #c6c6c6; 
     border: none;
     border-bottom: 1px solid #c6c6c6;
@@ -1327,7 +1350,7 @@ background: transparent;
 
 .nav > li.active > a.chatTab {
     font-family: lato-regular;
-    font-size: 7pt;
+    font-size: 8pt;
     color: #da454d;
     border: none;
     border-bottom: 3px solid #da454d;

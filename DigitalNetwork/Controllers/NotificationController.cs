@@ -41,7 +41,7 @@ namespace DigitalNetwork.Controllers
                 uid = data.FirstOrDefault<string>(); 
             }
 
-            result = new digimarketEntities1().add_notification(notification.message, notification.category, uid, true, System.DateTime.Now);
+            result = new digimarketEntities1().add_notification(notification.message, notification.category, uid, false, System.DateTime.Now);
             List<get_notification_Result> notifications = new List<get_notification_Result>();
             using (var data = new digimarketEntities1().get_notification())
             {
@@ -58,7 +58,7 @@ namespace DigitalNetwork.Controllers
         public int Update_Notification([FromBody] Notification notification)
         {
 
-            return new digimarketEntities1().update_notification(notification.uid,notification.status);
+            return new digimarketEntities1().update_notification(notification.uid,true);
         }
         [HttpDelete]
         [Route("api/admin/Delete/notification")]

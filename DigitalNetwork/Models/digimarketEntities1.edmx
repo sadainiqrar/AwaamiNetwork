@@ -138,6 +138,7 @@
         <EntityType Name="User_Marketing_Sources">
           <Key>
             <PropertyRef Name="ums_id" />
+            <PropertyRef Name="uid" />
           </Key>
           <Property Name="ums_id" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="uid" Type="varchar" MaxLength="20" Nullable="false" />
@@ -1103,7 +1104,7 @@
             <Parameter Name="status" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="get_uid" ReturnType="Collection(String)">
-            <Parameter Name="username" Mode="In" Type="String" />
+          <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="admin_sign_in_Result">
