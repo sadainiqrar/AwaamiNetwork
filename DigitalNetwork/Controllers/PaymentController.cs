@@ -67,7 +67,7 @@ namespace DigitalNetwork.Controllers
                 joiningDate = join.FirstOrDefault<get_joining_date_Result>().date;
             }
 
-            user_traffic traffic = new TrafficController().UserSessions(new DataModel.User_Analytic_Input() { uid = user.uid, from_date = new ArticleController().convertDate(joiningDate), to_date = new ArticleController().convertDate(DateTime.Now),
+            user_traffic traffic = new TrafficController().UserSession(new DataModel.User_Analytic_Input() { uid = user.uid, from_date = new ArticleController().convertDate(joiningDate), to_date = new ArticleController().convertDate(DateTime.Now),
             extra = user.username});
             using (var rate = new digimarketEntities1().get_rate("premium"))
             {

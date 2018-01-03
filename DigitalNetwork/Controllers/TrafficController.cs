@@ -194,7 +194,95 @@ namespace DigitalNetwork.Controllers
 
         [HttpPost]
         [Route("api/user/sessions")]
-        public user_traffic UserSessions([FromBody]User_Analytic_Input analytics_Input)
+        public user_traffic_earning UserSessions([FromBody]User_Analytic_Input analytics_Input)
+        {
+            user_traffic_earning traffic = new user_traffic_earning() { todayEarned = 0, monthlyTraffic = 0, todayTraffic = 0, monthlyEarned = 0 };
+            ArticleController a = new ArticleController();
+            GraphController use = new GraphController();
+            user_traffic month_traffic = new user_traffic() { premium = 0, non_premium = 0 };
+            user_traffic today_traffic = new user_traffic() { premium = 0, non_premium = 0 };
+            List<get_user_traffic_Result> res = get_all_sites(analytics_Input.uid);
+            var to = System.DateTime.Now;
+            var t_from = System.DateTime.Now;
+            var m_from = System.DateTime.Now;
+            if (to.Month == 1)
+            {
+                m_from = new DateTime(to.Year - 1, 12, to.Day);
+            }
+            else
+            {
+                m_from = new DateTime(to.Year, to.Month - 1, to.Day);
+            }
+
+            foreach (var item in res)
+            {
+
+                Authorization auth = new Authorization(item.email);
+
+                var result = auth.service.Data.Ga.Get("ga:" + item.ga_id, a.convertDate(m_from), a.convertDate(to), analytics_Input.session);
+                var result1 = auth.service.Data.Ga.Get("ga:" + item.ga_id, a.convertDate(m_from), a.convertDate(to), analytics_Input.session);
+                var result3 = auth.service.Data.Ga.Get("ga:" + item.ga_id, a.convertDate(t_from), a.convertDate(to), analytics_Input.session);
+                var result4 = auth.service.Data.Ga.Get("ga:" + item.ga_id, a.convertDate(t_from), a.convertDate(to), analytics_Input.session);
+                if ((analytics_Input.extra != null))
+                {
+                    if (!analytics_Input.extra.Equals(""))
+                    {
+                        result.Filters = "ga:campaign=@" + analytics_Input.extra;
+                        result1.Filters = "ga:campaign=@" + analytics_Input.extra + ";ga:country=@Canada";
+                        result3.Filters = "ga:campaign=@" + analytics_Input.extra;
+                        result4.Filters = "ga:campaign=@" + analytics_Input.extra + ";ga:country=@Canada";
+                    }
+                }
+                var today_result = result3.Execute();
+                var today_result1 = result4.Execute();
+                var session_result = result.Execute();
+                var session_result1 = result1.Execute();
+                int count = (int)session_result.TotalResults;
+                if (count != 0)
+                {
+
+                    month_traffic.non_premium += long.Parse(session_result.Rows[0].FirstOrDefault<string>());
+
+                }
+                //     month_traffic.non_premium = month_traffic.non_premium + 0;
+                int count2 = (int)session_result1.TotalResults;
+                if (count2 != 0)
+                {
+
+                    month_traffic.premium += long.Parse(session_result1.Rows[0].FirstOrDefault<string>());
+
+                }
+
+                int count3 = (int)today_result.TotalResults;
+                if (count3 != 0)
+                {
+
+                    today_traffic.non_premium += long.Parse(today_result.Rows[0].FirstOrDefault<string>());
+
+                }
+                //     month_traffic.non_premium = month_traffic.non_premium + 0;
+                int count4 = (int)today_result1.TotalResults;
+                if (count4 != 0)
+                {
+
+                    today_traffic.premium += long.Parse(today_result1.Rows[0].FirstOrDefault<string>());
+
+
+                }
+                //     month_traffic.premium = month_traffic.premium + 0;
+            }
+
+            month_traffic.non_premium = month_traffic.non_premium - month_traffic.premium;
+            today_traffic.non_premium = today_traffic.non_premium - today_traffic.premium;
+            traffic.monthlyTraffic = month_traffic.premium + month_traffic.non_premium;
+            traffic.todayTraffic = today_traffic.premium + today_traffic.non_premium;
+            traffic.monthlyEarned = use.GetEarned((month_traffic.premium).ToString(), "premium") + use.GetEarned((month_traffic.non_premium).ToString(), "non-premium");
+            traffic.todayEarned = use.GetEarned((today_traffic.premium).ToString(), "premium") + use.GetEarned((today_traffic.non_premium).ToString(), "non-premium");
+
+            return traffic;
+        }
+
+        public user_traffic UserSession([FromBody]User_Analytic_Input analytics_Input)
         {
             user_traffic traffic = new user_traffic();
             traffic.non_premium = 0;
@@ -241,7 +329,6 @@ namespace DigitalNetwork.Controllers
             return traffic;
         }
 
-
         public List<get_user_traffic_Result> get_all_sites(string uid)
         {
             return db.get_user_traffic(uid).ToList<get_user_traffic_Result>();
@@ -264,7 +351,15 @@ namespace DigitalNetwork.Controllers
             ArticleController a = new ArticleController();
 
             var to = System.DateTime.Now;
-            var from = new DateTime(to.Year, to.Month - 1, to.Day);
+            var from = System.DateTime.Now;
+            if (to.Month == 1)
+            {
+                from = new DateTime(to.Year - 1, 12, to.Day);
+            }
+            else
+            {
+                from = new DateTime(to.Year, to.Month - 1, to.Day);
+            }
             //List < List < UserStats >> total_stats = new List<List<UserStats>>();
 
             List<MapData> map = new List<MapData>();

@@ -283,8 +283,9 @@
                     <div class="col-lg-10 col-md-10" ng-class="{ 'userdiv': m.username!=userdata.username,'frienddiv': m.username==userdata.username }">
                         <p ng-class="{ 'userchatmsg': m.username!=userdata.username,'friendchatmsg': m.username==userdata.username  }">{{m.message}}</p>
                     </div>
-                   
+                 
                 </div>
+
                 {{ anchor()}}
                 <a id="bottom" ng-init=""></a>
 
@@ -300,8 +301,9 @@
             <div class="col-md-12">
 
                 <hr class="linechat">
-
+     
                 <input type="text" placeholder="Type your message..." class="messagebox" style="width: 90%;" ng-model="message" ng-keyup="$event.keyCode == 13 && send()"><i class="fa fa-send" id="sendbtnicon" ng-click="send()"></i>
+
             </div>
         </div>
 

@@ -26,7 +26,7 @@ angular.module('DigitalMarket').controller('dashboardController', function ($sco
            }
 
        );
-   };
+   }
    
    $scope.top_users = [];
    $scope.$parent.abbreviate = function (n) {
@@ -81,18 +81,19 @@ angular.module('DigitalMarket').controller('dashboardController', function ($sco
    );
 
    $scope.anchor = function () {
-       $anchorScroll('bottom');
+      
+           $anchorScroll('bottom');
    }
    $scope.hidechat = function ()
    {
-       $scope.chat = !($scope.chat);
+       $scope.chat = !$scope.chat;
        if ($scope.chat)
        {
            $scope.chattext = 'Turn On Chat';
        }
        else {
          
-       $anchorScroll('bottom');
+       
         
        
            //div[0].animate({
