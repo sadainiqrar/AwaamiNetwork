@@ -361,44 +361,63 @@ function mainController($scope, $rootScope, $cookies, articleFactory, sessionFac
 
 
 
-    function AddArticleDialogController($scope, $rootScope, $cookies, $mdDialog, articleFactory) {
-
+    function AddArticleDialogController($scope, $rootScope, $cookies,$mdToast, $mdDialog, articleFactory) {
+        $scope.disable = true;
         $scope.haveArticle = false;
         $scope.searchingarticle = false;
         $scope.url = "";
         $scope.article = { title: "", description: "", image: "", url: "", site_url: $rootScope.globals.currentUser.currentSite.site_url };
+      
         $scope.getMeta = function ()
         {
+            if ($scope.url == "" || $scope.url == undefined) {
+                $mdToast.show(
+                    $mdToast.simple()
+                        .textContent('Error! Empty Article Link')
+                        .action('CLOSE')
+                        .position('bottom left')
+                        .theme('error-toast')
+                        .hideDelay(3000)
+                );
+            } else {
+                $scope.searchingarticle = true;
 
-            $scope.searchingarticle = true;
-            articleFactory.getArticleMeta($scope.url).then(
-                // callback function for successful http request
-                function success(response) {
-                    $scope.article.title = response.data.title;
-                    $scope.article.description = response.data.description;
-                    $scope.article.image = response.data.image;
-                    $scope.article.url = response.data.url;
-                    if ($scope.article.url.indexOf($scope.article.site_url) !== -1)
-                    {
-                        $scope.haveArticle = true;
+                articleFactory.getArticleMeta($scope.url).then(
+                    // callback function for successful http request
+                    function success(response) {
+                        $scope.article.title = response.data.title;
+                        $scope.article.description = response.data.description;
+                        $scope.article.image = response.data.image;
+                        $scope.article.url = response.data.url;
+                        if ($scope.article.url.indexOf($scope.article.site_url) !== -1) {
+                            $scope.haveArticle = true;
 
+                            $scope.searchingarticle = false;
+
+                        }
+                        else {
+
+                            $scope.haveArticle = false;
+                            $scope.searchingarticle = false;
+                            $scope.disable = false;
+                            $mdToast.show(
+                                $mdToast.simple()
+                                    .textContent('Error!')
+                                    .action('CLOSE')
+                                    .position('bottom left')
+                                    .theme('error-toast')
+                                    .hideDelay(3000)
+                            );
+                        }
+
+                    },
+                    // callback function for error in http request
+                    function error(response) {
                         $scope.searchingarticle = false;
+                        // log errors
                     }
-                    else {
-                        
-                        $scope.haveArticle = false;
-                        $scope.searchingarticle = false;
-                        alert("Errorrrr");
-                    }
-
-                },
-                // callback function for error in http request
-                function error(response) {
-                    $scope.searchingarticle = false;
-                    // log errors
-                }
-            );
-
+                );
+            }
         }
 
         $scope.addArticle = function () {
