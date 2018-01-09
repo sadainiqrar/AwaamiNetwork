@@ -36,6 +36,16 @@ namespace DigitalNetwork
 
             RealtimeEngine realtime = new RealtimeEngine(10000);
             Task.Factory.StartNew(async () => await realtime.OnDataMonitor());
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            process.StartInfo.UseShellExecute = false;
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            startInfo.FileName = "cmd.exe";
+            startInfo.WorkingDirectory = @"C:\Users\AJ\source\repos\Awami Network\nodejs";
+            startInfo.Arguments = @"/c node app";
+            process.StartInfo = startInfo;
+            process.Start();
+         
         }
     }
 }
