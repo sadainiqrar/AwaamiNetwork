@@ -75,44 +75,15 @@ function trafficController($scope, $rootScope, $cookies, sessionFactory, statist
             function success(response) {
                 $scope.userStat = response.data;
 
-                angular.forEach($scope.userStat, function (value, key) {
-                    value.total_traffic = value.premium + value.non_premium;
-                    value.day = dateParser(value.day);
-
-                    sessionFactory.getRate("premium").then(
-                        // callback function for successful http request
-                        function success(response) {
-                            value.total_earning = value.total_earning + ((value.premium / 1000) * response.data[0].rate);
 
 
-                        },
-                        // callback function for error in http request
-                        function error(response) {
-                            // log errors
-                        }
-                    );
-                    sessionFactory.getRate("non-premium").then(
-                        // callback function for successful http request
-                        function success(response) {
-                            value.total_earning = value.total_earning + ((value.non_premium / 1000) * response.data[0].rate);
-                            $scope.isLoading = false;
-
-                        },
-                        // callback function for error in http request
-                        function error(response) {
-                            // log errors
-                            $scope.isLoading = false;
-                        }
-                    );
-
-                });
 
                 $scope.isLoading = false;
             },
             // callback function for error in http request
             function error(response) {
-                $scope.isLoading = false;
                 // log errors
+                $scope.isLoading = false;
             }
         );
 

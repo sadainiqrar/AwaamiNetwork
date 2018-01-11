@@ -127,7 +127,7 @@
 
                     <td id="paymenttable">{{h.amount | currency :"PKR"}}</td>
 
-                    <td id="paymenttable">{{h.status}}</td>
+                    <td id="paymenttable" ng-class="h.status == 'cleared' ? 'cleared' : 'pending'">{{h.status}}</td>
                 </tr>
 
             </table>

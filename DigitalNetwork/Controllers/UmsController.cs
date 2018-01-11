@@ -52,8 +52,15 @@ namespace DigitalNetwork.Controllers
                 ApplicationName = "digitalnetwork-182506",
                 ApiKey = "AIzaSyDvURFxjBImiFEEsJjNunfVSvbrRP1u9yA"
             });
+            try { 
             Url response = service.Url.Insert(new Url { LongUrl = data.ums_id + "?utm_source=facebook&utm_medium=digitalmarket&utm_campaign=" + data.uid }).Execute();
-            return response.Id;
+                return response.Id;
+            }
+            catch (Exception e)
+            {
+              
+            }
+            return data.ums_id + "?utm_source=facebook&utm_medium=digitalmarket&utm_campaign=" + data.uid;
 
         }
 

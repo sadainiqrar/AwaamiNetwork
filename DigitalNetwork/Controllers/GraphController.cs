@@ -39,20 +39,27 @@ namespace DigitalNetwork.Controllers
 
             result.Filters = "ga:medium=@referral";
             result1.Filters =  "ga:medium=@referral;ga:country=@Canada";
-            var final = result.Execute();
-            var final1 = result1.Execute();
-            int count = (int)final.TotalResults;
-            int count1 = (int)final1.TotalResults;
-            if (count != 0 && (count == count1))
+            try
             {
-                for (int i = 0; i < count; i++)
+                var final = result.Execute();
+                var final1 = result1.Execute();
+                int count = (int)final.TotalResults;
+                int count1 = (int)final1.TotalResults;
+                if (count != 0 && (count == count1))
                 {
-                    var item1 = final.Rows[i];
-                    var item2 = final1.Rows[i];
-                    GraphStats temp2 = new GraphStats() { dateTime = item2[1] + "/" + item2[0], sessions = item2[2], earned = GetEarned(item2[2], "premium") };
-                    GraphStats temp = new GraphStats() { dateTime = item1[1] + "/" + item1[0], sessions = (Int32.Parse(item1[2]) - Int32.Parse(temp2.sessions)).ToString(), earned = GetEarned((Int32.Parse(item1[2]) - Int32.Parse(temp2.sessions)).ToString(), "non-premium") };
-                    stats.Add(new GraphStats() { dateTime = temp.dateTime, sessions = (Int32.Parse(temp.sessions) + Int32.Parse(temp2.sessions)).ToString(), earned = temp.earned + temp2.earned });
+                    for (int i = 0; i < count; i++)
+                    {
+                        var item1 = final.Rows[i];
+                        var item2 = final1.Rows[i];
+                        GraphStats temp2 = new GraphStats() { dateTime = item2[1] + "/" + item2[0], sessions = item2[2], earned = GetEarned(item2[2], "premium") };
+                        GraphStats temp = new GraphStats() { dateTime = item1[1] + "/" + item1[0], sessions = (Int32.Parse(item1[2]) - Int32.Parse(temp2.sessions)).ToString(), earned = GetEarned((Int32.Parse(item1[2]) - Int32.Parse(temp2.sessions)).ToString(), "non-premium") };
+                        stats.Add(new GraphStats() { dateTime = temp.dateTime, sessions = (Int32.Parse(temp.sessions) + Int32.Parse(temp2.sessions)).ToString(), earned = temp.earned + temp2.earned });
+                    }
                 }
+            }
+            catch(Exception e)
+            {
+
             }
             return stats;
 
@@ -96,26 +103,33 @@ namespace DigitalNetwork.Controllers
 
             result.Filters = "ga:medium=@referral";
             result1.Filters = "ga:medium=@referral;ga:country=@Canada";
-            var final = result.Execute();
-            var final1 = result1.Execute();
-            int count = (int)final.TotalResults;
-            int count1 = (int)final1.TotalResults;
-            if (count != 0 && (count == count1))
+            try
             {
-                for (int i = 0; i < count; i++)
+                var final = result.Execute();
+                var final1 = result1.Execute();
+                int count = (int)final.TotalResults;
+                int count1 = (int)final1.TotalResults;
+                if (count != 0 && (count == count1))
                 {
-                    var item1 = final.Rows[i];
-                    var item2 = final1.Rows[i];
-                    double pEarned = GetEarned(item2[3], "premium") ;
-                    double nEarned = GetEarned((Int32.Parse(item1[3]) - Int32.Parse(item2[3])).ToString(), "non-premium");
-                    data.amount += pEarned + nEarned;
+                    for (int i = 0; i < count; i++)
+                    {
+                        var item1 = final.Rows[i];
+                        var item2 = final1.Rows[i];
+                        double pEarned = GetEarned(item2[3], "premium");
+                        double nEarned = GetEarned((Int32.Parse(item1[3]) - Int32.Parse(item2[3])).ToString(), "non-premium");
+                        data.amount += pEarned + nEarned;
 
-                  
-                    GraphStats temp = new GraphStats() { dateTime = item2[2] + "/"+ item1[1] + "/" + item1[0], sessions = (Int32.Parse(item1[3]) ).ToString() , earned = GetEarned((Int32.Parse(item1[3]) - Int32.Parse(item2[3])).ToString(), "non-premium")+ GetEarned(item2[3], "premium") };
-                    stats.Add(new GraphStats() { dateTime = temp.dateTime, sessions = temp.sessions, earned = temp.earned });
+
+                        GraphStats temp = new GraphStats() { dateTime = item2[2] + "/" + item1[1] + "/" + item1[0], sessions = (Int32.Parse(item1[3])).ToString(), earned = GetEarned((Int32.Parse(item1[3]) - Int32.Parse(item2[3])).ToString(), "non-premium") + GetEarned(item2[3], "premium") };
+                        stats.Add(new GraphStats() { dateTime = temp.dateTime, sessions = temp.sessions, earned = temp.earned });
+                    }
+                    data.graph = stats;
                 }
-                data.graph = stats;
+            }catch(Exception e)
+            {
+
             }
+        
             return data;
 
         }
@@ -147,15 +161,21 @@ namespace DigitalNetwork.Controllers
             result.MaxResults = 5;
             result.Sort = "-ga:sessions";
             result.Filters = "ga:landingPagePath=@" + use.convertUrl(input.url, input.site_url) + ";ga:campaign=@" + input.uid + ";ga:medium=@referral";
-            var final = result.Execute();
-            int count = (int)final.TotalResults;
-            if (count != 0)
+            try
             {
-                foreach (var item in final.Rows)
+                var final = result.Execute();
+                int count = (int)final.TotalResults;
+                if (count != 0)
                 {
-                    CountryStats temp = new CountryStats() { country = item[0], sessions = item[1] };
-                    stats.Add(temp);
+                    foreach (var item in final.Rows)
+                    {
+                        CountryStats temp = new CountryStats() { country = item[0], sessions = item[1] };
+                        stats.Add(temp);
+                    }
                 }
+            }catch(Exception e)
+            {
+
             }
             return stats;
 
@@ -192,7 +212,8 @@ namespace DigitalNetwork.Controllers
                 
                         result.Filters = "ga:landingPagePath=@" + use.convertUrl(input.url, input.site_url) + ";ga:campaign=@" + input.uid + ";ga:medium=@referral";
                         result1.Filters = "ga:landingPagePath=@" + use.convertUrl(input.url, input.site_url) + ";ga:campaign=@" + input.uid + ";ga:medium=@referral;ga:country=@Canada";
-                    
+            try
+            {
                 var session_result = result.Execute();
                 var session_result1 = result1.Execute();
                 int count = (int)session_result.TotalResults;
@@ -211,11 +232,15 @@ namespace DigitalNetwork.Controllers
 
                 }
                 traffic.premium = traffic.premium + 0;
-                
+
                 traffic.non_premium = traffic.non_premium - traffic.premium;
 
-            total.earned = total.earned + GetEarned(traffic.premium.ToString(), "premium") + GetEarned(traffic.non_premium.ToString(), "non-premium");
-            total.sessions = (traffic.premium + traffic.non_premium).ToString();
+                total.earned = total.earned + GetEarned(traffic.premium.ToString(), "premium") + GetEarned(traffic.non_premium.ToString(), "non-premium");
+                total.sessions = (traffic.premium + traffic.non_premium).ToString();
+            }catch(Exception e)
+            {
+
+            }
                 return total;
         }
 
@@ -250,20 +275,26 @@ namespace DigitalNetwork.Controllers
 
             result.Filters = "ga:landingPagePath=@" + use.convertUrl(input.url, input.site_url) + ";ga:campaign=@" + input.uid + ";ga:medium=@referral";
             result1.Filters = "ga:landingPagePath=@" + use.convertUrl(input.url, input.site_url) + ";ga:campaign=@" + input.uid + ";ga:medium=@referral;ga:country=@Canada";
-            var final = result.Execute();
-            var final1 = result1.Execute();
-            int count = (int)final.TotalResults;
-            int count1 = (int)final1.TotalResults;
-            if (count != 0 && (count == count1))
+            try
             {
-                for(int i=0; i<count; i++)
+                var final = result.Execute();
+                var final1 = result1.Execute();
+                int count = (int)final.TotalResults;
+                int count1 = (int)final1.TotalResults;
+                if (count != 0 && (count == count1))
                 {
-                    var item1 = final.Rows[i];
-                    var item2 = final1.Rows[i];
-                    GraphStats temp2 = new GraphStats() { dateTime = item2[1] + "/" + item2[0], sessions = item2[2], earned = GetEarned(item2[2], "premium") };
-                    GraphStats temp = new GraphStats() { dateTime = item1[1] + "/" + item1[0], sessions = (Int32.Parse(item1[2]) - Int32.Parse(temp2.sessions)).ToString(), earned = GetEarned((Int32.Parse(item1[2]) - Int32.Parse(temp2.sessions)).ToString(), "non-premium") };
-                    stats.Add(new GraphStats() { dateTime = temp.dateTime, sessions = (Int32.Parse(temp.sessions) + Int32.Parse(temp2.sessions)).ToString(), earned = temp.earned + temp2.earned});
+                    for (int i = 0; i < count; i++)
+                    {
+                        var item1 = final.Rows[i];
+                        var item2 = final1.Rows[i];
+                        GraphStats temp2 = new GraphStats() { dateTime = item2[1] + "/" + item2[0], sessions = item2[2], earned = GetEarned(item2[2], "premium") };
+                        GraphStats temp = new GraphStats() { dateTime = item1[1] + "/" + item1[0], sessions = (Int32.Parse(item1[2]) - Int32.Parse(temp2.sessions)).ToString(), earned = GetEarned((Int32.Parse(item1[2]) - Int32.Parse(temp2.sessions)).ToString(), "non-premium") };
+                        stats.Add(new GraphStats() { dateTime = temp.dateTime, sessions = (Int32.Parse(temp.sessions) + Int32.Parse(temp2.sessions)).ToString(), earned = temp.earned + temp2.earned });
+                    }
                 }
+            }catch(Exception e)
+            {
+
             }
             return stats;
 
@@ -303,39 +334,44 @@ namespace DigitalNetwork.Controllers
                 List<get_user_traffic_Result> res = trafficController.get_all_sites(user.uid);
                 foreach (var item in res)
                 {
-                    
+
                     Authorization auth = new Authorization(item.email);
                     var result = auth.service.Data.Realtime.Get("ga:" + item.ga_id, "rt:activeUsers");
                     result.Dimensions = "rt:country";
                     result.Filters = "ga:campaign=@" + user.username;
-                    var response = result.Execute();
-                    if (response.TotalResults != 0)
-                    {
-                        final.total_traffic = final.total_traffic + Int64.Parse(response.TotalsForAllResults["rt:activeUsers"]);
-                        foreach (var row in response.Rows)
+                    try {
+                        var response = result.Execute();
+                        if (response.TotalResults != 0)
                         {
-                            // UserStats temp = user_stats.Last<UserStats>();
-
-                            CountryStat cStats = new CountryStat();
-
-                            cStats = final.country_stats.FirstOrDefault(x => x.country == row[0]);
-
-
-                            if (cStats == null)
+                            final.total_traffic = final.total_traffic + Int64.Parse(response.TotalsForAllResults["rt:activeUsers"]);
+                            foreach (var row in response.Rows)
                             {
-                                cStats = new CountryStat() { country = row[0], sessions = Int64.Parse(row[1]) };
-                                final.country_stats.Add(cStats);
-                            }
-                            else
-                            {
-                                final.country_stats.Remove(cStats);
-                                cStats.sessions = cStats.sessions + Int64.Parse(row[1]);
-                                final.country_stats.Add(cStats);
+                                // UserStats temp = user_stats.Last<UserStats>();
 
+                                CountryStat cStats = new CountryStat();
+
+                                cStats = final.country_stats.FirstOrDefault(x => x.country == row[0]);
+
+
+                                if (cStats == null)
+                                {
+                                    cStats = new CountryStat() { country = row[0], sessions = Int64.Parse(row[1]) };
+                                    final.country_stats.Add(cStats);
+                                }
+                                else
+                                {
+                                    final.country_stats.Remove(cStats);
+                                    cStats.sessions = cStats.sessions + Int64.Parse(row[1]);
+                                    final.country_stats.Add(cStats);
+
+                                }
                             }
                         }
                     }
+                    catch (Exception e)
+                    { }
                 }
+                 
                 realtimeList.Add(user.uid, final);
             }
             return realtimeList;

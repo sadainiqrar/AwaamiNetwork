@@ -321,6 +321,8 @@ namespace DigitalNetwork.Controllers
                 Authorization auth = new Authorization(res.Email);
                 var result = auth.service.Data.Ga.Get(("ga:" + res.ga_id), convertDate(publishDate), convertDate(System.DateTime.Now), "ga:sessions");
                 result.Filters = "ga:medium=@referral;ga:landingPagePath=@" + convertUrl(a_url, url);
+            try
+            {
                 var final = result.Execute();
                 int count = (int)final.TotalResults;
                 if (count != 0)
@@ -328,7 +330,11 @@ namespace DigitalNetwork.Controllers
                     IList<string> l = final.Rows[0];
                     return l[0];
                 }
-                return "" + 1;
+                return "" + 0;
+            }catch(Exception E)
+            {
+                return "" + 0;
+            }
             
         }
 
@@ -383,26 +389,32 @@ namespace DigitalNetwork.Controllers
             result.Filters = "ga:landingPagePath=@" + convertUrl(a_url, url) + ";ga:campaign=@" + username;
             var result1 = auth.service.Data.Ga.Get(("ga:" + res.ga_id), convertDate(publishDate), convertDate(System.DateTime.Now), "ga:sessions");
             result1.Filters = "ga:landingPagePath=@" + convertUrl(a_url, url) + ";ga:campaign=@" + username +";ga:country=@Canada";
-         
-            var final1 = result1.Execute();
-            var final = result.Execute();
-            int count = (int)final.TotalResults;
-            int count1 = (int)final1.TotalResults;
-            if (count1 != 0)
+            try
             {
-                IList<string> l = final1.Rows[0];
-               traffic.premium+=long.Parse(l[0]);
-            }
-            if (count != 0)
-            {
-                IList<string> l = final.Rows[0];
-               traffic.non_premium+=long.Parse(l[0]);
-            }
-            traffic.non_premium = traffic.non_premium - traffic.premium;
+                var final1 = result1.Execute();
+                var final = result.Execute();
+                int count = (int)final.TotalResults;
+                int count1 = (int)final1.TotalResults;
+                if (count1 != 0)
+                {
+                    IList<string> l = final1.Rows[0];
+                    traffic.premium += long.Parse(l[0]);
+                }
+                if (count != 0)
+                {
+                    IList<string> l = final.Rows[0];
+                    traffic.non_premium += long.Parse(l[0]);
+                }
+                traffic.non_premium = traffic.non_premium - traffic.premium;
 
-            earned.premium = (Decimal.ToDouble(rate.GetRate("premium").FirstOrDefault<get_rate_Result>().rate) * traffic.premium)/1000;
-            earned.non_premium = (Decimal.ToDouble(rate.GetRate("non-premium").FirstOrDefault<get_rate_Result>().rate) * traffic.non_premium)/1000;
-            return new GraphStats() { dateTime = "", sessions = (traffic.premium + traffic.non_premium).ToString(), earned = earned.premium + earned.non_premium };
+                earned.premium = (Decimal.ToDouble(rate.GetRate("premium").FirstOrDefault<get_rate_Result>().rate) * traffic.premium) / 1000;
+                earned.non_premium = (Decimal.ToDouble(rate.GetRate("non-premium").FirstOrDefault<get_rate_Result>().rate) * traffic.non_premium) / 1000;
+            }catch(Exception E)
+            {
+
+            }
+                return new GraphStats() { dateTime = "", sessions = (traffic.premium + traffic.non_premium).ToString(), earned = earned.premium + earned.non_premium };
+           
         }
 
 
@@ -419,25 +431,30 @@ namespace DigitalNetwork.Controllers
             result.Filters = "ga:medium=@referral;ga:landingPagePath=@" + convertUrl(a_url, url);
             var result1 = auth.service.Data.Ga.Get(("ga:" + ga_id), convertDate(publishDate), convertDate(System.DateTime.Now), "ga:sessions");
             result1.Filters = "ga:medium=@referral;ga:landingPagePath=@" + convertUrl(a_url, url) + ";ga:country=@Canada";
-
-            var final1 = result1.Execute();
-            var final = result.Execute();
-            int count = (int)final.TotalResults;
-            int count1 = (int)final1.TotalResults;
-            if (count1 != 0)
+            try
             {
-                IList<string> l = final1.Rows[0];
-                traffic.premium += long.Parse(l[0]);
-            }
-            if (count != 0)
-            {
-                IList<string> l = final.Rows[0];
-                traffic.non_premium += long.Parse(l[0]);
-            }
-            traffic.non_premium = traffic.non_premium - traffic.premium;
+                var final1 = result1.Execute();
+                var final = result.Execute();
+                int count = (int)final.TotalResults;
+                int count1 = (int)final1.TotalResults;
+                if (count1 != 0)
+                {
+                    IList<string> l = final1.Rows[0];
+                    traffic.premium += long.Parse(l[0]);
+                }
+                if (count != 0)
+                {
+                    IList<string> l = final.Rows[0];
+                    traffic.non_premium += long.Parse(l[0]);
+                }
+                traffic.non_premium = traffic.non_premium - traffic.premium;
 
-            earned.premium = (Decimal.ToDouble(rate.GetRate("premium").FirstOrDefault<get_rate_Result>().rate) * traffic.premium) / 1000;
-            earned.non_premium = (Decimal.ToDouble(rate.GetRate("non-premium").FirstOrDefault<get_rate_Result>().rate) * traffic.non_premium) / 1000;
+                earned.premium = (Decimal.ToDouble(rate.GetRate("premium").FirstOrDefault<get_rate_Result>().rate) * traffic.premium) / 1000;
+                earned.non_premium = (Decimal.ToDouble(rate.GetRate("non-premium").FirstOrDefault<get_rate_Result>().rate) * traffic.non_premium) / 1000;
+            }catch(Exception e)
+            {
+
+            }
             return new GraphStats() { dateTime = "", sessions = (traffic.premium + traffic.non_premium).ToString(), earned = earned.premium + earned.non_premium };
         }
 

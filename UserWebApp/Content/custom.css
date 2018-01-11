@@ -1,5 +1,10 @@
 /* Let's get this party started */
-
+.cleared{
+    color: green !important;
+}
+.pending{
+    color: red !important;
+}
 .badge {
     display: inline-block;
     min-width: 8px;

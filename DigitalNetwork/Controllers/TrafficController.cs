@@ -52,27 +52,32 @@ namespace DigitalNetwork.Controllers
                 var result = auth.service.Data.Ga.Get("ga:" + item.ga_id, a.convertDate(from), a.convertDate(to), "ga:Sessions");
                 result.Dimensions = "ga:campaign";
                 result.Filters = "ga:medium=@digitalmarket";
-                var response = result.Execute();
-                if (response.TotalResults != 0)
+                try
                 {
-                    foreach (var row in response.Rows)
+                    var response = result.Execute();
+                    if (response.TotalResults != 0)
                     {
-
-
-                        if (allUsers.ContainsKey(row[0]))
+                        foreach (var row in response.Rows)
                         {
-                            allUsers[row[0]] = allUsers[row[0]] + long.Parse(row[1]);
-                        }
-                        else
-                        {
-                            allUsers.Add(row[0], long.Parse(row[1]));
-                        }
 
 
+                            if (allUsers.ContainsKey(row[0]))
+                            {
+                                allUsers[row[0]] = allUsers[row[0]] + long.Parse(row[1]);
+                            }
+                            else
+                            {
+                                allUsers.Add(row[0], long.Parse(row[1]));
+                            }
+
+
+
+                        }
 
                     }
-
                 }
+                catch (Exception e)
+                { }
                 // total_stats.Add(user_stats);
             }
             // allUsers.Remove("(not set)");
@@ -87,7 +92,7 @@ namespace DigitalNetwork.Controllers
         public List<UserStats> statistics([FromBody]User_Analytic_Input analytics_Input)
         {
             //List < List < UserStats >> total_stats = new List<List<UserStats>>();
-
+            GraphController use = new GraphController();
             List<UserStats> user_stats = new List<UserStats>();
             List<get_user_traffic_Result> res = get_all_sites(analytics_Input.uid);
             foreach (var item in res)
@@ -98,12 +103,13 @@ namespace DigitalNetwork.Controllers
                 var result = auth.service.Data.Ga.Get("ga:" + item.ga_id, analytics_Input.from_date, analytics_Input.to_date, analytics_Input.session + ",ga:newUsers");
                 result.Dimensions = "ga:date, " + analytics_Input.country;
                 result.Filters = "ga:campaign=@" + analytics_Input.extra;
+                try { 
                 var response = result.Execute();
                 if (response.TotalResults != 0)
                 {
                     foreach (var row in response.Rows)
                     {
-                        UserStats temp = new UserStats() { day = "", premium = 0, non_premium = 0, total_traffic = 0, total_earning = 0, country_stats = new List<CountryStats>() };
+                        UserStats temp = new UserStats() { date = new DateTime(), day = "", premium = 0, non_premium = 0, total_traffic = 0, total_earning = 0, country_stats = new List<CountryStats>() };
                         // UserStats temp = user_stats.Last<UserStats>();
 
 
@@ -111,24 +117,31 @@ namespace DigitalNetwork.Controllers
 
                         if (temp == null)
                         {
-                            temp = new UserStats() { day = "", premium = 0, non_premium = 0, total_traffic = 0, total_earning = 0, country_stats = new List<CountryStats>() };
+                            temp = new UserStats() { date = new DateTime(), day = "", premium = 0, non_premium = 0, total_traffic = 0, total_earning = 0, country_stats = new List<CountryStats>() };
                         }
                         if (!(temp.day.Equals(row[0])))
                         {
 
-                            UserStats stats = new UserStats() { day = "", premium = 0, non_premium = 0, total_traffic = 0, total_earning = 0, country_stats = new List<CountryStats>() };
+                            UserStats stats = new UserStats() { date = new DateTime(), day = "", premium = 0, non_premium = 0, total_traffic = 0, total_earning = 0, country_stats = new List<CountryStats>() };
 
                             stats.day = row[0];
-                            if (row[1].Equals("Canada"))
-                            {
-                                stats.premium += long.Parse(row[2]);
-                            }
-                            else
-                            {
-                                stats.non_premium += long.Parse(row[2]);
-                            }
+                                stats.date = dateConverter(stats.day);
 
-                            var cFind = stats.country_stats.FirstOrDefault(x => x.country == row[1]);
+                                if (row[1].Equals("Canada"))
+                                {
+                                    stats.premium += long.Parse(row[2]);
+                                    stats.total_earning += use.GetEarned(row[2], "premium");
+
+                                    stats.total_traffic += long.Parse(row[2]);
+                                }
+                                else
+                                {
+                                    stats.non_premium += long.Parse(row[2]);
+                                    stats.total_earning += use.GetEarned(row[2], "non-premium");
+                                    stats.total_traffic += long.Parse(row[2]);
+                                }
+
+                                var cFind = stats.country_stats.FirstOrDefault(x => x.country == row[1]);
                             if (cFind == null)
                             {
                                 cFind = new CountryStats() { country = row[1], sessions = "0", newSessions = "0" };
@@ -147,15 +160,20 @@ namespace DigitalNetwork.Controllers
 
                             user_stats.Remove(temp);
                             CountryStats cTemp = new CountryStats();
-                            if (row[1].Equals("Canada"))
-                            {
-                                temp.premium += long.Parse(row[2]);
-                            }
-                            else
-                            {
-                                temp.non_premium += long.Parse(row[2]);
-                            }
-                            var cFind = temp.country_stats.FirstOrDefault(x => x.country == row[1]);
+                                if (row[1].Equals("Canada"))
+                                {
+                                    temp.premium += long.Parse(row[2]);
+                                    temp.total_earning += use.GetEarned(row[2], "premium");
+
+                                    temp.total_traffic += long.Parse(row[2]);
+                                }
+                                else
+                                {
+                                    temp.non_premium += long.Parse(row[2]);
+                                    temp.total_earning += use.GetEarned(row[2], "non-premium");
+                                    temp.total_traffic += long.Parse(row[2]);
+                                }
+                                var cFind = temp.country_stats.FirstOrDefault(x => x.country == row[1]);
                             if (cFind == null)
                             {
                                 cFind = new CountryStats() { country = row[1], sessions = "0", newSessions = "0" };
@@ -176,8 +194,12 @@ namespace DigitalNetwork.Controllers
                     }
 
                 }
-                // total_stats.Add(user_stats);
+                    // total_stats.Add(user_stats);
+                }
+                catch (Exception e)
+                { }
             }
+
             return user_stats;
         }
 
@@ -233,6 +255,7 @@ namespace DigitalNetwork.Controllers
                         result4.Filters = "ga:campaign=@" + analytics_Input.extra + ";ga:country=@Canada";
                     }
                 }
+                try { 
                 var today_result = result3.Execute();
                 var today_result1 = result4.Execute();
                 var session_result = result.Execute();
@@ -269,8 +292,12 @@ namespace DigitalNetwork.Controllers
 
 
                 }
-                //     month_traffic.premium = month_traffic.premium + 0;
+                    //     month_traffic.premium = month_traffic.premium + 0;
+                }
+                catch (Exception e)
+                { }
             }
+
 
             month_traffic.non_premium = month_traffic.non_premium - month_traffic.premium;
             today_traffic.non_premium = today_traffic.non_premium - today_traffic.premium;
@@ -305,6 +332,7 @@ namespace DigitalNetwork.Controllers
                         result1.Filters = "ga:campaign=@" + analytics_Input.extra + ";ga:country=@Canada";
                     }
                 }
+                try { 
                 var session_result = result.Execute();
                 var session_result1 = result1.Execute();
                 int count = (int)session_result.TotalResults;
@@ -323,6 +351,9 @@ namespace DigitalNetwork.Controllers
 
                 }
                 traffic.premium = traffic.premium + 0;
+                }
+                catch (Exception e)
+                { }
             }
 
             traffic.non_premium = traffic.non_premium - traffic.premium;
@@ -368,7 +399,7 @@ namespace DigitalNetwork.Controllers
             Authorization auth = new Authorization(input.extra);
             var result = auth.service.Data.Ga.Get("ga:" + input.ga_id, a.convertDate(from), a.convertDate(to), input.session);
             result.Dimensions = "ga:countryIsoCode";
-
+            try { 
             var session_result = result.Execute();
 
 
@@ -407,6 +438,9 @@ namespace DigitalNetwork.Controllers
             }
             res.avg = total == 0 ? res.avg : res.avg / total;
             res.mapData = map;
+            }
+            catch (Exception e)
+            { }
             return res;
         }
 
@@ -441,6 +475,7 @@ namespace DigitalNetwork.Controllers
             var result1 = auth.service.Data.Ga.Get("ga:" + analytics_Input.ga_id, analytics_Input.from_date, analytics_Input.to_date, analytics_Input.session);
             result.Filters = "ga:medium=@referral";
             result1.Filters = "ga:medium=@referral;ga:country=@Canada";
+            try { 
             var session_result1 = result1.Execute();
             var session_result = result.Execute();
 
@@ -464,6 +499,9 @@ namespace DigitalNetwork.Controllers
                 stats.earned = nonearned + preearned;
                 stats.sessions = (total).ToString();
             }
+            }
+            catch (Exception e)
+            { }
             return stats;
 
         }
@@ -484,6 +522,7 @@ namespace DigitalNetwork.Controllers
             var result = auth.service.Data.Ga.Get("ga:" + analytics_Input.ga_id, analytics_Input.from_date, analytics_Input.to_date, analytics_Input.session + ",ga:newUsers");
             result.Dimensions = "ga:date, " + analytics_Input.country;
             result.Filters = "ga:medium=@referral";
+            try { 
             var response = result.Execute();
             if (response.TotalResults != 0)
             {
@@ -563,6 +602,9 @@ namespace DigitalNetwork.Controllers
                 }
                 
             }
+            }
+            catch (Exception e)
+            { }
             return admin_stats;
         }
 
@@ -592,6 +634,7 @@ namespace DigitalNetwork.Controllers
                     result.Filters = analytics_Input.extra;
                 }
             }
+            try { 
             var session_result = result.Execute();
             int count = (int)session_result.TotalResults;
             if (count != 0)
@@ -599,6 +642,9 @@ namespace DigitalNetwork.Controllers
                 IList<string> l = session_result.Rows[0];
                 return l[0];
             }
+            }
+            catch (Exception e)
+            { }
             return "" + 0;
 
         }
@@ -620,7 +666,7 @@ namespace DigitalNetwork.Controllers
                 }
             }
 
-
+            try { 
             var C_session_result = result.Execute();
             int count = (int)C_session_result.TotalResults;
             for (int i = 0; i < count; i++)
@@ -632,6 +678,9 @@ namespace DigitalNetwork.Controllers
                 CS.Session = l[1];
                 list.Add(CS);
             }
+            }
+            catch (Exception e)
+            { }
             return list;
 
         }
@@ -653,7 +702,7 @@ namespace DigitalNetwork.Controllers
                 }
             }
 
-
+            try { 
             var C_session_result = result.Execute();
             int count = (int)C_session_result.TotalResults;
             for (int i = 0; i < count; i++)
@@ -665,6 +714,9 @@ namespace DigitalNetwork.Controllers
                 PS.Session = l[1];
                 list.Add(PS);
             }
+            }
+            catch (Exception e)
+            { }
             return list;
 
         }
@@ -685,18 +737,22 @@ namespace DigitalNetwork.Controllers
                     result.Filters = analytics_Input.extra;
                 }
             }
-            var C_session_result = result.Execute();
-            int count = (int)C_session_result.TotalResults;
-            for (int i = 0; i < count; i++)
+            try
             {
+                var C_session_result = result.Execute();
+                int count = (int)C_session_result.TotalResults;
+                for (int i = 0; i < count; i++)
+                {
 
-                IList<string> l = C_session_result.Rows[i];
-                Page_Campaign_Session PCS = new Page_Campaign_Session();
-                PCS.Campaign = l[0];
-                PCS.Landing_Page_Path = l[1];
-                PCS.Session = l[2];
-                list.Add(PCS);
-            }
+                    IList<string> l = C_session_result.Rows[i];
+                    Page_Campaign_Session PCS = new Page_Campaign_Session();
+                    PCS.Campaign = l[0];
+                    PCS.Landing_Page_Path = l[1];
+                    PCS.Session = l[2];
+                    list.Add(PCS);
+                }
+              }catch(Exception e)
+                { }
             return list;
 
         }

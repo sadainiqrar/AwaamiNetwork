@@ -82,16 +82,22 @@ namespace DigitalNetwork.Controllers
             List<get_all_site_Result> gSites = new List<get_all_site_Result>();
             Authorization auth = new Authorization(admin.email);
             var result = auth.service.Management.Profiles.List("~all","~all");
-            var sites = result.Execute();
-            Dictionary<string,get_all_site_Result> dbSites = new Dictionary<string,get_all_site_Result>();
-            using (var data = new digimarketEntities1().get_all_site())
+            try
             {
-                dbSites = data.ToDictionary(t => t.site_url, t => t);
-            }
-            foreach (var site in sites.Items)
+                var sites = result.Execute();
+                Dictionary<string, get_all_site_Result> dbSites = new Dictionary<string, get_all_site_Result>();
+                using (var data = new digimarketEntities1().get_all_site())
+                {
+                    dbSites = data.ToDictionary(t => t.site_url, t => t);
+                }
+                foreach (var site in sites.Items)
+                {
+                    if (!dbSites.ContainsKey(site.WebsiteUrl))
+                        gSites.Add(new get_all_site_Result() { site_url = site.WebsiteUrl, site_name = site.Name, ga_id = site.Id, custom = false });
+
+                }
+            }catch(Exception e)
             {
-                if(!dbSites.ContainsKey(site.WebsiteUrl))
-                gSites.Add(new get_all_site_Result() { site_url = site.WebsiteUrl, site_name = site.Name, ga_id = site.Id, custom = false });
 
             }
 
